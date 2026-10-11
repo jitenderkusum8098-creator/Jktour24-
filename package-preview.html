@@ -41,4 +41,16 @@ function closeForm(){document.getElementById('modal').classList.add('hidden');}
 document.getElementById('bookForm').addEventListener('submit',function(e){e.preventDefault();const name=document.getElementById('name').value.trim(),mobile=document.getElementById('mobile').value.trim(),date=document.getElementById('date').value,pickup=document.getElementById('pickup').value.trim();const msg='Namaste JKTour24, mujhe Ujjain Darshan package book karna hai.%0AName: '+encodeURIComponent(name)+'%0AMobile: '+encodeURIComponent(mobile)+'%0ATravellers: '+qty+'%0ATravel date: '+encodeURIComponent(date)+'%0APickup: '+encodeURIComponent(pickup||'Not specified')+'%0APackage: Delhi to Ujjain 4N/5D%0ATotal: '+encodeURIComponent(money(qty*price))+'%0APackage: AC Bus + AC Hotel + 3 time Food';window.open('https://wa.me/918860742376?text='+msg,'_blank');});
 document.getElementById('date').min=new Date().toISOString().split('T')[0];update();
 </script>
+<script>
+(function(){
+  try{
+    if(!sessionStorage.getItem("jktourBackGuard")){
+      history.replaceState({jktourPage:true},"",location.href);
+      history.pushState({jktourGuard:true},"",location.href);
+      sessionStorage.setItem("jktourBackGuard","1");
+    }
+    window.addEventListener("pageshow",function(){sessionStorage.removeItem("jktourBackGuard")});
+  }catch(e){}
+})();
+</script>
 </body></html>
