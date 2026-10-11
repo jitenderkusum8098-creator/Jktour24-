@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="hi">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta name="build-version" content="2026-10-12-tour-cards-v6">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta name="build-version" content="2026-10-12-tour-cards-v7">
 <title>JKTour24 | उज्जैन ओंकारेश्वर यात्रा</title>
 <meta name="description" content="JKTour24 के साथ उज्जैन, ओंकारेश्वर और ममलेश्वर दर्शन यात्रा — 4 रात 5 दिन, ₹6,200 प्रति व्यक्ति।">
 <style>
@@ -136,6 +136,29 @@
 .tour-bottom>div>small{font-size:15px!important;line-height:1.45;font-weight:700;color:#344054!important}
 .tour-price{font-size:clamp(36px,4.2vw,44px)!important}
 @media(max-width:520px){.tour-bottom>div>small{font-size:15px!important;line-height:1.45;font-weight:700}.tour-price{font-size:38px!important}}
+
+
+/* Luxury package card refinement v7: price first, per-person below */
+.tour-card{position:relative;border:1px solid #d9c18c;box-shadow:0 16px 42px rgba(7,26,53,.13)}
+.tour-card:before{content:"";display:block;height:3px;background:linear-gradient(90deg,#9b7227,#f6d98e,#bd8b32)}
+.tour-cover{background-position:center 45%;position:relative}
+.tour-cover:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,16,34,.03) 35%,rgba(4,16,34,.48) 100%);pointer-events:none}
+.tour-ribbon,.tour-duration{z-index:1}
+.tour-ribbon{box-shadow:0 5px 18px rgba(0,0,0,.16);border:1px solid #ffe4a3}
+.tour-duration{box-shadow:0 6px 18px rgba(0,0,0,.22)}
+.tour-content{padding:26px;background:linear-gradient(180deg,#fff 0%,#fffdf8 100%)}
+.tour-content h2{letter-spacing:-.35px}
+.tour-includes>div{box-shadow:inset 0 1px 0 #fff;transition:transform .18s ease,border-color .18s ease}
+.tour-includes>div:hover{transform:translateY(-2px);border-color:#d9b45e}
+.tour-bottom{background:linear-gradient(135deg,#071a35,#102b4d);border:1px solid #243b5b;border-radius:14px;padding:17px;margin-top:5px;gap:14px;box-shadow:0 8px 20px rgba(7,26,53,.12)}
+.tour-bottom>div{display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+.tour-bottom>div>.tour-price{order:1;color:#f4cf78;font-size:clamp(36px,4.2vw,46px)!important;letter-spacing:-.7px}
+.tour-bottom>div>small{order:2;color:#e4eaf3!important;font-size:14px!important;line-height:1.4;font-weight:700}
+.tour-price span{color:#f4cf78}
+.tour-cta{background:linear-gradient(135deg,#f7d98d,#d9a943);border:1px solid #f7dc9a;box-shadow:0 6px 16px rgba(220,174,82,.22);font-size:14px;letter-spacing:.1px}
+.tour-cta:hover{background:linear-gradient(135deg,#ffe5a5,#e5b64f)}
+.tour-note{color:#596678}
+@media(max-width:520px){.tour-content{padding:18px 16px 17px}.tour-bottom{padding:15px;border-radius:12px}.tour-bottom>div{align-items:flex-start;gap:4px}.tour-bottom>div>.tour-price{font-size:38px!important}.tour-bottom>div>small{font-size:14px!important}}
 
 </style>
 </head>
