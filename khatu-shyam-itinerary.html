@@ -175,6 +175,40 @@ body.booking-open{overflow:hidden}
 .booking-panel-premium .booking-total{display:grid!important;grid-template-columns:1fr auto!important;gap:8px 14px!important;align-items:center!important}
 .booking-panel-premium .booking-total small{grid-column:1/-1!important}
 @media(max-width:560px){.booking-panel-premium .form-grid{grid-template-columns:minmax(0,1fr)!important}.booking-panel-premium .form-field.full{grid-column:auto!important}.booking-panel-premium .booking-actions{grid-template-columns:1fr!important}.booking-panel-premium .booking-close{width:100%!important}.booking-panel-premium .booking-top:before{font-size:46px!important;right:12px!important}.booking-price-strip{align-items:flex-start!important;flex-direction:column!important;gap:5px!important}}
+
+/* Accessibility-first premium typography: high contrast, heavier weights, clearer controls */
+.booking-panel-premium{font-size:17px!important;color:#172b40!important}
+.booking-panel-premium p,.booking-panel-premium .form-help,.booking-panel-premium .form-note,.booking-panel-premium small{font-size:16px!important;line-height:1.8!important;color:#34475b!important;font-weight:500!important}
+.booking-panel-premium label{font-size:17px!important;line-height:1.65!important;font-weight:800!important;color:#172d43!important}
+.booking-top h2{font-weight:900!important;line-height:1.35!important}
+.booking-top p{font-size:16px!important;font-weight:600!important;line-height:1.8!important;color:#fff!important}
+.booking-kicker{font-size:13px!important;font-weight:900!important;letter-spacing:1.1px!important}
+.form-section h3{font-size:22px!important;font-weight:900!important;line-height:1.5!important;color:#102d49!important}
+.form-section h3 span{font-size:14px!important;font-weight:900!important}
+.booking-panel-premium input:not([type=radio]):not([type=checkbox]),.booking-panel-premium select,.booking-panel-premium textarea{font-size:17px!important;font-weight:600!important;color:#152a40!important;min-height:56px!important;border:1.5px solid #c6d3e0!important;background:#fff!important}
+.booking-panel-premium input::placeholder,.booking-panel-premium textarea::placeholder{color:#536579!important;opacity:1!important;font-weight:500!important}
+.booking-panel-premium input:focus,.booking-panel-premium select:focus,.booking-panel-premium textarea:focus{outline:3px solid #d9b85c66!important;outline-offset:1px!important;border-color:#a87920!important}
+.booking-panel-premium .form-help{color:#34475b!important}
+.booking-panel-premium .passenger-detail-card h4,.booking-panel-premium .contact-card h4,.passenger-list-heading strong{font-size:18px!important;font-weight:900!important;color:#173d5d!important}
+.booking-panel-premium .passenger-detail-card h4 span{font-size:15px!important;font-weight:900!important}
+.booking-panel-premium .main-gender label,.booking-panel-premium .gender-choices label,.booking-panel-premium .check-grid label,.booking-panel-premium .choice-stack label{font-size:16px!important;font-weight:750!important;color:#1d344b!important}
+.booking-panel-premium input[type=radio],.booking-panel-premium input[type=checkbox]{width:20px!important;height:20px!important;accent-color:#174d73!important;flex-shrink:0!important}
+.booking-panel-premium .booking-total{border:2px solid #d8b34c!important;background:linear-gradient(130deg,#fff2c9,#fffdf5)!important}
+.booking-panel-premium .booking-total span{font-size:17px!important;font-weight:900!important;color:#4b3a18!important}
+.booking-panel-premium .booking-total strong{font-size:34px!important;font-weight:900!important;color:#0c3458!important}
+.booking-panel-premium .booking-total small{font-weight:650!important;color:#4d4a40!important}
+.booking-panel-premium .booking-actions .cta{font-size:18px!important;font-weight:900!important;min-height:60px!important}
+.booking-panel-premium .booking-close{font-size:16px!important;font-weight:800!important}
+.booking-panel-premium .small{font-size:14px!important;font-weight:600!important;color:#3d4f63!important}
+@media(max-width:560px){
+.booking-panel-premium{font-size:16px!important}
+.booking-panel-premium p,.booking-panel-premium .form-help,.booking-panel-premium .form-note,.booking-panel-premium small{font-size:15px!important;line-height:1.75!important}
+.booking-panel-premium label{font-size:16px!important}
+.form-section h3{font-size:20px!important}
+.booking-panel-premium input:not([type=radio]):not([type=checkbox]),.booking-panel-premium select,.booking-panel-premium textarea{font-size:17px!important;min-height:56px!important}
+.booking-panel-premium .booking-total strong{font-size:30px!important}
+.booking-panel-premium .booking-actions .cta{font-size:17px!important}
+}
 </style>
 </head>
 <body>
