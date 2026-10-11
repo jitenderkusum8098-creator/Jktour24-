@@ -9,6 +9,40 @@
 
 /* Homepage package booking card */
 .package-area{background:#f5f7fb;padding:44px 5%}.package-box{max-width:1080px;margin:auto;background:#fff;border:1px solid #e4e7ec;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px #071a3510;display:grid;grid-template-columns: minmax(0,1.1fr) minmax(280px,.9fr)}.package-photo{min-height:310px;background:linear-gradient(0deg,#071a3570,#071a3500),url('https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=1200&q=85') center/cover;display:flex;align-items:flex-end;padding:20px;color:#fff}.package-tag{background:#e7b957;color:#111;padding:8px 12px;border-radius:6px;font-size:12px;font-weight:800}.package-info{padding:25px}.package-info h2{margin:0 0 8px;font-size:clamp(22px,3vw,30px);color:#071a35}.package-sub{color:#667085;line-height:1.6;font-size:14px}.package-facts{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}.package-facts span{background:#f2f4f7;border-radius:7px;padding:8px 10px;font-size:13px}.package-features{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:17px 0}.package-feature{border:1px solid #e4e7ec;border-radius:8px;padding:10px 7px;font-size:12px}.package-feature b{display:block;font-size:13px;margin-top:5px}.package-cost{font-size:30px;font-weight:900;color:#071a35;margin:15px 0}.package-cost small{font-size:12px;color:#667085;font-weight:400}.package-btn{display:inline-block;border:0;border-radius:8px;background:#e7b957;color:#111;text-decoration:none;padding:13px 17px;margin:4px 5px 4px 0;font-weight:800;cursor:pointer}.package-btn.outline{background:#fff;border:1px solid #071a35}.cart-mini{display:inline-block;margin:4px 0 0 8px;padding:7px 10px;border-radius:20px;background:#071a35;color:#fff;font-size:12px}.pkg-modal{position:fixed;inset:0;background:#071a35b8;z-index:99;display:flex;align-items:center;justify-content:center;padding:16px}.pkg-modal.hidden{display:none}.pkg-dialog{background:#fff;width:min(480px,100%);padding:24px;border-radius:14px;max-height:90vh;overflow:auto}.pkg-dialog h2{margin-top:0}.pkg-label{display:block;font-weight:700;font-size:13px;margin:12px 0 6px}.pkg-input{width:100%;padding:12px;border:1px solid #cfd5df;border-radius:8px;font-size:15px}.pkg-qty{display:flex;align-items:center;gap:14px;margin:8px 0}.pkg-qty button{width:34px;height:34px;border:1px solid #cfd5df;border-radius:8px;background:white;font-size:20px;cursor:pointer}.pkg-total{display:flex;justify-content:space-between;font-weight:900;border-top:1px solid #e4e7ec;padding-top:14px;margin-top:14px}@media(max-width:720px){.package-box{grid-template-columns:1fr}.package-photo{min-height:200px}.package-info{padding:20px}.package-features{grid-template-columns:repeat(3,1fr)}}
+
+/* Premium responsive tour package cards */
+.package-area{background:linear-gradient(180deg,#f8f7f2 0%,#f2f5fa 100%);padding:56px 5% 48px}
+.tour-heading{max-width:1100px;margin:0 auto 28px;text-align:center}
+.tour-kicker{display:inline-block;color:#9b7227;font-size:11px;font-weight:900;letter-spacing:2px;margin-bottom:9px}
+.tour-grid{max-width:1100px;margin:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:stretch}
+.tour-card{background:#fff;border:1px solid #e6e2d7;border-radius:18px;overflow:hidden;box-shadow:0 12px 34px #10213a12;display:flex;flex-direction:column;transition:transform .2s ease,box-shadow .2s ease}
+.tour-card:hover{transform:translateY(-4px);box-shadow:0 18px 38px #10213a1c}
+.tour-cover{height:220px;position:relative;background-position:center;background-size:cover;background-repeat:no-repeat}
+.ujjain-cover{background-image:linear-gradient(0deg,#06162ac9 0%,#06162a00 66%),url('https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=1200&q=85')}
+.devi-cover{background-image:linear-gradient(0deg,#06162ac9 0%,#06162a00 66%),url('https://images.unsplash.com/photo-1606293926075-69a00db5995b?auto=format&fit=crop&w=1200&q=85')}
+.tour-ribbon{position:absolute;left:16px;top:16px;background:#f1ca75;color:#172033;padding:8px 11px;border-radius:5px;font-size:10px;letter-spacing:1px;font-weight:900}
+.tour-duration{position:absolute;right:15px;bottom:15px;color:#fff;background:#071a35d9;border:1px solid #ffffff55;padding:8px 11px;border-radius:20px;font-size:12px;font-weight:700}
+.tour-content{padding:23px;display:flex;flex:1;flex-direction:column}
+.tour-content .tour-kicker{font-size:10px;margin:0 0 7px}
+.tour-content h2{font-size:clamp(21px,2.4vw,28px);line-height:1.25;color:#071a35;margin:0 0 9px}
+.tour-description{font-size:14px;line-height:1.7;color:#626c7b;margin:0 0 18px;min-height:48px}
+.destination-label{font-size:12px;font-weight:800;color:#172033;margin-bottom:9px}
+.destination-pills{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:20px}
+.destination-pills span{font-size:12px;color:#27364b;background:#f7f3e9;border:1px solid #eee2c7;padding:7px 10px;border-radius:6px}
+.tour-includes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 22px}
+.tour-includes>div{background:#f7f9fc;border:1px solid #e8edf3;border-radius:9px;padding:12px 6px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px}
+.tour-icon{font-size:22px;line-height:1.2}
+.tour-includes b{font-size:12px;color:#172033}
+.tour-includes small{font-size:10px;color:#788292}
+.tour-bottom{display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid #edf0f4;padding-top:17px;margin-top:auto}
+.tour-bottom>div>small{display:block;font-size:11px;color:#778091;margin-bottom:3px}
+.tour-price{font-size:30px;line-height:1.1;color:#071a35;font-weight:900;white-space:nowrap}
+.tour-price span{font-size:15px}
+.tour-cta{display:flex;align-items:center;justify-content:center;gap:9px;text-align:center;text-decoration:none;background:#dcae52;color:#111827;padding:12px 13px;border-radius:8px;font-weight:800;font-size:12px;line-height:1.4;min-height:46px;transition:background .2s ease}
+.tour-cta:hover{background:#efc66e}
+.tour-note{max-width:1100px;margin:20px auto 0;text-align:center;font-size:11px;line-height:1.6;color:#687385}
+@media(max-width:820px){.tour-grid{grid-template-columns:1fr;max-width:620px}.tour-cover{height:235px}.tour-description{min-height:0}}
+@media(max-width:420px){.package-area{padding:38px 4%}.tour-content{padding:18px}.tour-cover{height:190px}.tour-bottom{align-items:stretch;flex-direction:column}.tour-bottom>div{display:flex;align-items:baseline;gap:8px}.tour-cta{width:100%;font-size:13px}.tour-includes b{font-size:11px}.tour-includes small{font-size:9px}}
 </style>
 </head>
 <body>
@@ -16,36 +50,35 @@
 <section class="hero" id="package" aria-label="JKTOUR24 उज्जैन और ओंकारेश्वर यात्रा बैनर"></section>
 
 <section class="package-area" id="featured-package">
-<div style="max-width:1080px;margin:0 auto 24px;text-align:center"><h2 class="section-title">हमारे यात्रा पैकेज</h2><p class="sub" style="margin-bottom:0">अपनी पसंद की यात्रा चुनें और सीधे Book Now करें।</p></div>
-<div class="package-box">
-<div class="package-photo"><span class="package-tag">J K TOUR24 · POPULAR PACKAGE</span></div>
-<div class="package-info">
-<div class="eyebrow">SPECIAL PILGRIMAGE PACKAGE</div>
-<h2>Delhi to Ujjain Darshan Yatra</h2>
-<div class="package-sub">उज्जैन, ओंकारेश्वर व ममलेश्वर दर्शन · अपनी यात्रा की तारीख चुनें और booking request भेजें।</div>
-<div class="package-facts"><span>🗓️ 4 Nights / 5 Days</span><span>📍 Delhi Departure</span></div>
-<div class="package-features"><div class="package-feature">🚌<b>AC Bus</b>आना-जाना</div><div class="package-feature">🏨<b>AC Hotel</b>ठहरना</div><div class="package-feature">🍽️<b>3-Time Food</b>भोजन</div></div>
-<div class="package-sub">पैकेज: AC बस + AC होटल + दिन में 3 समय भोजन। कमरा sharing, pickup point और यात्रा की तारीख बुकिंग से पहले confirm करें।</div>
-<div class="package-cost">₹6,200 <small>/ प्रति व्यक्ति</small></div>
-<a class="package-btn" href="ujjain-itinerary.html">🗓️ Itinerary देखें</a><button class="package-btn outline" onclick="pkgOpen()">Book Now</button><span class="cart-mini">Cart: <b id="pkgCartCount">0</b></span>
-<div class="package-sub" style="font-size:12px;margin-top:10px">सीट और यात्रा की पुष्टि JKTour24 से होने के बाद ही booking confirmed मानी जाएगी।</div>
-</div></div>
-<div class="package-box" style="margin:26px auto 0">
-<div class="package-photo" style="background-image:linear-gradient(0deg,#071a3570,#071a3500),url('https://images.unsplash.com/photo-1606293926075-69a00db5995b?auto=format&fit=crop&w=1200&q=85')"><span class="package-tag">POPULAR PILGRIMAGE PACKAGE</span></div>
-<div class="package-info">
-<div class="eyebrow">SHakti PEETH & PILGRIMAGE YATRA</div>
-<h2>9 Devi + Shiv Khori + Haridwar</h2>
-<div class="package-sub">माता के 9 देवी धाम, शिवखोड़ी और हरिद्वार की धार्मिक यात्रा।</div>
-<div class="package-facts"><span>🗓️ 5 Nights / 6 Days</span><span>📍 Delhi Departure</span></div>
-<div class="package-features"><div class="package-feature">🚌<b>AC Bus</b>आना-जाना</div><div class="package-feature">🏨<b>AC Hotel</b>ठहरना</div><div class="package-feature">🍽️<b>3-Time Food</b>भोजन</div></div>
-<div class="package-sub">पैकेज में AC बस, AC होटल और दिन में 3 समय खाना शामिल है। यात्रा की तारीख, होटल sharing, pickup point और 9 देवी के नाम/रूट की अंतिम पुष्टि बुकिंग से पहले करें।</div>
-<div class="package-cost">₹8,500 <small>/ प्रति व्यक्ति</small></div>
-<a class="package-btn" href="9-devi-itinerary.html">🗓️ Itinerary देखें</a><button class="package-btn outline" onclick="deviOpen()">Book Now</button>
-<div class="package-sub" style="font-size:12px;margin-top:10px">सीट और यात्रा की पुष्टि JKTour24 से होने के बाद ही booking confirmed मानी जाएगी।</div>
-</div></div>
+<div class="tour-heading"><span class="tour-kicker">JKTour24 • SPECIAL YATRAS</span><h2 class="section-title">अपनी अगली यात्रा चुनें</h2><p class="sub">श्रद्धा, आराम और यादगार सफ़र — हर ज़रूरी जानकारी एक ही जगह।</p></div>
+<div class="tour-grid">
+<article class="tour-card">
+  <div class="tour-cover ujjain-cover"><span class="tour-ribbon">POPULAR PACKAGE</span><span class="tour-duration">4 रात / 5 दिन</span></div>
+  <div class="tour-content">
+    <div class="tour-kicker">MADHYA PRADESH • DARSHAN YATRA</div>
+    <h2>Delhi to Ujjain Yatra</h2>
+    <p class="tour-description">महाकाल की नगरी उज्जैन से ओंकारेश्वर और ममलेश्वर तक पावन दर्शन यात्रा।</p>
+    <div class="destination-label">इस यात्रा में दर्शन</div>
+    <div class="destination-pills"><span>उज्जैन</span><span>ओंकारेश्वर</span><span>ममलेश्वर</span></div>
+    <div class="tour-includes"><div><span class="tour-icon">🚌</span><b>AC Bus</b><small>आना-जाना</small></div><div><span class="tour-icon">🏨</span><b>AC Hotel</b><small>ठहरने की सुविधा</small></div><div><span class="tour-icon">🍽️</span><b>3 समय भोजन</b><small>दिन में तीन बार</small></div></div>
+    <div class="tour-bottom"><div><small>प्रति व्यक्ति से</small><div class="tour-price">₹6,200<span>/-</span></div></div><a class="tour-cta" href="ujjain-itinerary.html">पूरी यात्रा की जानकारी देखें <span aria-hidden="true">↗</span></a></div>
+  </div>
+</article>
+<article class="tour-card">
+  <div class="tour-cover devi-cover"><span class="tour-ribbon">SPIRITUAL JOURNEY</span><span class="tour-duration">5 रात / 6 दिन</span></div>
+  <div class="tour-content">
+    <div class="tour-kicker">SHakti PEETH • NORTH INDIA</div>
+    <h2>9 Devi + Shiv Khori + Haridwar</h2>
+    <p class="tour-description">शक्तिपीठों के दर्शन, शिवखोड़ी की यात्रा और हरिद्वार में गंगा आरती का अवसर।</p>
+    <div class="destination-label">यात्रा के प्रमुख पड़ाव</div>
+    <div class="destination-pills"><span>9 देवी धाम</span><span>शिवखोड़ी</span><span>हरिद्वार</span></div>
+    <div class="tour-includes"><div><span class="tour-icon">🚌</span><b>AC Bus</b><small>आना-जाना</small></div><div><span class="tour-icon">🏨</span><b>AC Hotel</b><small>ठहरने की सुविधा</small></div><div><span class="tour-icon">🍽️</span><b>3 समय भोजन</b><small>दिन में तीन बार</small></div></div>
+    <div class="tour-bottom"><div><small>प्रति व्यक्ति से</small><div class="tour-price">₹8,500<span>/-</span></div></div><a class="tour-cta" href="9-devi-itinerary.html">पूरी यात्रा की जानकारी देखें <span aria-hidden="true">↗</span></a></div>
+  </div>
+</article>
+</div>
+<p class="tour-note">* यात्रा की तारीख, सीट उपलब्धता, pickup point और होटल व्यवस्था की पुष्टि बुकिंग से पहले करें।</p>
 </section>
-
-
 
 <div class="pkg-modal hidden" id="pkgModal" role="dialog" aria-modal="true" aria-labelledby="pkgTitle"><div class="pkg-dialog">
 <div style="display:flex;justify-content:space-between;gap:12px;align-items:center"><h2 id="pkgTitle">Book Ujjain Package</h2><button class="package-btn outline" onclick="pkgClose()" type="button">✕</button></div>
