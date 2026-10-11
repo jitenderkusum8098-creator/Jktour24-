@@ -40,7 +40,56 @@
 .booking-submit-area .small{font-size:11px;color:#64748b;line-height:1.5}
 body.booking-open{overflow:hidden}
 @media(max-width:560px){.booking-panel-premium{max-height:95vh!important;border-radius:17px!important}.booking-top{padding:22px 17px 17px}#khatuBookingForm{padding:4px 17px 18px}.form-grid{grid-template-columns:1fr}.form-field.full{grid-column:auto}.check-grid{grid-template-columns:1fr}.booking-price-strip{align-items:flex-start;flex-direction:column}.form-section h3{font-size:16px}}
-.passenger-section .form-field small{display:block;color:#64748b;font-size:12px;margin-top:6px}.booking-total{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 12px;background:linear-gradient(120deg,#fff7df,#fffdf7);border:1px solid #f0d58b;border-radius:14px;padding:15px;margin-top:17px}.booking-total span{font-size:14px;font-weight:700;color:#4b3b19}.booking-total strong{font-size:25px;color:#153c60}.booking-total small{flex-basis:100%;font-size:12px;color:#776747}.child-age-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.child-age-item{background:#fff;border:1px solid #e0e7ef;padding:10px;border-radius:10px}.child-age-item label{font-size:12px}.form-section{padding:22px 0}.booking-panel-premium input:not([type=checkbox]):not([type=radio]),.booking-panel-premium select,.booking-panel-premium textarea{min-height:47px}@media(max-width:560px){.child-age-grid{grid-template-columns:1fr}.booking-total strong{font-size:23px}}</style>
+.passenger-section .form-field small{display:block;color:#64748b;font-size:12px;margin-top:6px}.booking-total{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 12px;background:linear-gradient(120deg,#fff7df,#fffdf7);border:1px solid #f0d58b;border-radius:14px;padding:15px;margin-top:17px}.booking-total span{font-size:14px;font-weight:700;color:#4b3b19}.booking-total strong{font-size:25px;color:#153c60}.booking-total small{flex-basis:100%;font-size:12px;color:#776747}.child-age-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.child-age-item{background:#fff;border:1px solid #e0e7ef;padding:10px;border-radius:10px}.child-age-item label{font-size:12px}.form-section{padding:22px 0}.booking-panel-premium input:not([type=checkbox]):not([type=radio]),.booking-panel-premium select,.booking-panel-premium textarea{min-height:47px}@media(max-width:560px){.child-age-grid{grid-template-columns:1fr}.booking-total strong{font-size:23px}}
+/* Refined mobile-first booking form */
+.booking-modal{padding:12px!important;background:rgba(5,18,36,.82)!important;backdrop-filter:blur(7px)}
+.booking-panel-premium{width:min(100%,760px)!important;max-width:760px!important;max-height:94dvh!important;border:1px solid #e5eaf0!important;border-radius:24px!important;box-shadow:0 24px 90px #02081770!important;scrollbar-width:thin}
+.booking-top{padding:28px 25px 22px!important;background:radial-gradient(circle at 95% 0%,#3c6384 0,transparent 36%),linear-gradient(135deg,#0b1d35,#173f62)!important}
+.booking-top h2{letter-spacing:-.4px!important;font-weight:800!important}
+.booking-kicker{display:inline-flex;background:#ffffff16;border:1px solid #ffffff24;border-radius:30px;padding:6px 10px;letter-spacing:1.1px}
+.booking-price-strip{box-shadow:inset 0 1px #ffffff16;background:#ffffff12!important}
+#khatuBookingForm{padding:8px 25px 25px!important}
+.form-section{padding:23px 0!important}
+.form-section h3{font-size:18px!important;font-weight:800!important;letter-spacing:-.2px}
+.form-section h3 span{width:35px!important;height:35px!important;border-radius:12px!important;background:linear-gradient(145deg,#fff4d0,#ffe8a1)!important;box-shadow:0 3px 9px #b77e1b18}
+.form-grid{gap:15px!important}
+.booking-panel-premium label{font-size:13px!important;font-weight:700!important;line-height:1.45}
+.booking-panel-premium input:not([type=checkbox]):not([type=radio]),.booking-panel-premium select,.booking-panel-premium textarea{border:1px solid #d7e0eb!important;background:#fbfcff!important;border-radius:12px!important;padding:13px!important;min-height:48px!important;transition:border-color .15s,box-shadow .15s}
+.booking-panel-premium textarea{resize:vertical}
+.booking-panel-premium input:focus,.booking-panel-premium select:focus,.booking-panel-premium textarea:focus{background:#fff!important;border-color:#477da8!important;box-shadow:0 0 0 3px #477da81c!important}
+.contact-card{padding:16px!important;background:linear-gradient(145deg,#f8fafc,#f2f6fa)!important;border-color:#e1e8f0!important;border-radius:15px!important}
+.contact-card h4{display:flex;align-items:center;gap:8px;font-size:14px!important}
+.contact-card h4:before{content:"";width:7px;height:7px;background:#d7a93f;border-radius:50%}
+.form-help,.form-note{font-size:12px!important;line-height:1.65!important}
+.choice-pill{padding:12px 16px!important;border-radius:13px!important;background:#f8fafc!important}
+.choice-stack label{padding:13px!important;border-radius:13px!important;line-height:1.55!important;background:#f8fafc!important}
+.check-grid{gap:12px!important}
+.check-grid label{padding:10px;background:#fff;border:1px solid #e6ebf2;border-radius:10px}
+.conditional-box{padding:16px!important;background:linear-gradient(145deg,#f5f9fd,#edf4fa)!important;border-color:#dbe7f1!important;border-radius:15px!important}
+.booking-total{padding:18px!important;border-radius:16px!important;background:linear-gradient(120deg,#fff5d9,#fffdf7)!important;box-shadow:0 5px 16px #9d751015}
+.booking-total strong{font-size:28px!important;letter-spacing:-.6px}
+.booking-submit-area{padding-top:23px!important}
+.booking-submit{min-height:54px!important;box-shadow:0 7px 18px #173f6224!important;letter-spacing:.1px}
+.booking-submit-area .booking-close{font-size:14px!important}
+.booking-submit-area .small{max-width:440px;margin:8px auto 0;line-height:1.6!important}
+.booking-panel-premium [hidden]{display:none!important}
+@media(max-width:560px){
+.booking-modal{padding:7px!important;align-items:center}
+.booking-panel-premium{max-height:95dvh!important;border-radius:21px!important}
+.booking-top{padding:23px 18px 18px!important}
+.booking-top h2{font-size:23px!important;line-height:1.3!important}
+.booking-top p{font-size:13px!important;line-height:1.55!important}
+.booking-price-strip{padding:11px 13px!important;gap:7px!important}
+#khatuBookingForm{padding:4px 18px 19px!important}
+.form-section{padding:20px 0!important}
+.form-section h3{font-size:17px!important;gap:9px!important}
+.form-grid{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}
+.form-field.full{grid-column:auto!important}
+.check-grid{grid-template-columns:minmax(0,1fr)!important}
+.check-grid label{padding:12px!important}
+.booking-total strong{font-size:25px!important}
+}
+</style>
 </head>
 <body>
 <header class="top"><div class="brand">JKTOUR24<small>TRAVEL MORE, WORRY LESS</small></div><a href="index.html">← होम पेज</a></header>
