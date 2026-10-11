@@ -146,4 +146,16 @@ checkout.open();
 </script>
 
 <section class="cta"><div><h2>माता के दर्शन की यात्रा पर चलें?</h2><p>पैकेज, उपलब्धता और बुकिंग की जानकारी के लिए JKTour24 से संपर्क करें।</p></div><div class="cta-actions"><a class="btn btn-gold book-now-link" href="#booking">अभी बुक करें ↓</a><a class="btn btn-outline" href="index.html#featured-package">सभी पैकेज देखें</a></div></section></main>
-<footer>© JKTOUR24 · Divine Journeys, Beautiful Memories · <a href="index.html">होमपेज</a><br><small>Banner photos: Vaishno Devi, Shiv Khori cave, Jwala Ji temple and Haridwar Ganga Aarti — Wikimedia Commons</small></footer></body></html>
+<footer>© JKTOUR24 · Divine Journeys, Beautiful Memories · <a href="index.html">होमपेज</a><br><small>Banner photos: Vaishno Devi, Shiv Khori cave, Jwala Ji temple and Haridwar Ganga Aarti — Wikimedia Commons</small></footer><script>
+(function(){
+  try{
+    if(!sessionStorage.getItem("jktourBackGuard")){
+      history.replaceState({jktourPage:true},"",location.href);
+      history.pushState({jktourGuard:true},"",location.href);
+      sessionStorage.setItem("jktourBackGuard","1");
+    }
+    window.addEventListener("pageshow",function(){sessionStorage.removeItem("jktourBackGuard")});
+  }catch(e){}
+})();
+</script>
+</body></html>
