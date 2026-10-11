@@ -44,43 +44,44 @@
 @media(max-width:820px){.tour-grid{grid-template-columns:1fr;max-width:620px}.tour-cover{height:235px}.tour-description{min-height:0}}
 @media(max-width:420px){.package-area{padding:38px 4%}.tour-content{padding:18px}.tour-cover{height:190px}.tour-bottom{align-items:stretch;flex-direction:column}.tour-bottom>div{display:flex;align-items:baseline;gap:8px}.tour-cta{width:100%;font-size:13px}.tour-includes b{font-size:11px}.tour-includes small{font-size:9px}}
 
-/* Royal Yatra Experience design v4 */
-.package-area{background:radial-gradient(ellipse at top,#e9dfc9 0%,#f5f3ed 36%,#edf1f6 100%);padding:58px 5% 52px}
-.tour-heading{margin-bottom:34px}
-.tour-heading .section-title{color:#07172e;font-size:clamp(28px,4vw,40px);letter-spacing:-.5px}
-.tour-heading .sub{color:#5e6878}
-.tour-kicker{color:#c49a45;letter-spacing:2.3px}
-.tour-grid{gap:26px}
-.tour-card{background:#091a33;border:1px solid #c6a65e;border-radius:20px;overflow:hidden;box-shadow:0 18px 44px #07172e24;transition:transform .25s ease,box-shadow .25s ease}
-.tour-card:hover{transform:translateY(-5px);box-shadow:0 24px 52px #07172e30}
-.tour-cover{height:270px;background-position:center;background-size:cover;isolation:isolate}
-.tour-cover:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#07172e08 35%,#07172ebd 100%);z-index:-1}
-.ujjain-cover{background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Mahakaleshwar%20Temple%2C%20Ujjain.jpg?rev=20261012c')}
-.devi-cover{background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Vaishno%20Devi%20temple%20in%20katra.jpg?rev=20261012c')}
-.tour-ribbon{left:17px;top:17px;background:#e8c578;color:#07172e;border-radius:5px;padding:10px 14px;letter-spacing:1.5px}
-.tour-duration{background:#07172eeb;border:1px solid #e8c578;color:#f7e7bd;border-radius:8px;padding:10px 13px}
-.tour-content{background:linear-gradient(180deg,#0b1d37 0%,#07172e 100%);padding:26px;color:#fff}
-.tour-content .tour-kicker{color:#e8c578;font-size:10px;letter-spacing:1.7px}
-.tour-content h2{color:#fff;font-size:clamp(23px,2.5vw,30px);line-height:1.25;margin-bottom:12px}
-.tour-description{color:#d1d9e5;font-size:14px;line-height:1.75;margin-bottom:20px}
-.destination-label{color:#f6e7c3;font-size:13px}
-.destination-pills{gap:8px;margin-bottom:22px}
-.destination-pills span{background:#ffffff0c;border:1px solid #d9bd7a7a;color:#f4e5c1;border-radius:7px;padding:8px 11px}
-.tour-includes{gap:8px;margin-bottom:23px}
-.tour-includes>div{background:#ffffff0a;border:1px solid #ffffff20;border-radius:11px;padding:13px 5px;gap:6px}
-.tour-icon{font-size:23px}
-.tour-includes b{color:#fff;font-size:12px}
-.tour-includes small{color:#bac5d5;font-size:10px}
-.tour-bottom{border-top:1px solid #ffffff26;padding-top:19px;gap:14px}
-.tour-bottom>div>small{color:#d2d9e4;font-size:12px}
-.tour-price{color:#e8c578;font-size:clamp(30px,3.5vw,39px)}
-.tour-price span{color:#f7e7bd;font-size:15px}
-.tour-cta{background:linear-gradient(135deg,#f3d58e,#d5a744);color:#111827;border:1px solid #f7e6b8;border-radius:9px;padding:14px 15px;box-shadow:0 6px 18px #0003;font-size:13px}
-.tour-cta:hover{background:#f8df9f}
-.tour-note{color:#657083}
-@media(max-width:820px){.tour-grid{gap:22px}.tour-cover{height:265px}}
-@media(max-width:420px){.package-area{padding:34px 4%}.tour-content{padding:20px}.tour-cover{height:220px}.tour-bottom{flex-direction:column;align-items:stretch}.tour-bottom>div{display:flex;align-items:baseline;gap:9px}.tour-cta{width:100%}}
-
+/* Royal Yatra Experience — white and gold package cards */
+.package-area{background:linear-gradient(180deg,#fbf8f0 0%,#f4f6fa 100%);padding:48px 4% 44px}
+.tour-heading{margin:0 auto 28px;text-align:center}
+.tour-heading .section-title{color:#0b1b38;font-size:clamp(28px,4vw,40px);letter-spacing:-.5px}
+.tour-heading .sub{color:#687386}
+.tour-kicker{color:#a77724;letter-spacing:2px}
+.tour-grid{max-width:1120px;gap:22px}
+.tour-card{background:#fff;border:1px solid #e8e0cf;border-radius:22px;overflow:hidden;box-shadow:0 12px 32px #14213a12;display:flex;flex-direction:column;transition:transform .2s ease,box-shadow .2s ease}
+.tour-card:hover{transform:translateY(-3px);box-shadow:0 18px 38px #14213a1a}
+.tour-cover{height:clamp(220px,27vw,300px);position:relative;background-position:center;background-size:cover;background-repeat:no-repeat;isolation:isolate}
+.tour-cover:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#07172e08 42%,#07172e18 100%);z-index:-1}
+.ujjain-cover{background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Mahakaleshwar%20Temple%2C%20Ujjain.jpg?rev=20261012d')}
+.devi-cover{background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Vaishno%20Devi%20temple%20in%20katra.jpg?rev=20261012d')}
+.tour-ribbon{left:16px;top:16px;background:#f3ce78;color:#211a0c;border-radius:10px;padding:11px 15px;letter-spacing:1.1px;font-size:11px;box-shadow:0 3px 10px #0002}
+.tour-duration{right:15px;bottom:15px;background:#071a35ed;border:1px solid #e8c578;color:#fff;border-radius:26px;padding:10px 14px;font-size:13px}
+.tour-content{background:#fff;color:#101828;padding:24px;display:flex;flex:1;flex-direction:column}
+.tour-content .tour-kicker{color:#a77724;font-size:10px;letter-spacing:1.7px;margin:0 0 7px}
+.tour-content h2{color:#0b1b38;font-size:clamp(23px,2.5vw,30px);line-height:1.25;margin:0 0 10px}
+.tour-description{color:#626d7c;font-size:14px;line-height:1.7;margin:0 0 18px;min-height:48px}
+.destination-label{color:#0b1b38;font-size:13px;margin-bottom:9px}
+.destination-pills{gap:8px;margin-bottom:20px}
+.destination-pills span{background:#fffaf0;border:1px solid #ead9b5;color:#17233a;border-radius:9px;padding:9px 11px;font-size:12px}
+.tour-includes{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:0 0 20px}
+.tour-includes>div{background:#f7f8fb;border:1px solid #e3e7ee;border-radius:12px;padding:13px 6px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:5px}
+.tour-icon{font-size:25px;line-height:1.2}
+.tour-includes b{color:#0b1b38;font-size:12px}
+.tour-includes small{color:#737d8c;font-size:10px}
+.tour-bottom{display:flex;flex-direction:column;align-items:stretch;gap:14px;border-top:1px solid #eee8dc;padding-top:17px;margin-top:auto}
+.tour-bottom>div{display:flex;align-items:baseline;gap:12px}
+.tour-bottom>div>small{display:block;font-size:12px;color:#6b7483;margin-bottom:0}
+.tour-price{font-size:clamp(32px,3.5vw,42px);line-height:1.1;color:#0b1b38;font-weight:900;white-space:nowrap}
+.tour-price span{font-size:15px;color:#0b1b38}
+.tour-cta{display:flex;align-items:center;justify-content:center;gap:9px;text-align:center;text-decoration:none;background:linear-gradient(135deg,#f0c96f,#d9a943);color:#111827;padding:15px 14px;border:1px solid #e4b752;border-radius:10px;font-weight:900;font-size:14px;line-height:1.4;min-height:52px;box-shadow:0 5px 14px #dcae5228;transition:background .2s ease}
+.tour-cta:hover{background:#f5d58d}
+.tour-note{max-width:1100px;margin:20px auto 0;text-align:center;font-size:11px;line-height:1.6;color:#687385}
+@media(min-width:821px){.tour-bottom{gap:13px}}
+@media(max-width:820px){.tour-grid{grid-template-columns:1fr;max-width:620px;gap:22px}.tour-cover{height:clamp(210px,45vw,280px)}.tour-description{min-height:0}}
+@media(max-width:420px){.package-area{padding:34px 4%}.tour-content{padding:18px}.tour-cover{height:210px}.tour-includes b{font-size:11px}.tour-includes small{font-size:9px}.tour-bottom>div{gap:8px}.tour-cta{width:100%;font-size:13px}}
 </style>
 </head>
 <body>
