@@ -98,6 +98,7 @@ try{
 const verifyResponse=await fetch('https://jktour24-payment.jitenderkusum8098.workers.dev/verify-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(response)});
 const verified=await verifyResponse.json();
 if(!verifyResponse.ok||!verified.verified)throw new Error(verified.error||'Payment verification fail hui.');
+if(window.jktour24AddTestSeats)window.jktour24AddTestSeats(Number(adults.value||1));
 const confirmedMessage=message+'\nTest token signature verified. Payment ID: '+response.razorpay_payment_id+'. Please confirm booking availability and remaining payment.';
 alert.textContent='Test payment signature verify ho gaya. WhatsApp par booking request bheji ja rahi hai; booking abhi JKTour24 ki confirmation ke baad hi final hogi.';
 window.location.href='https://wa.me/918860742376?text='+encodeURIComponent(confirmedMessage);
@@ -115,31 +116,36 @@ checkout.open();
   <div class="seat-demo-card" id="seatDemoCard">
     <div class="seat-demo-eyebrow">JKTour24 · Minimum group size</div>
     <h2 id="seatDemoHeading">उज्जैन–ओंकारेश्वर यात्रा</h2>
-    <p>बस यात्रा तभी रवाना होगी जब कम-से-कम <strong>20 सीटें कन्फर्म</strong> होंगी। नीचे वाला counter अभी केवल preview/demo है।</p>
+    <p>बस यात्रा तभी रवाना होगी जब कम-से-कम <strong>20 सीटें कन्फर्म</strong> होंगी। टेस्ट पेमेंट सफल और server से verify होने पर इस ब्राउज़र के टेस्ट काउंटर में सीट जुड़ती है।</p>
     <div class="seat-demo-stats">
-      <div><div class="seat-demo-number"><span id="seatDemoBooked">12</span> <span style="font-size:18px;color:#667085">/ 20 सीटें</span></div><div style="font-size:13px;color:#667085;margin-top:6px">कन्फर्म सीटें (डेमो)</div></div>
-      <div><div class="seat-demo-remain" id="seatDemoRemaining">8</div><div style="font-size:13px;color:#667085;text-align:right;margin-top:6px">सीटें बाकी</div></div>
+      <div><div class="seat-demo-number"><span id="seatDemoBooked">0</span> <span style="font-size:18px;color:#667085">/ 20 सीटें</span></div><div style="font-size:13px;color:#667085;margin-top:6px">कन्फर्म सीटें (टेस्ट)</div></div>
+      <div><div class="seat-demo-remain" id="seatDemoRemaining">20</div><div style="font-size:13px;color:#667085;text-align:right;margin-top:6px">सीटें बाकी</div></div>
     </div>
-    <div class="seat-demo-track" role="progressbar" aria-label="कन्फर्म सीटों का डेमो" aria-valuemin="0" aria-valuemax="20" aria-valuenow="12" id="seatDemoProgress"><div class="seat-demo-fill" id="seatDemoFill" style="width:60%"></div></div>
-    <div class="seat-demo-meta"><span id="seatDemoPercent">60% सीटें भरीं</span><span>लक्ष्य: 20 सीटें</span></div>
+    <div class="seat-demo-track" role="progressbar" aria-label="कन्फर्म सीटों का डेमो" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0" id="seatDemoProgress"><div class="seat-demo-fill" id="seatDemoFill" style="width:0%"></div></div>
+    <div class="seat-demo-meta"><span id="seatDemoPercent">0% सीटें भरीं</span><span>लक्ष्य: 20 सीटें</span></div>
     <div class="seat-demo-status" id="seatDemoStatus"><span aria-hidden="true">ℹ️</span><span>अभी 20 सीटें पूरी नहीं हुईं। लक्ष्य पूरा होने पर ही यात्रा की पुष्टि होगी।</span></div>
-    <div class="seat-demo-actions"><button class="seat-demo-add" type="button" id="seatDemoAdd">डेमो में +1 सीट देखें</button><button class="seat-demo-reset" type="button" id="seatDemoReset">डेमो रीसेट</button></div>
+    <div class="seat-demo-actions"><button class="seat-demo-reset" type="button" id="seatDemoReset">टेस्ट काउंटर रीसेट</button></div>
     <p class="seat-demo-foot">ध्यान दें: ये sample numbers हैं। बटन सिर्फ़ डिज़ाइन जाँचने के लिए है—यह असली बुकिंग, भुगतान, सीट या रिफंड नहीं बदलता। Live counter के लिए booking database और verified payment integration जोड़ना बाकी है।</p>
   </div>
 </section>
 <script>
 (function(){
- const bookedEl=document.getElementById('seatDemoBooked');
- if(!bookedEl)return;
- const total=20, initial=12; let booked=initial;
- const remaining=document.getElementById('seatDemoRemaining'),fill=document.getElementById('seatDemoFill'),percent=document.getElementById('seatDemoPercent'),status=document.getElementById('seatDemoStatus'),progress=document.getElementById('seatDemoProgress'),add=document.getElementById('seatDemoAdd');
+ const bookedEl=document.getElementById('seatDemoBooked'); if(!bookedEl)return;
+ const total=20, storageKey='jktour24_ujjain_test_booked_v1';
+ let booked=0;
+ try{booked=Math.min(total,Math.max(0,Number(localStorage.getItem(storageKey)||0)));}catch(e){}
+ const remaining=document.getElementById('seatDemoRemaining'),fill=document.getElementById('seatDemoFill'),percent=document.getElementById('seatDemoPercent'),status=document.getElementById('seatDemoStatus'),progress=document.getElementById('seatDemoProgress');
  function render(){
-  bookedEl.textContent=booked;remaining.textContent=total-booked;fill.style.width=(booked/total*100)+'%';percent.textContent=Math.round(booked/total*100)+'% सीटें भरीं';progress.setAttribute('aria-valuenow',booked);
-  if(booked>=total){status.innerHTML='<span aria-hidden="true">✅</span><span>डेमो लक्ष्य पूरा: 20/20 सीटें। असली वेबसाइट में पेमेंट वेरिफिकेशन और booking database से ही यह स्थिति तय होगी।</span>';add.disabled=true;add.textContent='डेमो लक्ष्य पूरा';}
-  else{status.innerHTML='<span aria-hidden="true">ℹ️</span><span>अभी '+(total-booked)+' सीटें और चाहिए। 20 कन्फर्म सीटें होने पर ही यात्रा की पुष्टि होगी।</span>';add.disabled=false;add.textContent='डेमो में +1 सीट देखें';}
+  bookedEl.textContent=booked; remaining.textContent=total-booked; fill.style.width=(booked/total*100)+'%'; percent.textContent=Math.round(booked/total*100)+'% सीटें भरीं'; progress.setAttribute('aria-valuenow',booked);
+  if(booked>=total){status.innerHTML='<span aria-hidden="true">✅</span><span>टेस्ट में 20/20 सीटें भर गईं। बुकिंग बंद करने का live नियम अभी backend में जोड़ना बाकी है।</span>';}
+  else{status.innerHTML='<span aria-hidden="true">ℹ️</span><span>अभी '+(total-booked)+' सीटें बाकी हैं। हर सफल verified टेस्ट पेमेंट पर चुने गए वयस्कों के बराबर सीटें इस ब्राउज़र में जुड़ेंगी।</span>';}
  }
- add.addEventListener('click',()=>{if(booked<total){booked++;render();}});
- document.getElementById('seatDemoReset').addEventListener('click',()=>{booked=initial;render();});
+ window.jktour24AddTestSeats=function(count){
+  const n=Math.max(1,Math.floor(Number(count)||1)); booked=Math.min(total,booked+n);
+  try{localStorage.setItem(storageKey,String(booked));}catch(e){}
+  render();
+ };
+ document.getElementById('seatDemoReset').addEventListener('click',()=>{booked=0;try{localStorage.removeItem(storageKey);}catch(e){}render();});
  render();
 })();
 </script>
