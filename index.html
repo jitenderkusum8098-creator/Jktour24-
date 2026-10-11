@@ -29,7 +29,23 @@
 <div class="package-cost">₹6,200 <small>/ प्रति व्यक्ति</small></div>
 <button class="package-btn" onclick="pkgAdd()">🛒 Add to Cart</button><button class="package-btn outline" onclick="pkgOpen()">Book Now</button><span class="cart-mini">Cart: <b id="pkgCartCount">0</b></span>
 <div class="package-sub" style="font-size:12px;margin-top:10px">सीट और यात्रा की पुष्टि JKTour24 से होने के बाद ही booking confirmed मानी जाएगी।</div>
-</div></div></section>
+</div></div>
+
+<div class="package-box" style="margin:26px auto 0">
+<div class="package-photo" style="background-image:linear-gradient(0deg,#071a3570,#071a3500),url('https://images.unsplash.com/photo-1606293926075-69a00db5995b?auto=format&fit=crop&w=1200&q=85')"><span class="package-tag">POPULAR PILGRIMAGE PACKAGE</span></div>
+<div class="package-info">
+<div class="eyebrow">SHakti PEETH & PILGRIMAGE YATRA</div>
+<h2>9 Devi + Shiv Khori + Haridwar</h2>
+<div class="package-sub">माता के 9 देवी धाम, शिवखोड़ी और हरिद्वार की धार्मिक यात्रा।</div>
+<div class="package-facts"><span>🗓️ 5 Nights / 6 Days</span><span>📍 Delhi Departure</span></div>
+<div class="package-features"><div class="package-feature">🚌<b>AC Bus</b>आना-जाना</div><div class="package-feature">🏨<b>AC Hotel</b>ठहरना</div><div class="package-feature">🍽️<b>3-Time Food</b>भोजन</div></div>
+<div class="package-sub">पैकेज में AC बस, AC होटल और दिन में 3 समय खाना शामिल है। यात्रा की तारीख, होटल sharing, pickup point और 9 देवी के नाम/रूट की अंतिम पुष्टि बुकिंग से पहले करें।</div>
+<div class="package-cost">₹8,500 <small>/ प्रति व्यक्ति</small></div>
+<button class="package-btn" onclick="deviAdd()">🛒 Add to Cart</button><button class="package-btn outline" onclick="deviOpen()">Book Now</button><span class="cart-mini">Cart: <b id="deviCartCount">0</b></span>
+<div class="package-sub" style="font-size:12px;margin-top:10px">सीट और यात्रा की पुष्टि JKTour24 से होने के बाद ही booking confirmed मानी जाएगी।</div>
+</div></div>
+
+</section>
 <div class="pkg-modal hidden" id="pkgModal" role="dialog" aria-modal="true" aria-labelledby="pkgTitle"><div class="pkg-dialog">
 <div style="display:flex;justify-content:space-between;gap:12px;align-items:center"><h2 id="pkgTitle">Book Ujjain Package</h2><button class="package-btn outline" onclick="pkgClose()" type="button">✕</button></div>
 <p class="package-sub">Delhi to Ujjain · 4N/5D · ₹6,200 प्रति व्यक्ति</p>
@@ -45,7 +61,20 @@
 <section class="contact" id="contact"><h2>JKTour24 के साथ यात्रा की योजना बनाएं</h2><p>पैकेज, तारीख, सीट उपलब्धता और बुकिंग की जानकारी के लिए संपर्क करें।</p><p><b>फोन / WhatsApp:</b> 8860742376 &nbsp; | &nbsp; <b>Email:</b> jktour24@gmail.com</p><a class="btn" href="https://wa.me/918860742376?text=%E0%A4%A8%E0%A4%AE%E0%A4%B8%E0%A5%8D%E0%A4%A4%E0%A5%87%2C%20JKTour24%20%E0%A4%95%E0%A5%87%20%E0%A4%89%E0%A4%9C%E0%A5%8D%E0%A4%9C%E0%A5%88%E0%A4%A8%204N%2F5D%20%E0%A4%AA%E0%A5%88%E0%A4%95%E0%A5%87%E0%A4%9C%20%E0%A4%95%E0%A5%80%20%E0%A4%9C%E0%A4%BE%E0%A4%A8%E0%A4%95%E0%A4%BE%E0%A4%B0%E0%A5%80%20%E0%A4%9A%E0%A4%BE%E0%A4%B9%E0%A4%BF%E0%A4%8F%E0%A5%A4">WhatsApp पर पूछताछ करें</a></section>
 <footer>© JKTour24 · Travel More, Worry Less · ॥ जय महाकाल ॥</footer>
 
+
+<div class="pkg-modal hidden" id="deviModal" role="dialog" aria-modal="true" aria-labelledby="deviTitle"><div class="pkg-dialog">
+<div style="display:flex;justify-content:space-between;gap:12px;align-items:center"><h2 id="deviTitle">9 Devi Yatra Booking</h2><button class="package-btn outline" onclick="deviClose()" type="button">✕</button></div>
+<p class="package-sub">9 Devi + Shiv Khori + Haridwar · 5N/6D · ₹8,500 प्रति व्यक्ति</p>
+<label class="pkg-label">यात्रियों की संख्या</label><div class="pkg-qty"><button type="button" onclick="deviChange(-1)">−</button><b id="deviQty">1</b><button type="button" onclick="deviChange(1)">+</button></div>
+<div class="pkg-total"><span>Total</span><span id="deviTotal">₹8,500</span></div>
+<form id="deviForm"><label class="pkg-label" for="deviName">पूरा नाम</label><input class="pkg-input" id="deviName" required placeholder="अपना नाम"><label class="pkg-label" for="deviMobile">मोबाइल नंबर</label><input class="pkg-input" id="deviMobile" type="tel" pattern="[0-9+ -]{10,15}" required placeholder="मोबाइल नंबर"><label class="pkg-label" for="deviDate">यात्रा की तारीख</label><input class="pkg-input" id="deviDate" type="date" required><label class="pkg-label" for="deviPickup">Pickup point (optional)</label><input class="pkg-input" id="deviPickup" placeholder="Delhi pickup point"><button class="package-btn" type="submit" style="width:100%;margin-top:16px">WhatsApp पर Booking Request भेजें</button></form>
+<p class="package-sub" style="font-size:12px">यह booking request है, payment या confirmed ticket नहीं।</p>
+</div></div>
+
 <script>
 let pkgQty=1,pkgCart=0;const pkgPrice=6200;function pkgMoney(n){return '₹'+n.toLocaleString('en-IN')}function pkgUpdate(){document.getElementById('pkgQty').textContent=pkgQty;document.getElementById('pkgTotal').textContent=pkgMoney(pkgQty*pkgPrice);document.getElementById('pkgCartCount').textContent=pkgCart}function pkgAdd(){pkgCart=pkgQty;pkgUpdate();document.getElementById('pkgModal').classList.remove('hidden')}function pkgOpen(){document.getElementById('pkgModal').classList.remove('hidden')}function pkgClose(){document.getElementById('pkgModal').classList.add('hidden')}function pkgChange(n){pkgQty=Math.max(1,Math.min(20,pkgQty+n));pkgUpdate()}document.getElementById('pkgDate').min=new Date().toISOString().split('T')[0];document.getElementById('pkgForm').addEventListener('submit',function(e){e.preventDefault();const n=document.getElementById('pkgName').value.trim(),m=document.getElementById('pkgMobile').value.trim(),d=document.getElementById('pkgDate').value,p=document.getElementById('pkgPickup').value.trim();const msg='Namaste JKTour24, Ujjain package booking request.%0AName: '+encodeURIComponent(n)+'%0AMobile: '+encodeURIComponent(m)+'%0ATravellers: '+pkgQty+'%0ATravel date: '+encodeURIComponent(d)+'%0APickup: '+encodeURIComponent(p||'Not specified')+'%0APackage: Delhi to Ujjain 4N/5D%0AAC Bus + AC Hotel + 3 time Food%0ATotal: '+encodeURIComponent(pkgMoney(pkgQty*pkgPrice));window.open('https://wa.me/918860742376?text='+msg,'_blank')});pkgUpdate();
+
+let deviQty=1,deviCart=0;const deviPrice=8500;function deviMoney(n){return '₹'+n.toLocaleString('en-IN')}function deviUpdate(){document.getElementById('deviQty').textContent=deviQty;document.getElementById('deviTotal').textContent=deviMoney(deviQty*deviPrice);document.getElementById('deviCartCount').textContent=deviCart}function deviAdd(){deviCart=deviQty;deviUpdate();deviOpen()}function deviOpen(){document.getElementById('deviModal').classList.remove('hidden')}function deviClose(){document.getElementById('deviModal').classList.add('hidden')}function deviChange(n){deviQty=Math.max(1,Math.min(20,deviQty+n));deviUpdate()}document.getElementById('deviDate').min=new Date().toISOString().split('T')[0];document.getElementById('deviForm').addEventListener('submit',function(e){e.preventDefault();const n=document.getElementById('deviName').value.trim(),m=document.getElementById('deviMobile').value.trim(),d=document.getElementById('deviDate').value,p=document.getElementById('deviPickup').value.trim();const msg='Namaste JKTour24, 9 Devi package booking request.%0AName: '+encodeURIComponent(n)+'%0AMobile: '+encodeURIComponent(m)+'%0ATravellers: '+deviQty+'%0ATravel date: '+encodeURIComponent(d)+'%0APickup: '+encodeURIComponent(p||'Not specified')+'%0APackage: 9 Devi + Shiv Khori + Haridwar 5N/6D%0AAC Bus + AC Hotel + 3 time Food%0ATotal: '+encodeURIComponent(deviMoney(deviQty*deviPrice));window.open('https://wa.me/918860742376?text='+msg,'_blank')});deviUpdate();
+
 </script>
 </body></html>
