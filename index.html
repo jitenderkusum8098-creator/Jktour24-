@@ -238,5 +238,5 @@ let deviQty=1,deviCart=0;const deviPrice=8500;function deviMoney(n){return '₹'
 
 (function(){const key='jktour24_ujjain_test_booked_v1';let n=0;try{n=Math.min(20,Math.max(0,Number(localStorage.getItem(key)||0)))}catch(e){}const b=document.getElementById('homeSeatsBooked'),l=document.getElementById('homeSeatsLeft'),f=document.getElementById('homeSeatsFill'),p=document.getElementById('homeSeatsPercent'),bar=document.getElementById('homeSeatsProgress');if(!b)return;function draw(){b.textContent=n;l.textContent=20-n;f.style.width=(n/20*100)+'%';p.textContent=Math.round(n/20*100)+'% सीटें भरीं';bar.setAttribute('aria-valuenow',n)}draw();window.addEventListener('storage',function(e){if(e.key===key){n=Math.min(20,Math.max(0,Number(e.newValue||0)));draw()}})})();
 </script>
-<!-- JKTour24 Pages refresh: 2026-10-12 v3 -->
+<!-- JKTour24 Pages refresh: 2026-10-12 seat-counter-v4 -->
 </body></html>
