@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="hi">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta name="build-version" content="2026-10-12-tour-cards-v3">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta name="build-version" content="2026-10-12-tour-cards-v5">
 <title>JKTour24 | उज्जैन ओंकारेश्वर यात्रा</title>
 <meta name="description" content="JKTour24 के साथ उज्जैन, ओंकारेश्वर और ममलेश्वर दर्शन यात्रा — 4 रात 5 दिन, ₹6,200 प्रति व्यक्ति।">
 <style>
@@ -82,6 +82,55 @@
 @media(min-width:821px){.tour-bottom{gap:13px}}
 @media(max-width:820px){.tour-grid{grid-template-columns:1fr;max-width:620px;gap:22px}.tour-cover{height:clamp(210px,45vw,280px)}.tour-description{min-height:0}}
 @media(max-width:420px){.package-area{padding:34px 4%}.tour-content{padding:18px}.tour-cover{height:210px}.tour-includes b{font-size:11px}.tour-includes small{font-size:9px}.tour-bottom>div{gap:8px}.tour-cta{width:100%;font-size:13px}}
+
+/* JKTour24 reference-inspired card polish v5 */
+.package-area{background:#f7f6f2;padding:44px 4% 42px}
+.tour-heading{margin:0 auto 24px}
+.tour-heading .section-title{font-size:clamp(27px,4vw,38px);margin:0 0 8px}
+.tour-grid{max-width:760px;grid-template-columns:minmax(0,1fr);gap:24px}
+.tour-card{border:1px solid #e8e0d0;border-radius:20px;box-shadow:0 8px 28px rgba(15,28,49,.09);overflow:hidden}
+.tour-card:hover{transform:translateY(-2px);box-shadow:0 13px 32px rgba(15,28,49,.13)}
+.tour-cover{height:clamp(230px,39vw,330px);background-position:center 43%;border-radius:0}
+.tour-ribbon{left:16px;top:16px;padding:10px 13px;background:#f2c96f;border:1px solid #e4b65a;color:#172033;border-radius:7px;font-size:10px;letter-spacing:1px}
+.tour-duration{right:16px;bottom:15px;background:#071a35f2;color:#fff;border:1px solid #e8c578;padding:9px 14px;border-radius:24px}
+.tour-content{padding:23px 25px 25px}
+.tour-content .tour-kicker{font-size:10px;letter-spacing:1.6px;margin-bottom:8px}
+.tour-content h2{font-size:clamp(23px,3vw,30px);margin-bottom:8px}
+.tour-description{font-size:14px;line-height:1.65;margin-bottom:17px;min-height:0}
+.destination-label{font-size:12px;margin-bottom:8px}
+.destination-pills{gap:7px;margin-bottom:19px}
+.destination-pills span{background:#fffaf0;border:1px solid #ead8b0;border-radius:6px;padding:7px 10px;font-size:12px}
+.tour-includes{gap:9px;margin-bottom:20px}
+.tour-includes>div{background:#fff;border:1px solid #e8dfca;border-radius:10px;padding:13px 5px 12px;gap:6px}
+.tour-icon{display:flex;align-items:center;justify-content:center;width:29px;height:29px;color:#b38736}
+.tour-icon svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tour-includes b{font-size:12px}
+.tour-includes small{font-size:10px}
+.tour-bottom{border-top:1px solid #eee8dc;padding-top:17px;gap:13px}
+.tour-bottom>div{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.tour-bottom>div>small{font-size:12px}
+.tour-price{font-size:clamp(34px,4vw,43px);letter-spacing:-.6px}
+.tour-cta{width:100%;min-height:54px;border-radius:8px;background:#e7b653;border:1px solid #d6a23c;box-shadow:0 5px 13px rgba(191,142,44,.18);font-size:14px}
+.tour-cta:hover{background:#f0c96f}
+.tour-note{max-width:760px;font-size:11px;margin-top:18px}
+@media(min-width:821px){.tour-grid{max-width:760px}.tour-cover{height:310px}}
+@media(max-width:520px){
+ .package-area{padding:30px 4% 32px}
+ .tour-grid{gap:18px}
+ .tour-card{border-radius:16px}
+ .tour-cover{height:215px}
+ .tour-content{padding:19px 17px 20px}
+ .tour-content h2{font-size:23px}
+ .tour-description{font-size:13px}
+ .destination-pills span{font-size:11px;padding:7px 9px}
+ .tour-includes{gap:6px}
+ .tour-includes>div{padding:11px 3px 10px;border-radius:9px}
+ .tour-includes b{font-size:11px}
+ .tour-includes small{font-size:9px}
+ .tour-bottom>div{gap:8px}
+ .tour-cta{font-size:13px;padding:13px 10px}
+}
+
 </style>
 </head>
 <body>
@@ -99,7 +148,7 @@
     <p class="tour-description">महाकाल की नगरी उज्जैन से ओंकारेश्वर और ममलेश्वर तक पावन दर्शन यात्रा।</p>
     <div class="destination-label">इस यात्रा में दर्शन</div>
     <div class="destination-pills"><span>उज्जैन</span><span>ओंकारेश्वर</span><span>ममलेश्वर</span></div>
-    <div class="tour-includes"><div><span class="tour-icon">🚌</span><b>AC Bus</b><small>आना-जाना</small></div><div><span class="tour-icon">🏨</span><b>AC Hotel</b><small>ठहरने की सुविधा</small></div><div><span class="tour-icon">🍽️</span><b>3 समय भोजन</b><small>दिन में तीन बार</small></div></div>
+    <div class="tour-includes"><div><span class="tour-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 16V5.5A2.5 2.5 0 0 1 7.5 3h9A2.5 2.5 0 0 1 19 5.5V16M5 11h14M7 16v3m10-3v3M5 19h14M8 7h.01M16 7h.01"/></svg></span><b>AC Bus</b><small>आना-जाना</small></div><div><span class="tour-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 20V5m0 10h18v5M3 11h18v9M7 11V7h5v4m2 0V7h5v4"/></svg></span><b>AC Hotel</b><small>ठहरने की सुविधा</small></div><div><span class="tour-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3v7m-3-7v4a3 3 0 0 0 6 0V3M7 10v11M16 3v18m0-18c3 2 4 5 4 8h-4"/></svg></span><b>3 समय भोजन</b><small>दिन में तीन बार</small></div></div>
     <div class="tour-bottom"><div><small>प्रति व्यक्ति से</small><div class="tour-price">₹6,200<span>/-</span></div></div><a class="tour-cta" href="ujjain-itinerary.html">पूरी यात्रा की जानकारी देखें <span aria-hidden="true">↗</span></a></div>
   </div>
 </article>
