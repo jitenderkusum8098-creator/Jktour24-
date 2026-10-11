@@ -48,12 +48,45 @@ const fmt=n=>'₹'+Number(n).toLocaleString('en-IN');
 function updateBill(){const a=Number(adults.value||1),c=Number(children.value||0);document.getElementById('adultCount').textContent=a;document.getElementById('adultTotal').textContent=fmt(a*price);document.getElementById('childCount').textContent=c+' (किराया confirm होगा)';document.getElementById('grandTotal').textContent=fmt(a*price);}
 adults.addEventListener('change',updateBill);children.addEventListener('change',updateBill);
 const date=document.getElementById('bkDate');const now=new Date();date.min=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10);
-form.addEventListener('submit',function(e){e.preventDefault();if(!form.reportValidity())return;
+form.addEventListener('submit',async function(e){
+e.preventDefault();if(!form.reportValidity())return;
 const v=id=>document.getElementById(id).value.trim();
-const total=Number(adults.value)*price;\nconst paymentMethod=form.querySelector('input[name="paymentMethod"]:checked').value;
-const message=['Namaste JKTour24, mujhe tour booking request karni hai.','Package: 9 देवी + शिव खोरी + हरिद्वार यात्रा','Duration: 5 रात / 6 दिन','Name: '+v('bkName'),'Mobile: '+v('bkPhone'),'Email: '+(v('bkEmail')||'Not provided'),'Travel date: '+v('bkDate'),'Adults: '+adults.value,'Children: '+children.value+' (fare to confirm)','Pickup: '+v('bkPickup'),'Estimated adult total: '+fmt(total),'Payment preference: '+paymentMethod,'Notes: '+(v('bkNotes')||'None'),'Please confirm seat availability, final invoice, advance amount and official payment method. I understand this is a request, not a confirmed booking.'].join('\n');
-const alert=document.getElementById('bookingAlert');alert.style.display='block';alert.textContent=paymentMethod.includes('₹1 online token')?'₹1 online payment abhi active nahi hai. WhatsApp par booking request bhejein; gateway approve hone ke baad ₹1 payment activate karenge.':'WhatsApp khulne par message check karke Send dabayein. Booking confirmation abhi pending hai.';
-window.open('https://wa.me/918860742376?text='+encodeURIComponent(message),'_blank','noopener');
+const total=Number(adults.value)*price;
+const paymentMethod=form.querySelector('input[name="paymentMethod"]:checked').value;
+const message=['Namaste JKTour24, mujhe tour booking request karni hai.','Package: 9 देवी + शिव खोरी + हरिद्वार यात्रा','Duration: 5 रात / 6 दिन','Name: '+v('bkName'),'Mobile: '+v('bkPhone'),'Email: '+(v('bkEmail')||'Not provided'),'Travel date: '+v('bkDate'),'Adults: '+adults.value,'Children: '+children.value+' (fare to confirm)','Pickup: '+v('bkPickup'),'Estimated adult total: '+fmt(total),'Payment preference: '+paymentMethod,'Notes: '+(v('bkNotes')||'None'),'Please confirm seat availability, final invoice, advance amount and remaining payment. I understand this is a booking request, not a confirmed booking.'].join('\\n');
+const alert=document.getElementById('bookingAlert');alert.style.display='block';
+if(!paymentMethod.includes('₹1 online token')){
+alert.textContent='WhatsApp khulne par message check karke Send dabayein. Booking confirmation abhi pending hai.';
+window.open('https://wa.me/918860742376?text='+encodeURIComponent(message),'_blank','noopener');return;
+}
+alert.textContent='Razorpay test checkout khol rahe hain…';
+try{
+const orderResponse=await fetch('https://jktour24-payment.jitenderkusum8098.workers.dev/create-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({purpose:'JKTour24 booking token'})});
+const order=await orderResponse.json();
+if(!orderResponse.ok||!order.order_id||!order.key_id)throw new Error(order.error||'Test order create nahi hua.');
+if(!window.Razorpay){
+await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='https://checkout.razorpay.com/v1/checkout.js';s.onload=resolve;s.onerror=()=>reject(new Error('Razorpay checkout load nahi hua.'));document.head.appendChild(s);});
+}
+const checkout=new window.Razorpay({
+key:order.key_id,amount:order.amount,currency:order.currency,order_id:order.order_id,
+name:'JKTour24',description:'₹1 booking token — TEST MODE',
+prefill:{name:v('bkName'),email:v('bkEmail'),contact:v('bkPhone')},
+notes:{package:'9 Devi, Shiv Khori and Haridwar',travel_date:v('bkDate')},
+handler:async function(response){
+alert.textContent='Payment response mil gaya; server par verify kar rahe hain…';
+try{
+const verifyResponse=await fetch('https://jktour24-payment.jitenderkusum8098.workers.dev/verify-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(response)});
+const verified=await verifyResponse.json();
+if(!verifyResponse.ok||!verified.verified)throw new Error(verified.error||'Payment verification fail hui.');
+const confirmedMessage=message+'\\nTest token signature verified. Payment ID: '+response.razorpay_payment_id+'. Please confirm booking availability and remaining payment.';
+alert.textContent='Test payment signature verify ho gaya. WhatsApp par booking request bheji ja rahi hai; booking abhi JKTour24 ki confirmation ke baad hi final hogi.';
+window.location.href='https://wa.me/918860742376?text='+encodeURIComponent(confirmedMessage);
+}catch(err){alert.textContent='Payment response mila, lekin verification confirm nahi hui. Dobara payment na karein; JKTour24 se contact karein. Details: '+err.message;}
+}
+});
+checkout.on('payment.failed',function(){alert.textContent='Test payment fail/cancel hui. Abhi booking confirm nahi hai; chahein to baad mein dobara try karein.';});
+checkout.open();
+}catch(err){alert.textContent='Test checkout start nahi hua: '+err.message+'. Website abhi booking ko paid nahi maanegi.';}
 });
 })();
 </script>\n<section class="cta"><div><h2>माता के दर्शन की यात्रा पर चलें?</h2><p>पैकेज, उपलब्धता और बुकिंग की जानकारी के लिए JKTour24 से संपर्क करें।</p></div><div class="cta-actions"><a class="btn btn-gold book-now-link" href="#booking">अभी बुक करें ↓</a><a class="btn btn-outline" href="index.html#featured-package">सभी पैकेज देखें</a></div></section></main>
