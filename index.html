@@ -252,4 +252,16 @@ let deviQty=1,deviCart=0;const deviPrice=8500;function deviMoney(n){return '₹'
 (function(){const key='jktour24_ujjain_test_booked_v1';const b=document.getElementById('homeSeatsBooked'),l=document.getElementById('homeSeatsLeft'),f=document.getElementById('homeSeatsFill'),p=document.getElementById('homeSeatsPercent'),bar=document.getElementById('homeSeatsProgress');if(!b)return;let n=0;function read(){try{n=Math.min(20,Math.max(0,Number(localStorage.getItem(key)||0)))}catch(e){n=0}b.textContent=n;l.textContent=20-n;f.style.width=(n/20*100)+'%';p.textContent=Math.round(n/20*100)+'% सीटें भरीं';bar.setAttribute('aria-valuenow',n)}read();window.addEventListener('storage',function(e){if(e.key===key||e.key===null)read()});window.addEventListener('pageshow',read);window.addEventListener('focus',read);document.addEventListener('visibilitychange',function(){if(!document.hidden)read()});setInterval(read,1500);})();
 </script>
 <!-- JKTour24 Pages refresh: 2026-10-12 seat-counter-v4 -->
+<script>
+(function(){
+  try{
+    if(!sessionStorage.getItem("jktourBackGuard")){
+      history.replaceState({jktourPage:true},"",location.href);
+      history.pushState({jktourGuard:true},"",location.href);
+      sessionStorage.setItem("jktourBackGuard","1");
+    }
+    window.addEventListener("pageshow",function(){sessionStorage.removeItem("jktourBackGuard")});
+  }catch(e){}
+})();
+</script>
 </body></html>
