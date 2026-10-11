@@ -52,7 +52,7 @@ e.preventDefault();if(!form.reportValidity())return;
 const v=id=>document.getElementById(id).value.trim();
 const total=Number(adults.value)*price;
 const paymentMethod=form.querySelector('input[name="paymentMethod"]:checked').value;
-const message=['Namaste JKTour24, mujhe tour booking request karni hai.','Package: उज्जैन–ओंकारेश्वर यात्रा','Duration: 4 रात / 5 दिन','Name: '+v('bkName'),'Mobile: '+v('bkPhone'),'Email: '+(v('bkEmail')||'Not provided'),'Travel date: '+v('bkDate'),'Adults: '+adults.value,'Children: '+children.value+' (fare to confirm)','Pickup: '+v('bkPickup'),'Estimated adult total: '+fmt(total),'Payment preference: '+paymentMethod,'Notes: '+(v('bkNotes')||'None'),'Please confirm seat availability, final invoice, advance amount and remaining payment. I understand this is a booking request, not a confirmed booking.'].join('\\n');
+const message=['Namaste JKTour24, mujhe tour booking request karni hai.','Package: उज्जैन–ओंकारेश्वर यात्रा','Duration: 4 रात / 5 दिन','Name: '+v('bkName'),'Mobile: '+v('bkPhone'),'Email: '+(v('bkEmail')||'Not provided'),'Travel date: '+v('bkDate'),'Adults: '+adults.value,'Children: '+children.value+' (fare to confirm)','Pickup: '+v('bkPickup'),'Estimated adult total: '+fmt(total),'Payment preference: '+paymentMethod,'Notes: '+(v('bkNotes')||'None'),'Please confirm seat availability, final invoice, advance amount and remaining payment. I understand this is a booking request, not a confirmed booking.'].join('\n');
 const alert=document.getElementById('bookingAlert');alert.style.display='block';
 if(!paymentMethod.includes('₹1 online token')){
 alert.textContent='WhatsApp khulne par message check karke Send dabayein. Booking confirmation abhi pending hai.';
@@ -77,7 +77,7 @@ try{
 const verifyResponse=await fetch('https://jktour24-payment.jitenderkusum8098.workers.dev/verify-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(response)});
 const verified=await verifyResponse.json();
 if(!verifyResponse.ok||!verified.verified)throw new Error(verified.error||'Payment verification fail hui.');
-const confirmedMessage=message+'\\nTest token signature verified. Payment ID: '+response.razorpay_payment_id+'. Please confirm booking availability and remaining payment.';
+const confirmedMessage=message+'\nTest token signature verified. Payment ID: '+response.razorpay_payment_id+'. Please confirm booking availability and remaining payment.';
 alert.textContent='Test payment signature verify ho gaya. WhatsApp par booking request bheji ja rahi hai; booking abhi JKTour24 ki confirmation ke baad hi final hogi.';
 window.location.href='https://wa.me/918860742376?text='+encodeURIComponent(confirmedMessage);
 }catch(err){alert.textContent='Payment response mila, lekin verification confirm nahi hui. Dobara payment na karein; JKTour24 se contact karein. Details: '+err.message;}
