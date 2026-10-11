@@ -38,6 +38,22 @@
 </section>
 <section class="section-head"><span class="eyebrow">PACKAGE INCLUDES</span><h2 class="section-title">पैकेज में क्या शामिल है?</h2></section><section class="included"><article><div class="icon">🚌</div><h3>AC बस यात्रा</h3><p>निर्धारित रूट के अनुसार आने-जाने की यात्रा।</p></article><article><div class="icon">🏨</div><h3>AC होटल स्टे</h3><p>यात्रा कार्यक्रम के अनुसार AC होटल / धर्मशाला में ठहरना।</p></article><article><div class="icon">🍽️</div><h3>3 समय भोजन</h3><p>दिन में तीन समय भोजन की व्यवस्था।</p></article></section>
 <div class="note">ध्यान दें: होटल sharing, pickup point, दर्शन समय और यात्रा की उपलब्धता बुकिंग से पहले confirm करें। वास्तविक समय यातायात और स्थानीय परिस्थितियों के अनुसार बदल सकता है।</div>
+<section class="seat-demo" aria-labelledby="seatDemoHeading">
+  <div class="seat-demo-card" id="seatDemoCard">
+    <div class="seat-demo-eyebrow">JKTour24 · Minimum group size</div>
+    <h2 id="seatDemoHeading">उज्जैन–ओंकारेश्वर यात्रा</h2>
+    <p>बस यात्रा तभी रवाना होगी जब कम-से-कम <strong>20 सीटें कन्फर्म</strong> होंगी। टेस्ट पेमेंट सफल और server से verify होने पर इस ब्राउज़र के टेस्ट काउंटर में सीट जुड़ती है।</p>
+    <div class="seat-demo-stats">
+      <div><div class="seat-demo-number"><span id="seatDemoBooked">0</span> <span style="font-size:18px;color:#667085">/ 20 सीटें</span></div><div style="font-size:13px;color:#667085;margin-top:6px">कन्फर्म सीटें (टेस्ट)</div></div>
+      <div><div class="seat-demo-remain" id="seatDemoRemaining">20</div><div style="font-size:13px;color:#667085;text-align:right;margin-top:6px">सीटें बाकी</div></div>
+    </div>
+    <div class="seat-demo-track" role="progressbar" aria-label="कन्फर्म सीटों का डेमो" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0" id="seatDemoProgress"><div class="seat-demo-fill" id="seatDemoFill" style="width:0%"></div></div>
+    <div class="seat-demo-meta"><span id="seatDemoPercent">0% सीटें भरीं</span><span>लक्ष्य: 20 सीटें</span></div>
+    <div class="seat-demo-status" id="seatDemoStatus"><span aria-hidden="true">ℹ️</span><span>अभी 20 सीटें पूरी नहीं हुईं। लक्ष्य पूरा होने पर ही यात्रा की पुष्टि होगी।</span></div>
+    <div class="seat-demo-actions"><button class="seat-demo-reset" type="button" id="seatDemoReset">टेस्ट काउंटर रीसेट</button></div>
+    <p class="seat-demo-foot">यह अभी टेस्ट काउंटर है। सफल verified TEST payment पर इसी ब्राउज़र में सीट जोड़ी जाएगी। सभी ग्राहकों के बीच साझा live count के लिए database जोड़ना बाकी है।</p>
+  </div>
+</section>
 <section class="booking-wrap" id="booking"><div class="booking-card">
 <span class="eyebrow">SECURE YOUR SEAT · JKTour24</span><h2>बुकिंग और बिलिंग</h2>
 <p class="booking-lead">यात्रा की तारीख और यात्रियों की जानकारी भरें। नीचे किराये का अनुमान अपने-आप अपडेट होगा। विवरण WhatsApp पर भेजकर उपलब्धता और भुगतान की पुष्टि लें।</p>
@@ -112,22 +128,7 @@ checkout.open();
 })();
 </script>
 
-<section class="seat-demo" aria-labelledby="seatDemoHeading">
-  <div class="seat-demo-card" id="seatDemoCard">
-    <div class="seat-demo-eyebrow">JKTour24 · Minimum group size</div>
-    <h2 id="seatDemoHeading">उज्जैन–ओंकारेश्वर यात्रा</h2>
-    <p>बस यात्रा तभी रवाना होगी जब कम-से-कम <strong>20 सीटें कन्फर्म</strong> होंगी। टेस्ट पेमेंट सफल और server से verify होने पर इस ब्राउज़र के टेस्ट काउंटर में सीट जुड़ती है।</p>
-    <div class="seat-demo-stats">
-      <div><div class="seat-demo-number"><span id="seatDemoBooked">0</span> <span style="font-size:18px;color:#667085">/ 20 सीटें</span></div><div style="font-size:13px;color:#667085;margin-top:6px">कन्फर्म सीटें (टेस्ट)</div></div>
-      <div><div class="seat-demo-remain" id="seatDemoRemaining">20</div><div style="font-size:13px;color:#667085;text-align:right;margin-top:6px">सीटें बाकी</div></div>
-    </div>
-    <div class="seat-demo-track" role="progressbar" aria-label="कन्फर्म सीटों का डेमो" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0" id="seatDemoProgress"><div class="seat-demo-fill" id="seatDemoFill" style="width:0%"></div></div>
-    <div class="seat-demo-meta"><span id="seatDemoPercent">0% सीटें भरीं</span><span>लक्ष्य: 20 सीटें</span></div>
-    <div class="seat-demo-status" id="seatDemoStatus"><span aria-hidden="true">ℹ️</span><span>अभी 20 सीटें पूरी नहीं हुईं। लक्ष्य पूरा होने पर ही यात्रा की पुष्टि होगी।</span></div>
-    <div class="seat-demo-actions"><button class="seat-demo-reset" type="button" id="seatDemoReset">टेस्ट काउंटर रीसेट</button></div>
-    <p class="seat-demo-foot">ध्यान दें: ये sample numbers हैं। बटन सिर्फ़ डिज़ाइन जाँचने के लिए है—यह असली बुकिंग, भुगतान, सीट या रिफंड नहीं बदलता। Live counter के लिए booking database और verified payment integration जोड़ना बाकी है।</p>
-  </div>
-</section>
+
 <script>
 (function(){
  const bookedEl=document.getElementById('seatDemoBooked'); if(!bookedEl)return;
