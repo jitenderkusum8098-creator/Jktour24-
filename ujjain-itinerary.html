@@ -121,8 +121,9 @@ try{
  const oldSeats=Math.min(20,Math.max(0,Number(localStorage.getItem(seatKey)||0)));
  const newSeats=Math.min(20,oldSeats+Number(adults.value||1));
  localStorage.setItem(seatKey,String(newSeats));
- if(window.jktour24AddTestSeats)window.jktour24AddTestSeats(0);
-}catch(seatError){if(window.jktour24AddTestSeats)window.jktour24AddTestSeats(Number(adults.value||1));}
+ const b=document.getElementById('seatDemoBooked'),r=document.getElementById('seatDemoRemaining'),f=document.getElementById('seatDemoFill'),p=document.getElementById('seatDemoPercent'),bar=document.getElementById('seatDemoProgress');
+ if(b&&r&&f&&p&&bar){b.textContent=newSeats;r.textContent=20-newSeats;f.style.width=(newSeats/20*100)+'%';p.textContent=Math.round(newSeats/20*100)+'% सीटें भरीं';bar.setAttribute('aria-valuenow',newSeats);}
+}catch(seatError){console.error('Test seat counter update failed');}
 const confirmedMessage=message+'\nTest token signature verified. Payment ID: '+response.razorpay_payment_id+'. Please confirm booking availability and remaining payment.';
 alert.textContent='Test payment signature verify ho gaya. WhatsApp par booking request bheji ja rahi hai; booking abhi JKTour24 ki confirmation ke baad hi final hogi.';
 window.location.href='https://wa.me/918860742376?text='+encodeURIComponent(confirmedMessage);
