@@ -163,11 +163,60 @@
 
 
 .home-seat-counter{margin:18px 0 20px;padding:15px 16px;background:#f3f8ff;border:1px solid #d7e9ff;border-radius:14px;color:#172337}.home-seat-heading,.home-seat-foot{display:flex;align-items:center;justify-content:space-between;gap:10px}.home-seat-heading{font-size:13px;font-weight:800;margin-bottom:12px}.home-seat-heading span:first-child{color:#245f9d}.home-seat-heading strong{font-size:15px;color:#1684e8}.home-seat-track{height:11px;background:#dfe8f2;border-radius:99px;overflow:hidden}.home-seat-track>div{height:100%;width:0;background:linear-gradient(90deg,#1684e8,#48a8ff);border-radius:99px;transition:width .3s}.home-seat-foot{margin-top:8px;font-size:12px;color:#667085}.home-seat-foot strong{color:#26364a}.home-seat-counter>small{display:block;margin-top:11px;color:#667085;line-height:1.5}@media(max-width:420px){.home-seat-counter{padding:13px}.home-seat-heading{font-size:12px}}
+
+/* Emotional JKTOUR24 yatra story section below hero */
+.yatra-story{position:relative;overflow:hidden;padding:clamp(38px,6vw,72px) 5%;background:radial-gradient(ellipse at top right,#fff0ca 0,transparent 38%),linear-gradient(145deg,#fffdf8 0%,#f7f3e9 55%,#fff 100%);border-bottom:1px solid #eadfc7}
+.yatra-story:before,.yatra-story:after{content:"✦";position:absolute;color:#dfbd70;opacity:.28;font-size:90px;line-height:1;pointer-events:none}.yatra-story:before{left:2%;top:20px}.yatra-story:after{right:3%;bottom:18px}
+.yatra-inner{position:relative;z-index:1;max-width:1040px;margin:auto}
+.yatra-intro{text-align:center;max-width:850px;margin:0 auto 28px}
+.yatra-brandline{display:inline-flex;align-items:center;gap:9px;color:#987025;font-weight:900;font-size:12px;letter-spacing:2.5px;margin-bottom:13px}
+.yatra-brandline:before,.yatra-brandline:after{content:"";width:25px;height:1px;background:#d8b45d}
+.yatra-title{color:#091b38;font-size:clamp(25px,4.5vw,43px);line-height:1.32;font-weight:900;margin:0 auto 14px}
+.yatra-title em{font-style:normal;color:#b1842c}
+.yatra-lead{font-size:clamp(15px,2vw,18px);line-height:1.9;color:#4c5668;margin:0 auto;max-width:760px}
+.yatra-quote{margin:25px auto 30px;max-width:800px;text-align:center;padding:19px 22px;border-top:1px solid #dfc98f;border-bottom:1px solid #dfc98f;color:#182844;font-size:clamp(16px,2.3vw,21px);font-weight:800;line-height:1.8}
+.yatra-quote span{color:#bd8b2e}
+.yatra-places{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:0 auto 27px}
+.yatra-place{min-height:104px;padding:15px 8px;text-align:center;background:#fffdf8;border:1px solid #eadfca;border-radius:13px;box-shadow:0 5px 16px #0b1b3808;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:7px}
+.yatra-place .yp-icon{font-size:25px;line-height:1.1}.yatra-place strong{font-size:13px;color:#132541;line-height:1.5}
+.yatra-description{max-width:820px;margin:0 auto 24px;text-align:center;color:#505b6d;font-size:15px;line-height:1.95}
+.yatra-includes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 auto 24px}
+.yatra-includes article{display:flex;align-items:center;gap:12px;padding:16px 14px;border:1px solid #e6dcc6;border-radius:12px;background:#fff}
+.yatra-includes .yi-icon{width:42px;height:42px;flex:0 0 42px;border-radius:11px;background:#fff5dc;display:grid;place-items:center;font-size:22px}
+.yatra-includes strong{display:block;color:#132541;font-size:14px;margin-bottom:3px}.yatra-includes small{display:block;color:#697386;font-size:12px;line-height:1.5}
+.yatra-closing{text-align:center;color:#14233d;font-size:clamp(16px,2.2vw,20px);font-weight:800;line-height:1.8;margin:22px auto 8px}
+.yatra-tagline{display:inline-block;margin-top:10px;padding:10px 17px;background:#0b1b38;color:#f4d58b;border-radius:7px;font-size:clamp(14px,2vw,17px);letter-spacing:.4px;box-shadow:0 6px 18px #0b1b3818}
+@media(max-width:700px){.yatra-story{padding:36px 4%}.yatra-story:before{font-size:55px;left:0}.yatra-story:after{font-size:55px;right:0}.yatra-places{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.yatra-place:last-child{grid-column:1/-1;min-height:78px}.yatra-includes{grid-template-columns:1fr;gap:9px}.yatra-includes article{padding:13px}.yatra-quote{padding:15px 10px;margin:20px auto 24px}.yatra-place{min-height:88px}}
 </style>
 </head>
 <body>
 <header class="top"><div class="brand"><img class="brand-logo" src="logo.svg" alt="JKTour24 logo"><div>JKTOUR24<small>TRAVEL MORE, WORRY LESS</small></div></div><nav class="nav"><a href="#package">पैकेज</a><a href="#itinerary">यात्रा कार्यक्रम</a><a href="#included">क्या शामिल है</a><a href="#contact">संपर्क</a></nav></header>
 <section class="hero" id="package" aria-label="JKTOUR24 उज्जैन और ओंकारेश्वर यात्रा बैनर"></section>
+
+<section class="yatra-story" id="jk-safar-story" aria-labelledby="yatra-story-title">
+  <div class="yatra-inner">
+    <div class="yatra-intro">
+      <div class="yatra-brandline">JKTOUR24 • श्रद्धा, सुकून और यादें</div>
+      <h2 class="yatra-title" id="yatra-story-title">अगली बार सिर्फ़ बस को मत देखना…<br><em>इस बार सफ़र का हिस्सा बनकर देखना। ❤️</em></h2>
+      <p class="yatra-lead">क्योंकि कुछ सफ़र सिर्फ़ एक जगह से दूसरी जगह जाने के लिए नहीं होते…<br><strong>कुछ सफ़र सुकून देते हैं, कुछ मन को भक्ति से भर देते हैं और कुछ ज़िंदगी भर के लिए यादें बन जाते हैं।</strong></p>
+    </div>
+    <div class="yatra-quote">कभी माता रानी के दरबार में सुकून… कभी शिवखोड़ी में आस्था…<br>कभी गंगा किनारे शांति, तो कभी महाकाल और श्याम बाबा के दर्शन। <span>🙏❤️</span></div>
+    <div class="yatra-places" aria-label="हमारी प्रमुख यात्राएँ">
+      <div class="yatra-place"><span class="yp-icon">🙏</span><strong>9 देवियों के दर्शन</strong></div>
+      <div class="yatra-place"><span class="yp-icon">🔱</span><strong>शिवखोड़ी यात्रा</strong></div>
+      <div class="yatra-place"><span class="yp-icon">🌊</span><strong>हरिद्वार गंगा दर्शन</strong></div>
+      <div class="yatra-place"><span class="yp-icon">🕉️</span><strong>उज्जैन महाकाल दर्शन</strong></div>
+      <div class="yatra-place"><span class="yp-icon">❤️</span><strong>खाटू श्याम जी यात्रा</strong></div>
+    </div>
+    <p class="yatra-description">आपकी आस्था हो, परिवार के साथ घूमने का प्लान हो या अपनों के साथ खूबसूरत पल बिताने की ख्वाहिश—<strong>JKTOUR24 के साथ हर सफ़र को ख़ास बनाइए।</strong> हम चाहते हैं कि लौटते समय आपके पास सिर्फ़ तस्वीरें नहीं, बल्कि दिल में बस जाने वाली यादें भी हों।</p>
+    <div class="yatra-includes">
+      <article><span class="yi-icon">🚌</span><div><strong>एसी बस</strong><small>आरामदायक सफ़र के लिए</small></div></article>
+      <article><span class="yi-icon">🍽️</span><div><strong>खाने की सुविधा</strong><small>यात्रा में स्वाद का भी ख़याल</small></div></article>
+      <article><span class="yi-icon">🏨</span><div><strong>एसी होटल</strong><small>दिनभर की यात्रा के बाद आराम</small></div></article>
+    </div>
+    <div class="yatra-closing">आप सिर्फ़ एक सीट बुक नहीं करते…<br>आप अपनों के साथ बिताए खूबसूरत पल चुनते हैं। ❤️<br><span class="yatra-tagline">आप बस सफ़र का मज़ा लीजिए… बाकी फ़िक्र हमारी।</span><br><span style="font-size:14px;color:#9b742c">JKTOUR24 — मंज़िल से भी खूबसूरत, आपका सफ़र!</span></div>
+  </div>
+</section>
 
 <section class="package-area" id="featured-package">
 <div class="tour-heading"><span class="tour-kicker">JKTour24 • SPECIAL YATRAS</span><h2 class="section-title">अपनी अगली यात्रा चुनें</h2><p class="sub">श्रद्धा, आराम और यादगार सफ़र — हर ज़रूरी जानकारी एक ही जगह।</p></div>
