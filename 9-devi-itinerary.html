@@ -56,7 +56,6 @@
 <div class="booking-field full"><label for="bkPickup">पिकअप शहर / स्थान *</label><input id="bkPickup" name="pickup" required placeholder="उदाहरण: दिल्ली, निर्धारित pickup point"></div>
 <div class="booking-field full"><label for="bkNotes">अन्य जानकारी (वैकल्पिक)</label><textarea id="bkNotes" name="notes" maxlength="500" placeholder="कमरे की sharing, बच्चों की उम्र या अन्य अनुरोध"></textarea></div>
 </div>
-<div class="booking-field full" style="margin-top:18px;padding:14px;border:1px solid #cfd5df;border-radius:10px;background:#f8fafc"><strong>भुगतान और बुकिंग पुष्टि</strong><p class="booking-note">पहले WhatsApp पर booking request भेजें। JKTour24 उपलब्धता, अंतिम किराया, advance और बाकी भुगतान की पुष्टि करेगा। Request भेजने से सीट अपने-आप confirm नहीं होती।</p><input type="radio" name="paymentMethod" value="Pay after booking confirmation" checked hidden></div>
 <div class="bill-box" aria-live="polite"><div class="bill-row"><span>पैकेज</span><strong>9 देवी + शिव खोरी + हरिद्वार यात्रा</strong></div><div class="bill-row"><span>अवधि</span><strong>5 रात / 6 दिन</strong></div><div class="bill-row"><span>प्रति वयस्क</span><strong>₹8,500</strong></div><div class="bill-row"><span>वयस्क × <span id="adultCount">1</span></span><strong id="adultTotal">₹8,500</strong></div><div class="bill-row"><span>बच्चे</span><strong id="childCount">0 (किराया confirm होगा)</strong></div><div class="bill-row total"><span>अनुमानित कुल (वयस्क)</span><strong id="grandTotal">₹8,500</strong></div><p class="booking-note">यह शुरुआती bill estimate है, अंतिम invoice नहीं। बच्चे का किराया, सीट/होटल उपलब्धता, लागू कर (यदि हों), advance amount और बाकी भुगतान JKTour24 द्वारा पुष्टि किए जाएंगे। बच्चों का किराया, उपलब्धता और अंतिम भुगतान JKTour24 से confirm होगा।</p></div>
 <div class="booking-field full" style="margin:18px 0;padding:14px;border:2px solid #dcae52;background:#fff8e9;border-radius:10px;color:#071a35;line-height:1.6;font-weight:700"><label style="display:flex;gap:10px;align-items:flex-start;cursor:pointer"><input id="tourTermsAccept" name="tourTermsAccept" type="checkbox" required style="width:20px;height:20px;flex:0 0 20px;margin-top:4px"><span>मैंने <a href="tour-rules.html" target="_blank" rel="noopener" style="text-decoration:underline">JKTour24 के सभी 10 यात्रा नियम और Cancellation &amp; Refund Policy</a> पढ़ ली है और समझ ली है।</span></label></div>
 <button class="booking-submit" type="submit">WhatsApp पर Booking Request भेजें →</button>
@@ -70,79 +69,14 @@ const fmt=n=>'₹'+Number(n).toLocaleString('en-IN');
 function updateBill(){const a=Number(adults.value||1),c=Number(children.value||0);document.getElementById('adultCount').textContent=a;document.getElementById('adultTotal').textContent=fmt(a*price);document.getElementById('childCount').textContent=c+' (किराया confirm होगा)';document.getElementById('grandTotal').textContent=fmt(a*price);}
 adults.addEventListener('change',updateBill);children.addEventListener('change',updateBill);
 const date=document.getElementById('bkDate');const now=new Date();date.min=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10);
-form.addEventListener('submit',async function(e){
-e.preventDefault();if(!form.reportValidity())return;
-const v=id=>document.getElementById(id).value.trim();
-const total=Number(adults.value)*price;
-const paymentMethod=form.querySelector('input[name="paymentMethod"]:checked').value;
-const message=['Namaste JKTour24, mujhe tour booking request karni hai.','Package: 9 देवी + शिव खोरी + हरिद्वार यात्रा','Duration: 5 रात / 6 दिन','Name: '+v('bkName'),'Mobile: '+v('bkPhone'),'Age: '+v('bkAge'),'Gender: '+v('bkGender'),'Address: '+v('bkAddress'),'Emergency contact: '+v('bkEmergency'),'Email: '+(v('bkEmail')||'Not provided'),'Travel date: '+v('bkDate'),'Adults: '+adults.value,'Children: '+children.value+' (fare to confirm)','Pickup: '+v('bkPickup'),'Estimated adult total: '+fmt(total),'Payment preference: '+paymentMethod,'Notes: '+(v('bkNotes')||'None'),'Please confirm seat availability, final invoice, advance amount and remaining payment. I understand this is a booking request, not a confirmed booking.'].join('\n');
-const alert=document.getElementById('bookingAlert');alert.style.display='block';
-if(!paymentMethod.includes('₹1 online token')){
-alert.textContent='WhatsApp khulne par message check karke Send dabayein. Booking confirmation abhi pending hai.';
-window.open('https://wa.me/918860742376?text='+encodeURIComponent(message),'_blank','noopener');return;
-}
-alert.textContent='Razorpay test checkout khol rahe hain…';
-try{
-const orderResponse=await fetch('https://jktour24-payment.jitenderkusum8098.workers.dev/create-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({purpose:'JKTour24 booking token'})});
-const order=await orderResponse.json();
-if(!orderResponse.ok||!order.order_id||!order.key_id)throw new Error(order.error||'Test order create nahi hua.');
-if(!window.Razorpay){
-await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='https://checkout.razorpay.com/v1/checkout.js';s.onload=resolve;s.onerror=()=>reject(new Error('Razorpay checkout load nahi hua.'));document.head.appendChild(s);});
-}
-const checkout=new window.Razorpay({
-key:order.key_id,amount:order.amount,currency:order.currency,order_id:order.order_id,
-name:'JKTour24',description:'₹1 booking token — TEST MODE',
-prefill:{name:v('bkName'),email:v('bkEmail'),contact:v('bkPhone')},
-notes:{package:'9 Devi, Shiv Khori and Haridwar',travel_date:v('bkDate')},
-handler:async function(response){
-alert.textContent='Payment response mil gaya; server par verify kar rahe hain…';
-try{
-const verifyResponse=await fetch('https://jktour24-payment.jitenderkusum8098.workers.dev/verify-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(response)});
-const verified=await verifyResponse.json();
-if(!verifyResponse.ok||!verified.verified)throw new Error(verified.error||'Payment verification fail hui.');
-const confirmedMessage=message+'\nTest token signature verified. Payment ID: '+response.razorpay_payment_id+'. Please confirm booking availability and remaining payment.';
-alert.textContent='Test payment signature verify ho gaya. WhatsApp par booking request bheji ja rahi hai; booking abhi JKTour24 ki confirmation ke baad hi final hogi.';
-window.location.href='https://wa.me/918860742376?text='+encodeURIComponent(confirmedMessage);
-}catch(err){alert.textContent='Payment response mila, lekin verification confirm nahi hui. Dobara payment na karein; JKTour24 se contact karein. Details: '+err.message;}
-}
+form.addEventListener('submit',function(e){
+ e.preventDefault();if(!form.reportValidity())return;
+ const v=id=>document.getElementById(id).value.trim();
+ const total=Number(adults.value)*price;
+ const message=['Namaste JKTour24, mujhe tour booking request karni hai.','Package: 9 देवी + शिव खोरी + हरिद्वार यात्रा','Duration: 5 रात / 6 दिन','Name: '+v('bkName'),'Mobile: '+v('bkPhone'),'Age: '+v('bkAge'),'Gender: '+v('bkGender'),'Address: '+v('bkAddress'),'Emergency contact: '+v('bkEmergency),'Email: '+(v('bkEmail')||'Not provided'),'Travel date: '+v('bkDate'),'Adults: '+adults.value,'Children: '+children.value+' (fare to confirm)','Pickup: '+v('bkPickup),'Estimated adult total: '+fmt(total),'Notes: '+(v('bkNotes')||'None'),'Please confirm seat availability, final invoice, advance amount and remaining payment. This is a booking request, not a confirmed booking.'].join('\\n');
+ const alert=document.getElementById('bookingAlert');alert.style.display='block';alert.textContent='WhatsApp khulne par message check karke Send dabayein. Booking confirmation abhi pending hai.';
+ window.open('https://wa.me/918860742376?text='+encodeURIComponent(message),'_blank','noopener');
 });
-checkout.on('payment.failed',function(){alert.textContent='Test payment fail/cancel hui. Abhi booking confirm nahi hai; chahein to baad mein dobara try karein.';});
-checkout.open();
-}catch(err){alert.textContent='Test checkout start nahi hua: '+err.message+'. Website abhi booking ko paid nahi maanegi.';}
-});
-})();
-</script>
-
-<section class="seat-demo" aria-labelledby="seatDemoHeading">
-  <div class="seat-demo-card" id="seatDemoCard">
-    <div class="seat-demo-eyebrow">JKTour24 · Minimum group size</div>
-    <h2 id="seatDemoHeading">9 देवी + शिव खोरी + हरिद्वार यात्रा</h2>
-    <p>बस यात्रा तभी रवाना होगी जब कम-से-कम <strong>20 सीटें कन्फर्म</strong> होंगी। नीचे वाला counter अभी केवल preview/demo है।</p>
-    <div class="seat-demo-stats">
-      <div><div class="seat-demo-number"><span id="seatDemoBooked">7</span> <span style="font-size:18px;color:#667085">/ 20 सीटें</span></div><div style="font-size:13px;color:#667085;margin-top:6px">कन्फर्म सीटें (डेमो)</div></div>
-      <div><div class="seat-demo-remain" id="seatDemoRemaining">13</div><div style="font-size:13px;color:#667085;text-align:right;margin-top:6px">सीटें बाकी</div></div>
-    </div>
-    <div class="seat-demo-track" role="progressbar" aria-label="कन्फर्म सीटों का डेमो" aria-valuemin="0" aria-valuemax="20" aria-valuenow="7" id="seatDemoProgress"><div class="seat-demo-fill" id="seatDemoFill" style="width:35%"></div></div>
-    <div class="seat-demo-meta"><span id="seatDemoPercent">35% सीटें भरीं</span><span>लक्ष्य: 20 सीटें</span></div>
-    <div class="seat-demo-status" id="seatDemoStatus"><span aria-hidden="true">ℹ️</span><span>अभी 20 सीटें पूरी नहीं हुईं। लक्ष्य पूरा होने पर ही यात्रा की पुष्टि होगी।</span></div>
-    <div class="seat-demo-actions"><button class="seat-demo-add" type="button" id="seatDemoAdd">डेमो में +1 सीट देखें</button><button class="seat-demo-reset" type="button" id="seatDemoReset">डेमो रीसेट</button></div>
-    <p class="seat-demo-foot">ध्यान दें: ये sample numbers हैं। बटन सिर्फ़ डिज़ाइन जाँचने के लिए है—यह असली बुकिंग, भुगतान, सीट या रिफंड नहीं बदलता। Live counter के लिए booking database और verified payment integration जोड़ना बाकी है।</p>
-  </div>
-</section>
-<script>
-(function(){
- const bookedEl=document.getElementById('seatDemoBooked');
- if(!bookedEl)return;
- const total=20, initial=7; let booked=initial;
- const remaining=document.getElementById('seatDemoRemaining'),fill=document.getElementById('seatDemoFill'),percent=document.getElementById('seatDemoPercent'),status=document.getElementById('seatDemoStatus'),progress=document.getElementById('seatDemoProgress'),add=document.getElementById('seatDemoAdd');
- function render(){
-  bookedEl.textContent=booked;remaining.textContent=total-booked;fill.style.width=(booked/total*100)+'%';percent.textContent=Math.round(booked/total*100)+'% सीटें भरीं';progress.setAttribute('aria-valuenow',booked);
-  if(booked>=total){status.innerHTML='<span aria-hidden="true">✅</span><span>डेमो लक्ष्य पूरा: 20/20 सीटें। असली वेबसाइट में पेमेंट वेरिफिकेशन और booking database से ही यह स्थिति तय होगी।</span>';add.disabled=true;add.textContent='डेमो लक्ष्य पूरा';}
-  else{status.innerHTML='<span aria-hidden="true">ℹ️</span><span>अभी '+(total-booked)+' सीटें और चाहिए। 20 कन्फर्म सीटें होने पर ही यात्रा की पुष्टि होगी।</span>';add.disabled=false;add.textContent='डेमो में +1 सीट देखें';}
- }
- add.addEventListener('click',()=>{if(booked<total){booked++;render();}});
- document.getElementById('seatDemoReset').addEventListener('click',()=>{booked=initial;render();});
- render();
 })();
 </script>
 
