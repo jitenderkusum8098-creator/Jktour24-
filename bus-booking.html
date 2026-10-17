@@ -38,29 +38,7 @@ footer{text-align:center;color:#667085;font-size:12px;padding:20px}
 <main>
 <section class="hero"><div class="eyebrow">JOURNEY • SEAT • TICKET</div><h1>🚌 अपनी बस सीट बुक करें</h1><p>Boarding point चुनें, अपनी पसंद की सीट चुनें और ticket details देखें।</p></section>
 <div class="demo-notice"><b>टेस्ट मोड:</b> यह अभी booking-flow preview है। Live system में package की fixed date/time, bus type और boarding/dropping points Super Admin सेट करेगा; customer departure date/time या bus type नहीं बदलेगा। इस preview में Super Admin/backend connection अभी नहीं है, इसलिए नीचे के route/stops और seats sample हैं। असली seat availability, payment और confirmed ticket के लिए secure backend तथा payment gateway जोड़ना बाकी है। इस preview से वास्तविक booking या payment नहीं होगी।</div>
-<form id="busForm">
-<section class="card"><h2 class="step-title"><span class="step-no">1</span> यात्रा और Boarding / Dropping Point</h2>
-<div class="fields">
-<div><label for="journeyDate">पैकेज की Fixed Date / Time</label><input id="journeyDate" type="text" value="Super Admin द्वारा तय होगा" readonly></div>
-<div><label for="busType">Super Admin द्वारा तय Bus Type</label><input id="busType" type="text" value="AC Seater (demo)" readonly></div>
-<div><label for="boarding">Boarding Point — यहाँ से बस में चढ़ें</label><select id="boarding" required><option value="">Boarding point चुनें</option><option>Delhi — Kashmere Gate (sample)</option><option>Delhi — Anand Vihar (sample)</option><option>Gurugram — IFFCO Chowk (sample)</option></select></div>
-<div><label for="dropping">Dropping Point — यहाँ उतरें</label><select id="dropping" required><option value="">Dropping point चुनें</option><option>Ujjain — Dewas Gate (sample)</option><option>Ujjain — Nanakheda Bus Stand (sample)</option><option>Indore — Sarwate Bus Stand (sample)</option></select></div>
-</div>
-<div class="bus-summary"><span class="pill">🚌 JKTour24 • Demo Coach</span><span class="pill">⏱ समय और वास्तविक route operator से confirm होगा</span><span class="pill">💺 Seat preview</span></div>
-</section>
-<section class="card"><h2 class="step-title"><span class="step-no">2</span> अपनी सीट चुनें</h2>
-<div class="legend"><span><i class="dot available"></i> Available</span><span><i class="dot selected"></i> Selected</span><span><i class="dot booked"></i> Sample booked</span></div>
-<div class="seat-area"><div class="bus"><div class="driver">🚍 Driver / Front</div><div class="seat-grid" id="seatGrid" aria-label="Bus seat layout"></div></div>
-<aside class="seat-summary"><h3>आपकी booking</h3><p>Selected seat: <b id="selectedSeatsText">कोई सीट नहीं</b></p><p>Seats: <b id="seatCount">0</b></p><p>Sample fare per seat: <b>₹6,200</b></p><p style="font-size:21px;color:#071a35"><b id="totalFare">₹0</b></p><p style="font-size:12px">5 साल तक (5 साल सहित) बच्चे का टिकट मुफ्त (₹0) है। 6 साल या अधिक उम्र के बच्चे पर पूरा प्रति-सीट किराया लागू होगा। यह केवल preview fare है; वास्तविक किराया route और package के अनुसार तय होगा।</p></aside></div>
-</section>
-<section class="card"><h2 class="step-title"><span class="step-no">3</span> यात्री की जानकारी</h2>
-<div class="fields"><div><label for="customerName">पूरा नाम</label><input id="customerName" autocomplete="name" required placeholder="अपना नाम"></div><div><label for="customerMobile">मोबाइल नंबर</label><input id="customerMobile" type="tel" inputmode="numeric" pattern="[0-9+ -]{10,15}" autocomplete="tel" required placeholder="मोबाइल नंबर"></div></div>
-</section>
-<section class="card"><h2 class="step-title"><span class="step-no">4</span> Payment Mode चुनें</h2>
-<div class="payment-options"><label class="payment-option"><input type="radio" name="paymentMode" value="Cash / Pay on Boarding" required><span><b>💵 Cash</b><small>Boarding पर cash — preview only</small></span></label><label class="payment-option"><input type="radio" name="paymentMode" value="Online (not connected)" required><span><b>📱 Online Payment</b><small>Payment gateway अभी connect नहीं है; कोई पैसा नहीं कटेगा।</small></span></label></div>
-<button class="primary" type="submit">Booking Preview बनाएँ →</button>
-</section>
-</form>
+<div class="notice"><h2>बुकिंग के लिए आगे बढ़ें</h2><p>अब सभी यात्रियों की बुकिंग एक ही साझा फॉर्म से होगी।</p><a class="btn" href="booking.html?package=khatu">बुकिंग फॉर्म खोलें</a></div>
 <section class="ticket" id="ticket" aria-live="polite"><div class="ticket-head"><h2>🎫 Ticket Preview तैयार है</h2><div>Demo Ticket Number</div><strong id="ticketNo"></strong></div><div class="ticket-body"><div class="ticket-grid" id="ticketGrid"></div><div class="ticket-warning"><b>ध्यान दें:</b> यह DEMO ticket है, confirmed travel ticket नहीं। कोई seat server पर reserve नहीं हुई और कोई payment process नहीं हुआ। असली booking के लिए secure backend, operator route inventory और payment verification जोड़ना आवश्यक है।</div><button class="primary" type="button" id="printTicket">Ticket Print / Save PDF</button></div></section>
 </main>
 <footer>© JKTour24 · Travel More, Worry Less · Demo booking interface</footer>
