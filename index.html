@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="hi">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta name="theme-color" content="#071a35"><meta name="build-version" content="2026-10-18-itinerary-passenger-flow-v1">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta name="theme-color" content="#071a35"><meta name="build-version" content="2026-10-18-itinerary-passenger-flow-v2">
 <title>JKTour24 | तीर्थ यात्रा पैकेज</title>
 <meta name="description" content="JKTour24 के साथ उज्जैन, ओंकारेश्वर और ममलेश्वर दर्शन यात्रा — उज्जैन और राजस्थान तीर्थ यात्रा पैकेज।">
 <style>
@@ -514,6 +514,7 @@ let deviQty=1,deviCart=0;const deviPrice=8500;function deviMoney(n){return '₹'
 </style>
 <script>
 (function(){
+function initJkPassengerFlow(){
 const packages={
  pkgModal:{title:'दिल्ली से उज्जैन दर्शन यात्रा',price:6200,days:['दिन 1: दिल्ली से यात्रा शुरू और रास्ते में निर्धारित पड़ाव।','दिन 2: उज्जैन आगमन और महाकालेश्वर सहित प्रमुख दर्शन।','दिन 3: उज्जैन के अन्य धार्मिक स्थल और निर्धारित कार्यक्रम।','दिन 4: ओंकारेश्वर और ममलेश्वर दर्शन, तय कार्यक्रम के अनुसार।','दिन 5: वापसी यात्रा।'],form:'pkgForm',name:'pkgName',mobile:'pkgMobile',age:'pkgAge',gender:'pkgGender',address:'pkgAddress',pickup:'pkgPickup',emergency:'pkgEmergency',qty:'pkgQty',packageName:'Delhi to Ujjain 4N/5D'},
  deviModal:{title:'9 देवी • शिवखोड़ी • हरिद्वार यात्रा',price:8500,days:['दिन 1: दिल्ली से यात्रा प्रारंभ और निर्धारित pickup।','दिन 2–4: पैकेज कार्यक्रम के अनुसार देवी मंदिरों और शिवखोड़ी के दर्शन।','दिन 5: निर्धारित कार्यक्रम के अनुसार हरिद्वार यात्रा/दर्शन।','दिन 6: वापसी यात्रा।'],form:'deviForm',name:'deviName',mobile:'deviMobile',age:'deviAge',gender:'deviGender',address:'deviAddress',pickup:'deviPickup',emergency:'deviEmergency',qty:'deviQty',packageName:'9 Devi + Shiv Khori + Haridwar 5N/6D'}
@@ -549,6 +550,8 @@ function build(id,p){
  });
 }
 Object.keys(packages).forEach(id=>build(id,packages[id]));
+}
+if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",initJkPassengerFlow,{once:true});}else{initJkPassengerFlow();}
 })();
 </script>
 </body></html>
