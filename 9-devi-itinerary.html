@@ -50,7 +50,7 @@
 <div class="booking-field"><label for="bkGender">जेंडर *</label><select id="bkGender" name="gender" required><option value="">जेंडर चुनें</option><option>पुरुष</option><option>महिला</option><option>अन्य</option></select></div>
 <div class="booking-field full"><label for="bkAddress">पूरा पता *</label><textarea id="bkAddress" name="address" required rows="2" placeholder="मकान नंबर, गली, क्षेत्र, शहर और पिन कोड"></textarea></div>
 <div class="booking-field full"><label for="bkEmergency">आपातकालीन संपर्क नंबर *</label><input id="bkEmergency" name="emergency" type="tel" inputmode="tel" pattern="[0-9 +()-]{10,16}" required placeholder="परिवार के सदस्य का मोबाइल नंबर"></div>
-<div class="booking-field"><label for="bkDate">यात्रा की तारीख *</label><input id="bkDate" name="date" type="date" required></div>
+<div class="booking-field"><label>यात्रा की तारीख</label><input value="JKTour24 द्वारा तय — ग्राहक तारीख नहीं बदल सकता" readonly><small class="booking-note">इस पैकेज की यात्रा तय तारीख पर ही होगी।</small></div>
 <div class="booking-field"><label for="bkAdults">वयस्क यात्री *</label><select id="bkAdults" name="adults"><option value="1">1 यात्री</option><option value="2">2 यात्री</option><option value="3">3 यात्री</option><option value="4">4 यात्री</option><option value="5">5 यात्री</option><option value="6">6 यात्री</option><option value="7">7 यात्री</option><option value="8">8 यात्री</option><option value="9">9 यात्री</option><option value="10">10 यात्री</option></select></div>
 <div class="booking-field"><label for="bkChildren">बच्चे (वैकल्पिक, किराया अलग से confirm होगा)</label><select id="bkChildren" name="children"><option value="0">0 बच्चे</option><option value="1">1 बच्चा</option><option value="2">2 बच्चे</option><option value="3">3 बच्चे</option><option value="4">4 बच्चे</option></select></div>
 <div class="booking-field full"><label for="bkPickup">पिकअप शहर / स्थान *</label><input id="bkPickup" name="pickup" required placeholder="उदाहरण: दिल्ली, निर्धारित pickup point"></div>
@@ -68,12 +68,12 @@ const adults=document.getElementById('bkAdults'), children=document.getElementBy
 const fmt=n=>'₹'+Number(n).toLocaleString('en-IN');
 function updateBill(){const a=Number(adults.value||1),c=Number(children.value||0);document.getElementById('adultCount').textContent=a;document.getElementById('adultTotal').textContent=fmt(a*price);document.getElementById('childCount').textContent=c+' (किराया confirm होगा)';document.getElementById('grandTotal').textContent=fmt(a*price);}
 adults.addEventListener('change',updateBill);children.addEventListener('change',updateBill);
-const date=document.getElementById('bkDate');const now=new Date();date.min=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10);
+
 form.addEventListener('submit',function(e){
  e.preventDefault();if(!form.reportValidity())return;
  const v=id=>document.getElementById(id).value.trim();
  const total=Number(adults.value)*price;
- const message=['Namaste JKTour24, mujhe tour booking request karni hai.','Package: 9 देवी + शिव खोरी + हरिद्वार यात्रा','Duration: 5 रात / 6 दिन','Name: '+v('bkName'),'Mobile: '+v('bkPhone'),'Age: '+v('bkAge'),'Gender: '+v('bkGender'),'Address: '+v('bkAddress'),'Emergency contact: '+v('bkEmergency'),'Email: '+(v('bkEmail')||'Not provided'),'Travel date: '+v('bkDate'),'Adults: '+adults.value,'Children: '+children.value+' (fare to confirm)','Pickup: '+v('bkPickup'),'Estimated adult total: '+fmt(total),'Notes: '+(v('bkNotes')||'None'),'Please confirm seat availability, final invoice, advance amount and remaining payment. This is a booking request, not a confirmed booking.'].join('\\n');
+ const message=['Namaste JKTour24, mujhe tour booking request karni hai.','Package: 9 देवी + शिव खोरी + हरिद्वार यात्रा','Duration: 5 रात / 6 दिन','Name: '+v('bkName'),'Mobile: '+v('bkPhone'),'Age: '+v('bkAge'),'Gender: '+v('bkGender'),'Address: '+v('bkAddress'),'Emergency contact: '+v('bkEmergency'),'Email: '+(v('bkEmail')||'Not provided'),'Travel date: JKTour24 द्वारा तय (admin schedule pending)','Adults: '+adults.value,'Children: '+children.value+' (fare to confirm)','Pickup: '+v('bkPickup'),'Estimated adult total: '+fmt(total),'Notes: '+(v('bkNotes')||'None'),'Please confirm seat availability, final invoice, advance amount and remaining payment. This is a booking request, not a confirmed booking.'].join('\\n');
  const alert=document.getElementById('bookingAlert');alert.style.display='block';alert.textContent='WhatsApp khulne par message check karke Send dabayein. Booking confirmation abhi pending hai.';
  window.open('https://wa.me/918860742376?text='+encodeURIComponent(message),'_blank','noopener');
 });
