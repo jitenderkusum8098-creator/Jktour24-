@@ -59,7 +59,7 @@
 </div>
 <div class="bill-box" aria-live="polite"><div class="bill-row"><span>पैकेज</span><strong>उज्जैन–ओंकारेश्वर यात्रा</strong></div><div class="bill-row"><span>अवधि</span><strong>4 रात / 5 दिन</strong></div><div class="bill-row"><span>प्रति वयस्क</span><strong>₹6,200</strong></div><div class="bill-row"><span>वयस्क × <span id="adultCount">1</span></span><strong id="adultTotal">₹6,200</strong></div><div class="bill-row"><span>बच्चे</span><strong id="childCount">0 (किराया confirm होगा)</strong></div><div class="bill-row total"><span>अनुमानित कुल (वयस्क)</span><strong id="grandTotal">₹6,200</strong></div><p class="booking-note">यह शुरुआती bill estimate है, अंतिम invoice नहीं। बच्चे का किराया, सीट/होटल उपलब्धता, लागू कर (यदि हों), advance amount और बाकी भुगतान JKTour24 द्वारा पुष्टि किए जाएंगे। बच्चों का किराया, उपलब्धता और अंतिम भुगतान JKTour24 से confirm होगा।</p></div>
 <div class="booking-field full" style="margin:18px 0;padding:14px;border:2px solid #dcae52;background:#fff8e9;border-radius:10px;color:#071a35;line-height:1.6;font-weight:700"><label style="display:flex;gap:10px;align-items:flex-start;cursor:pointer"><input id="tourTermsAccept" name="tourTermsAccept" type="checkbox" required style="width:20px;height:20px;flex:0 0 20px;margin-top:4px"><span>मैंने <a href="tour-rules.html" target="_blank" rel="noopener" style="text-decoration:underline">JKTour24 के सभी 10 यात्रा नियम और Cancellation &amp; Refund Policy</a> पढ़ ली है और समझ ली है।</span></label></div>
-<button class="booking-submit" type="submit">WhatsApp पर Booking Request भेजें →</button>
+<button class="booking-submit" type="submit">आगे बढ़ें — बस और सीट चुनें</button>
 <div class="booking-alert" id="bookingAlert" role="status"></div>
 </form></div></section>
 <script>
@@ -75,7 +75,7 @@ form.addEventListener('submit',function(e){
  const childAges=[...childAgeFields.querySelectorAll('.child-age-input')].map(x=>Number(x.value));const childTotal=childAges.reduce((sum,age)=>sum+(age>=6?price:0),0);const total=Number(adults.value)*price+childTotal;
  const message=['Namaste JKTour24, mujhe tour booking request karni hai.','Package: उज्जैन–ओंकारेश्वर यात्रा','Duration: 4 रात / 5 दिन','Name: '+v('bkName'),'Mobile: '+v('bkPhone'),'Age: '+v('bkAge'),'Gender: '+v('bkGender'),'Address: '+v('bkAddress'),'Emergency contact: '+v('bkEmergency'),'Email: '+(v('bkEmail')||'Not provided'),'Travel date: JKTour24 द्वारा तय (admin schedule pending)','Adults: '+adults.value,'Children: '+children.value+'; ages: '+childAges.join(', ')+'; up to 5 years free; age 6+ full package fare','Pickup: '+v('bkPickup'),'Total ticket price: '+fmt(total),'Notes: '+(v('bkNotes')||'None'),'Please confirm seat availability, final invoice, advance amount and remaining payment. This is a booking request, not a confirmed booking.'].join('\\n');
  const alert=document.getElementById('bookingAlert');alert.style.display='block';alert.textContent='WhatsApp khulne par message check karke Send dabayein. Booking confirmation abhi pending hai.';
- window.open('https://wa.me/918860742376?text='+encodeURIComponent(message),'_blank','noopener');
+ window.location.href='booking.html?package=ujjain';
 });
 })();
 </script>
