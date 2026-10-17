@@ -284,6 +284,7 @@ body.booking-open{overflow:hidden}
 <script>
 function openKhatuBooking(){document.getElementById("khatuBookingModal").classList.add("open");document.body.classList.add("booking-open")}
 function closeKhatuBooking(){document.getElementById("khatuBookingModal").classList.remove("open");document.body.classList.remove("booking-open")}
+window.addEventListener("DOMContentLoaded",function(){if(location.hash==="#book-now")openKhatuBooking()});
 const khatuForm=document.getElementById("khatuBookingForm");
 
 document.getElementById("khatuBookingModal").addEventListener("click",function(e){if(e.target===this)closeKhatuBooking()});
