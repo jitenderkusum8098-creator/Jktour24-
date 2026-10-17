@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="hi">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta name="build-version" content="2026-10-12-khatu-package-v1">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta name="theme-color" content="#071a35"><meta name="build-version" content="2026-10-18-customer-mobile-refresh-v1">
 <title>JKTour24 | तीर्थ यात्रा पैकेज</title>
 <meta name="description" content="JKTour24 के साथ उज्जैन, ओंकारेश्वर और ममलेश्वर दर्शन यात्रा — उज्जैन और राजस्थान तीर्थ यात्रा पैकेज।">
 <style>
@@ -286,10 +286,71 @@
  .homepage-destination{font-size:10px!important;line-height:1.55!important;padding:8px 2px!important;color:#fff!important;overflow-wrap:anywhere}
  .homepage-destination span{font-size:22px!important;margin-bottom:8px!important}
 }
+
+/* JKTour24 customer website refresh — mobile navigation, readability and touch targets */
+:root{scroll-behavior:smooth;scroll-padding-top:88px}
+.top{position:sticky;top:0;z-index:50;min-height:78px;padding:11px clamp(16px,4vw,56px);box-shadow:0 6px 24px #0002}
+.brand{min-width:0;gap:10px;letter-spacing:1.5px}
+.brand-logo{width:48px;height:48px;flex:0 0 48px}
+.brand small{letter-spacing:1.2px;line-height:1.5}
+.nav{align-items:center;flex-wrap:wrap}
+.nav a{padding:10px 12px;border-radius:8px;text-decoration:none;transition:background .18s ease,color .18s ease}
+.nav a:hover,.nav a:focus-visible{background:#dcae5220;color:#f2ca70;outline:none}
+.mobile-menu-toggle{display:none;align-items:center;justify-content:center;flex-direction:column;gap:5px;width:44px;height:44px;border:1px solid #dcae5270;border-radius:10px;background:#111;color:#fff;cursor:pointer}
+.mobile-menu-toggle span{display:block;width:20px;height:2px;background:#f2ca70;border-radius:2px}
+.hero{background-position:center;background-size:cover;position:relative}
+.tour-card,.card,.package-box{box-shadow:0 12px 32px #071a3510}
+.tour-card{height:100%}
+.tour-cta,.btn,.package-btn{touch-action:manipulation}
+.tour-cta:focus-visible,.btn:focus-visible,.package-btn:focus-visible,.pkg-input:focus-visible,.mobile-menu-toggle:focus-visible{outline:3px solid #dcae52;outline-offset:3px}
+.pkg-input{max-width:100%;min-height:46px}
+.pkg-dialog{overscroll-behavior:contain}
+.tour-note a{color:#755319}
+@media(max-width:760px){
+ .top{position:sticky;top:0;min-height:70px;padding:10px 14px;gap:10px}
+ .brand{font-size:14px;letter-spacing:1px}
+ .brand-logo{width:42px;height:42px;flex-basis:42px}
+ .brand small{font-size:9px;letter-spacing:.7px}
+ .mobile-menu-toggle{display:flex;flex:0 0 44px}
+ .nav{display:none;position:absolute;left:10px;right:10px;top:calc(100% + 7px);padding:10px;background:#080b10;border:1px solid #dcae5270;border-radius:14px;box-shadow:0 14px 32px #0004;flex-direction:column;align-items:stretch;gap:4px}
+ .nav.is-open{display:flex}
+ .nav a{display:block;padding:13px 14px;font-size:15px;border-bottom:1px solid #ffffff14}
+ .nav a:last-child{border-bottom:0}
+ .hero{aspect-ratio:4/3;min-height:220px;background-size:cover;background-position:center}
+ .package-area{padding:34px 4%}
+ .tour-heading{padding:0 5px;margin-bottom:22px}
+ .tour-heading .section-title{line-height:1.25}
+ .tour-grid{gap:18px}
+ .tour-card{border-radius:16px}
+ .tour-cover{height:205px}
+ .tour-content{padding:19px}
+ .tour-content h2{font-size:23px}
+ .tour-description{font-size:14px;line-height:1.75}
+ .tour-includes{gap:6px}
+ .tour-includes>div{padding:10px 4px}
+ .tour-bottom{gap:10px}
+ .tour-price{font-size:31px}
+ .tour-cta{width:100%;min-height:48px;padding:12px 14px}
+ .pkg-dialog{padding:18px}
+}
+@media(max-width:380px){
+ .brand{gap:7px;font-size:12px}
+ .brand-logo{width:38px;height:38px;flex-basis:38px}
+ .brand small{font-size:8px}
+ .tour-content{padding:15px}
+ .tour-cover{height:180px}
+ .tour-includes b{font-size:10px}
+ .tour-includes small{font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){
+ :root{scroll-behavior:auto}
+ *,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+}
+
 </style>
 </head>
 <body>
-<header class="top"><div class="brand"><img class="brand-logo" src="logo.svg" alt="JKTour24 logo"><div>JKTOUR24<small>TRAVEL MORE, WORRY LESS</small></div></div><nav class="nav"><a href="#package">पैकेज</a><a href="#itinerary">यात्रा कार्यक्रम</a><a href="#included">क्या शामिल है</a><a href="#contact">संपर्क</a></nav></header>
+<header class="top"><div class="brand"><img class="brand-logo" src="logo.svg" alt="JKTour24 logo"><div>JKTOUR24<small>TRAVEL MORE, WORRY LESS</small></div></div><button class="mobile-menu-toggle" type="button" aria-label="मेन्यू खोलें" aria-expanded="false" aria-controls="primary-navigation"><span></span><span></span><span></span></button><nav class="nav" id="primary-navigation"><a href="#package">पैकेज</a><a href="#itinerary">यात्रा कार्यक्रम</a><a href="#included">क्या शामिल है</a><a href="#contact">संपर्क</a></nav></header>
 <section class="hero" id="package" aria-label="JKTOUR24 उज्जैन और ओंकारेश्वर यात्रा बैनर"></section>
 
 <section class="yatra-story" id="jk-safar-story" aria-labelledby="yatra-story-title">
@@ -405,4 +466,28 @@ let deviQty=1,deviCart=0;const deviPrice=8500;function deviMoney(n){return '₹'
   }catch(e){}
 })();
 </script>
+
+<script>
+/* Accessible mobile menu for the existing customer website navigation */
+(function(){
+  var toggle=document.querySelector('.mobile-menu-toggle');
+  var nav=document.getElementById('primary-navigation');
+  if(!toggle||!nav)return;
+  function closeMenu(){
+    nav.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded','false');
+    toggle.setAttribute('aria-label','मेन्यू खोलें');
+  }
+  toggle.addEventListener('click',function(){
+    var open=!nav.classList.contains('is-open');
+    nav.classList.toggle('is-open',open);
+    toggle.setAttribute('aria-expanded',String(open));
+    toggle.setAttribute('aria-label',open?'मेन्यू बंद करें':'मेन्यू खोलें');
+  });
+  nav.querySelectorAll('a').forEach(function(link){link.addEventListener('click',closeMenu);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu();});
+  window.addEventListener('resize',function(){if(window.innerWidth>760)closeMenu();});
+})();
+</script>
+
 </body></html>
