@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071a35"><meta name="description" content="JKTour24 package, bus, hotel, food reviews and yatra photos/videos.">
+<title>यात्रा Reviews & Gallery | JKTour24</title>
+<style>
+:root{--navy:#071a35;--gold:#e7b957;--ink:#172033;--muted:#667085;--line:#e4e7ec;--cream:#fff9eb}
+*{box-sizing:border-box}body{margin:0;background:#f5f7fb;color:var(--ink);font-family:Arial,'Noto Sans Devanagari',sans-serif;line-height:1.65}
+header{background:#050607;color:white;padding:14px clamp(16px,5vw,60px);display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid var(--gold);gap:12px}header strong{letter-spacing:1.5px}header small{display:block;color:#e7c66f;font-size:10px;letter-spacing:1px}header a{color:#f5d88f;text-decoration:none;font-weight:700}
+main{max-width:1050px;margin:28px auto;padding:0 14px 48px}.hero{background:linear-gradient(130deg,#071a35,#17385b);border-radius:18px;color:#fff;padding:26px}.hero span{color:#f5d88f;font-weight:800;font-size:12px;letter-spacing:2px}.hero h1{margin:6px 0;font-size:clamp(27px,5vw,40px)}.hero p{color:#e1e8f0;margin:0}
+.notice{background:#fff4d6;border:1px solid #e9c86e;border-radius:12px;padding:12px 15px;color:#65480e;font-size:13px;margin:16px 0}
+.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:18px 0}.tab{border:1px solid #d7dce5;border-radius:10px;padding:12px 8px;background:white;font-weight:800;cursor:pointer;color:var(--navy)}.tab[aria-selected=true]{background:var(--navy);color:#fff;border-color:var(--gold);box-shadow:inset 0 -3px var(--gold)}
+.panel{background:white;border:1px solid var(--line);border-radius:15px;padding:20px;margin:12px 0;box-shadow:0 8px 25px #071a3508}.panel h2{margin:0 0 8px;color:var(--navy)}.empty{border:1px dashed #cbd2de;border-radius:12px;text-align:center;padding:26px 14px;color:var(--muted);background:#fafbfc}.empty b{display:block;color:var(--navy);font-size:17px;margin-bottom:4px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.field{display:block;font-weight:700;font-size:13px;margin:12px 0 5px}.input{width:100%;padding:12px;border:1px solid #cbd2de;border-radius:8px;font:inherit;background:#fff}.btn{display:inline-block;background:var(--gold);color:#111;border:0;border-radius:8px;padding:12px 16px;font-weight:800;text-decoration:none;cursor:pointer}.btn.secondary{background:#fff;border:1px solid var(--navy)}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.muted{font-size:12px;color:var(--muted)}.stars{font-size:23px;letter-spacing:3px;color:#d19a22;cursor:pointer}.stars button{font-size:24px;border:0;background:none;color:#d0d5dd;padding:0 2px;cursor:pointer}.stars button.active{color:#d19a22}
+@media(max-width:640px){.tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:1fr}header{padding:12px}.panel{padding:15px}}
+</style>
+</head>
+<body>
+<header><div><strong>JKTOUR24</strong><small>TRAVEL MORE, WORRY LESS</small></div><a href="index.html">← पैकेज पर वापस जाएँ</a></header>
+<main>
+<section class="hero"><span>REAL JOURNEYS • REAL EXPERIENCES</span><h1>हमारी यात्राओं के Reviews & Photos ❤️</h1><p>Package, bus, hotel और food का feedback देखें। यात्रियों की photos/videos approval के बाद यहाँ दिखाई जाएँगी।</p></section>
+<div class="notice"><b>महत्वपूर्ण:</b> अभी यह reviews/gallery पेज का UI preview है। असली reviews, media uploads और Super Admin approval को सुरक्षित backend से जोड़ना बाकी है। कोई sample या unverified review असली review के रूप में नहीं दिखाया जा रहा।</div>
+<div class="tabs" role="tablist" aria-label="Review categories">
+<button class="tab" role="tab" aria-selected="true" data-panel="package">⭐ Package Reviews</button>
+<button class="tab" role="tab" aria-selected="false" data-panel="bus">🚌 Bus Reviews</button>
+<button class="tab" role="tab" aria-selected="false" data-panel="hotel">🏨 Hotel Reviews</button>
+<button class="tab" role="tab" aria-selected="false" data-panel="food">🍽️ Food Reviews</button>
+</div>
+<section class="panel" id="reviews-panel" role="tabpanel"><h2 id="panel-title">⭐ Package Reviews</h2><div class="empty"><b>अभी verified reviews उपलब्ध नहीं हैं</b>ग्राहकों के approved reviews जुड़ने पर यहाँ rating, नाम और review दिखेंगे।</div></section>
+<section class="panel"><h2>📸 हमारी यात्रा की Photos & Videos</h2><p>Admin द्वारा प्रकाशित और Super Admin से approved यात्रियों की photos/videos यहाँ gallery में दिखाई जाएँगी।</p><div class="empty"><b>Gallery जल्द उपलब्ध होगी</b>अभी कोई verified media item प्रकाशित नहीं किया गया है।</div></section>
+<section class="panel"><h2>✍️ अपना Review भेजें</h2><p>अपनी यात्रा का अनुभव भेजें। Public website पर दिखाने से पहले review को approval मिलना चाहिए।</p>
+<form id="review-form"><div class="grid"><div><label class="field" for="customer-name">आपका नाम</label><input class="input" id="customer-name" required maxlength="80" placeholder="पूरा नाम"></div><div><label class="field" for="package">किस पैकेज की यात्रा की?</label><select class="input" id="package" required><option value="">पैकेज चुनें</option><option>दिल्ली से उज्जैन दर्शन यात्रा</option><option>खाटू श्याम जी यात्रा</option><option>9 देवी • शिवखोड़ी • हरिद्वार</option></select></div></div>
+<label class="field">Overall rating</label><div class="stars" id="star-picker" aria-label="1 से 5 स्टार चुनें"><button type="button" data-rating="1" aria-label="1 star">★</button><button type="button" data-rating="2" aria-label="2 stars">★</button><button type="button" data-rating="3" aria-label="3 stars">★</button><button type="button" data-rating="4" aria-label="4 stars">★</button><button type="button" data-rating="5" aria-label="5 stars">★</button></div>
+<label class="field" for="review-text">आपका review</label><textarea class="input" id="review-text" required rows="4" maxlength="1200" placeholder="अपना अनुभव लिखें"></textarea>
+<label class="field" for="media-file">यात्रा की photo/video (वैकल्पिक)</label><input class="input" id="media-file" type="file" accept="image/*,video/*"><p class="muted">यह UI preview अभी review या file को server पर भेजता नहीं है। कोई भी review/media public नहीं होगा जब तक secure submission और approval workflow जोड़ा न जाए।</p>
+<div class="actions"><button class="btn" type="submit">Review Submit Preview</button><a class="btn secondary" href="index.html">पैकेज देखें</a></div><p id="form-message" class="muted" aria-live="polite"></p></form></section>
+</main>
+<script>
+(function(){
+const titles={package:'⭐ Package Reviews',bus:'🚌 Bus Reviews',hotel:'🏨 Hotel Reviews',food:'🍽️ Food Reviews'};
+document.querySelectorAll('.tab').forEach(function(tab){tab.addEventListener('click',function(){document.querySelectorAll('.tab').forEach(function(t){t.setAttribute('aria-selected',String(t===tab));});document.getElementById('panel-title').textContent=titles[tab.dataset.panel];});});
+let rating=0;document.querySelectorAll('#star-picker button').forEach(function(btn){btn.addEventListener('click',function(){rating=Number(btn.dataset.rating);document.querySelectorAll('#star-picker button').forEach(function(b){b.classList.toggle('active',Number(b.dataset.rating)<=rating);});});});
+document.getElementById('review-form').addEventListener('submit',function(e){e.preventDefault();if(!rating){document.getElementById('form-message').textContent='कृपया 1 से 5 स्टार rating चुनें।';return;}document.getElementById('form-message').textContent='यह केवल preview है—review या media server पर submit नहीं हुआ। Live submission और Super Admin approval backend जोड़ने के बाद सक्रिय होगा।';});
+})();
+</script>
+</body></html>

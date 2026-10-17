@@ -37,12 +37,12 @@ footer{text-align:center;color:#667085;font-size:12px;padding:20px}
 <header><a href="index.html" class="brand" aria-label="JKTour24 home">JKTOUR24<small>TRAVEL MORE, WORRY LESS</small></a><a href="index.html">← वेबसाइट पर वापस</a></header>
 <main>
 <section class="hero"><div class="eyebrow">JOURNEY • SEAT • TICKET</div><h1>🚌 अपनी बस सीट बुक करें</h1><p>Boarding point चुनें, अपनी पसंद की सीट चुनें और ticket details देखें।</p></section>
-<div class="demo-notice"><b>टेस्ट मोड:</b> यह अभी booking-flow preview है। नीचे दिए गए route/stops और seats नमूने के लिए हैं। असली seat availability, online payment और confirmed ticket के लिए operator route data और secure backend/payment gateway जोड़ना बाकी है। इस preview से वास्तविक booking या payment नहीं होगी।</div>
+<div class="demo-notice"><b>टेस्ट मोड:</b> यह अभी booking-flow preview है। Live system में package की fixed date/time, bus type और boarding/dropping points Super Admin सेट करेगा; customer departure date/time या bus type नहीं बदलेगा। इस preview में Super Admin/backend connection अभी नहीं है, इसलिए नीचे के route/stops और seats sample हैं। असली seat availability, payment और confirmed ticket के लिए secure backend तथा payment gateway जोड़ना बाकी है। इस preview से वास्तविक booking या payment नहीं होगी।</div>
 <form id="busForm">
 <section class="card"><h2 class="step-title"><span class="step-no">1</span> यात्रा और Boarding / Dropping Point</h2>
 <div class="fields">
-<div><label for="journeyDate">यात्रा की तारीख</label><input id="journeyDate" type="date" required></div>
-<div><label for="busType">बस का प्रकार</label><select id="busType" required><option value="AC Seater">AC Seater</option><option value="AC Sleeper">AC Sleeper (preview)</option><option value="Non-AC Seater">Non-AC Seater (preview)</option></select></div>
+<div><label for="journeyDate">पैकेज की Fixed Date / Time</label><input id="journeyDate" type="text" value="Super Admin द्वारा तय होगा" readonly></div>
+<div><label for="busType">Super Admin द्वारा तय Bus Type</label><input id="busType" type="text" value="AC Seater (demo)" readonly></div>
 <div><label for="boarding">Boarding Point — यहाँ से बस में चढ़ें</label><select id="boarding" required><option value="">Boarding point चुनें</option><option>Delhi — Kashmere Gate (sample)</option><option>Delhi — Anand Vihar (sample)</option><option>Gurugram — IFFCO Chowk (sample)</option></select></div>
 <div><label for="dropping">Dropping Point — यहाँ उतरें</label><select id="dropping" required><option value="">Dropping point चुनें</option><option>Ujjain — Dewas Gate (sample)</option><option>Ujjain — Nanakheda Bus Stand (sample)</option><option>Indore — Sarwate Bus Stand (sample)</option></select></div>
 </div>
@@ -67,7 +67,7 @@ footer{text-align:center;color:#667085;font-size:12px;padding:20px}
 <script>
 (function(){
 const $=id=>document.getElementById(id),price=6200,selected=new Set(),sampleBooked=new Set(['A1','A2','B4','C3','D2','E4']);
-const date=$('journeyDate');date.min=new Date().toISOString().slice(0,10);
+
 const rows=['A','B','C','D','E','F','G','H'];
 rows.forEach((row,idx)=>{for(let col=1;col<=4;col++){if(col===3){const gap=document.createElement('span');gap.className='aisle';gap.setAttribute('aria-hidden','true');$('seatGrid').appendChild(gap)}const id=row+col,btn=document.createElement('button');btn.type='button';btn.className='seat';btn.textContent=id;btn.setAttribute('aria-label','Seat '+id);if(sampleBooked.has(id)){btn.classList.add('booked');btn.disabled=true;btn.title='Sample booked seat'}else{btn.addEventListener('click',()=>{if(selected.has(id))selected.delete(id);else selected.add(id);btn.classList.toggle('selected',selected.has(id));btn.setAttribute('aria-pressed',String(selected.has(id)));updateSummary()})}$('seatGrid').appendChild(btn)}});
 function money(n){return '₹'+n.toLocaleString('en-IN')}
