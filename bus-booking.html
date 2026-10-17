@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071a35">
+<meta name="description" content="JKTour24 bus seat selection, boarding point, dropping point and ticket preview.">
+<title>Bus Booking | JKTour24</title>
+<style>
+:root{--navy:#071a35;--gold:#e7b957;--ink:#172033;--muted:#667085;--line:#e4e7ec;--cream:#fff9eb}
+*{box-sizing:border-box}body{margin:0;background:#f5f7fb;color:var(--ink);font-family:Arial,'Noto Sans Devanagari',sans-serif;line-height:1.5}
+header{background:#050607;color:#fff;padding:14px clamp(16px,4vw,50px);display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--gold);gap:12px}
+.brand{font-weight:900;letter-spacing:1.5px}.brand small{display:block;color:#d9d9d9;font-size:10px;letter-spacing:1px}
+header a{color:#f5d88f;text-decoration:none;font-weight:700}
+main{max-width:980px;margin:28px auto;padding:0 14px 40px}
+.hero{background:linear-gradient(130deg,#071a35,#16395b);color:#fff;border-radius:18px;padding:25px;margin-bottom:18px}
+.hero .eyebrow{color:#f5d88f;font-size:11px;font-weight:900;letter-spacing:2px}.hero h1{font-size:clamp(25px,5vw,38px);margin:8px 0}.hero p{color:#e1e8f0;margin:0}
+.demo-notice{background:#fff4d6;border:1px solid #e9c86e;border-radius:12px;padding:13px 15px;color:#65480e;font-size:13px;margin:0 0 18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;margin:16px 0;box-shadow:0 8px 24px #071a3508}
+.step-title{display:flex;align-items:center;gap:10px;margin:0 0 16px;color:var(--navy);font-size:20px}.step-no{display:grid;place-items:center;width:31px;height:31px;flex:0 0 31px;border-radius:50%;background:var(--gold);font-size:14px}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+label{display:block;font-size:13px;font-weight:800;margin-bottom:6px}
+input,select{font:inherit;width:100%;min-height:46px;border:1px solid #cbd2dc;border-radius:9px;padding:10px 12px;background:#fff;color:var(--ink)}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:3px solid #dcae52;outline-offset:2px}
+.bus-summary{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}.pill{padding:8px 11px;background:#f3f5f8;border:1px solid #e4e7ec;border-radius:8px;font-size:13px}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;margin-bottom:15px}.legend span{display:flex;align-items:center;gap:6px}.dot{width:14px;height:14px;border-radius:4px;border:1px solid #cbd2dc;display:inline-block}.available{background:#fff}.selected{background:#e7b957;border-color:#bd8b25}.booked{background:#d7dce4;border-color:#c2c9d3}
+.seat-area{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}.bus{border:2px solid #cbd5e1;border-radius:24px 24px 14px 14px;padding:18px 12px 14px;max-width:430px;width:100%;margin:auto;background:#f8fafc}.driver{font-size:12px;color:#667085;text-align:right;border-bottom:1px dashed #cbd5e1;padding:0 5px 12px;margin-bottom:12px}
+.seat-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}.aisle{visibility:hidden}.seat{min-height:39px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;font-size:12px;font-weight:800;cursor:pointer;padding:5px 2px}.seat.selected{background:#e7b957;border-color:#b98720;color:#111}.seat.booked{background:#d7dce4;color:#7a8492;cursor:not-allowed;text-decoration:line-through}
+.seat-summary{background:#fff9eb;border:1px solid #ead7a5;border-radius:12px;padding:16px}.seat-summary h3{margin:0 0 10px}.seat-summary p{margin:7px 0;color:#4b5563;font-size:14px}
+.payment-options{display:grid;grid-template-columns:1fr 1fr;gap:12px}.payment-option{border:1px solid #d6dce5;border-radius:12px;padding:14px;display:flex;gap:10px;align-items:flex-start;cursor:pointer}.payment-option input{width:18px;min-height:18px;margin:3px 0 0;flex:0 0 18px}.payment-option:has(input:checked){border-color:#c09235;background:#fff9eb}.payment-option b{display:block}.payment-option small{display:block;color:var(--muted);font-weight:400;margin-top:4px}
+.primary{display:block;width:100%;border:0;border-radius:10px;background:linear-gradient(120deg,#ffe19a,#e2b24f);color:#101828;font-weight:900;font-size:16px;padding:15px;cursor:pointer;margin-top:16px}.primary:disabled{opacity:.55;cursor:not-allowed}
+.ticket{display:none;border:2px solid #d6b65e;background:#fff;border-radius:16px;overflow:hidden;margin-top:18px}.ticket.show{display:block}.ticket-head{background:var(--navy);color:#fff;padding:18px}.ticket-head h2{margin:0 0 5px}.ticket-head strong{color:#f5d88f;font-size:22px}.ticket-body{padding:18px}.ticket-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.ticket-item small{display:block;color:var(--muted);font-size:11px}.ticket-item b{overflow-wrap:anywhere}.ticket-warning{background:#fff4d6;color:#65480e;border-radius:8px;padding:10px;margin-top:15px;font-size:12px}
+footer{text-align:center;color:#667085;font-size:12px;padding:20px}
+@media(max-width:650px){main{margin:18px auto}.hero{padding:20px}.card{padding:16px}.fields,.seat-area,.payment-options,.ticket-grid{grid-template-columns:1fr}.seat-area{gap:14px}.bus{max-width:360px}.seat-grid{gap:6px}.seat{min-height:38px}.step-title{font-size:18px}}
+</style>
+</head>
+<body>
+<header><a href="index.html" class="brand" aria-label="JKTour24 home">JKTOUR24<small>TRAVEL MORE, WORRY LESS</small></a><a href="index.html">← वेबसाइट पर वापस</a></header>
+<main>
+<section class="hero"><div class="eyebrow">JOURNEY • SEAT • TICKET</div><h1>🚌 अपनी बस सीट बुक करें</h1><p>Boarding point चुनें, अपनी पसंद की सीट चुनें और ticket details देखें।</p></section>
+<div class="demo-notice"><b>टेस्ट मोड:</b> यह अभी booking-flow preview है। नीचे दिए गए route/stops और seats नमूने के लिए हैं। असली seat availability, online payment और confirmed ticket के लिए operator route data और secure backend/payment gateway जोड़ना बाकी है। इस preview से वास्तविक booking या payment नहीं होगी।</div>
+<form id="busForm">
+<section class="card"><h2 class="step-title"><span class="step-no">1</span> यात्रा और Boarding / Dropping Point</h2>
+<div class="fields">
+<div><label for="journeyDate">यात्रा की तारीख</label><input id="journeyDate" type="date" required></div>
+<div><label for="busType">बस का प्रकार</label><select id="busType" required><option value="AC Seater">AC Seater</option><option value="AC Sleeper">AC Sleeper (preview)</option><option value="Non-AC Seater">Non-AC Seater (preview)</option></select></div>
+<div><label for="boarding">Boarding Point — यहाँ से बस में चढ़ें</label><select id="boarding" required><option value="">Boarding point चुनें</option><option>Delhi — Kashmere Gate (sample)</option><option>Delhi — Anand Vihar (sample)</option><option>Gurugram — IFFCO Chowk (sample)</option></select></div>
+<div><label for="dropping">Dropping Point — यहाँ उतरें</label><select id="dropping" required><option value="">Dropping point चुनें</option><option>Ujjain — Dewas Gate (sample)</option><option>Ujjain — Nanakheda Bus Stand (sample)</option><option>Indore — Sarwate Bus Stand (sample)</option></select></div>
+</div>
+<div class="bus-summary"><span class="pill">🚌 JKTour24 • Demo Coach</span><span class="pill">⏱ समय और वास्तविक route operator से confirm होगा</span><span class="pill">💺 Seat preview</span></div>
+</section>
+<section class="card"><h2 class="step-title"><span class="step-no">2</span> अपनी सीट चुनें</h2>
+<div class="legend"><span><i class="dot available"></i> Available</span><span><i class="dot selected"></i> Selected</span><span><i class="dot booked"></i> Sample booked</span></div>
+<div class="seat-area"><div class="bus"><div class="driver">🚍 Driver / Front</div><div class="seat-grid" id="seatGrid" aria-label="Bus seat layout"></div></div>
+<aside class="seat-summary"><h3>आपकी booking</h3><p>Selected seat: <b id="selectedSeatsText">कोई सीट नहीं</b></p><p>Seats: <b id="seatCount">0</b></p><p>Sample fare per seat: <b>₹6,200</b></p><p style="font-size:21px;color:#071a35"><b id="totalFare">₹0</b></p><p style="font-size:12px">यह केवल preview fare है; वास्तविक किराया route और package के अनुसार तय होगा।</p></aside></div>
+</section>
+<section class="card"><h2 class="step-title"><span class="step-no">3</span> यात्री की जानकारी</h2>
+<div class="fields"><div><label for="customerName">पूरा नाम</label><input id="customerName" autocomplete="name" required placeholder="अपना नाम"></div><div><label for="customerMobile">मोबाइल नंबर</label><input id="customerMobile" type="tel" inputmode="numeric" pattern="[0-9+ -]{10,15}" autocomplete="tel" required placeholder="मोबाइल नंबर"></div></div>
+</section>
+<section class="card"><h2 class="step-title"><span class="step-no">4</span> Payment Mode चुनें</h2>
+<div class="payment-options"><label class="payment-option"><input type="radio" name="paymentMode" value="Cash / Pay on Boarding" required><span><b>💵 Cash</b><small>Boarding पर cash — preview only</small></span></label><label class="payment-option"><input type="radio" name="paymentMode" value="Online (not connected)" required><span><b>📱 Online Payment</b><small>Payment gateway अभी connect नहीं है; कोई पैसा नहीं कटेगा।</small></span></label></div>
+<button class="primary" type="submit">Booking Preview बनाएँ →</button>
+</section>
+</form>
+<section class="ticket" id="ticket" aria-live="polite"><div class="ticket-head"><h2>🎫 Ticket Preview तैयार है</h2><div>Demo Ticket Number</div><strong id="ticketNo"></strong></div><div class="ticket-body"><div class="ticket-grid" id="ticketGrid"></div><div class="ticket-warning"><b>ध्यान दें:</b> यह DEMO ticket है, confirmed travel ticket नहीं। कोई seat server पर reserve नहीं हुई और कोई payment process नहीं हुआ। असली booking के लिए secure backend, operator route inventory और payment verification जोड़ना आवश्यक है।</div><button class="primary" type="button" id="printTicket">Ticket Print / Save PDF</button></div></section>
+</main>
+<footer>© JKTour24 · Travel More, Worry Less · Demo booking interface</footer>
+<script>
+(function(){
+const $=id=>document.getElementById(id),price=6200,selected=new Set(),sampleBooked=new Set(['A1','A2','B4','C3','D2','E4']);
+const date=$('journeyDate');date.min=new Date().toISOString().slice(0,10);
+const rows=['A','B','C','D','E','F','G','H'];
+rows.forEach((row,idx)=>{for(let col=1;col<=4;col++){if(col===3){const gap=document.createElement('span');gap.className='aisle';gap.setAttribute('aria-hidden','true');$('seatGrid').appendChild(gap)}const id=row+col,btn=document.createElement('button');btn.type='button';btn.className='seat';btn.textContent=id;btn.setAttribute('aria-label','Seat '+id);if(sampleBooked.has(id)){btn.classList.add('booked');btn.disabled=true;btn.title='Sample booked seat'}else{btn.addEventListener('click',()=>{if(selected.has(id))selected.delete(id);else selected.add(id);btn.classList.toggle('selected',selected.has(id));btn.setAttribute('aria-pressed',String(selected.has(id)));updateSummary()})}$('seatGrid').appendChild(btn)}});
+function money(n){return '₹'+n.toLocaleString('en-IN')}
+function updateSummary(){$('selectedSeatsText').textContent=selected.size?[...selected].sort().join(', '):'कोई सीट नहीं';$('seatCount').textContent=selected.size;$('totalFare').textContent=money(selected.size*price)}
+$('busForm').addEventListener('submit',e=>{e.preventDefault();if(!selected.size){alert('कृपया पहले कम से कम एक seat चुनें।');return}if($('boarding').value===$('dropping').value){alert('Boarding और dropping point अलग-अलग चुनें।');return}
+const mode=document.querySelector('input[name="paymentMode"]:checked');if(!mode){alert('Payment mode चुनें।');return}
+const number='DEMO-JK-'+new Date().toISOString().slice(2,10).replace(/-/g,'')+'-'+Math.random().toString(36).slice(2,7).toUpperCase();
+$('ticketNo').textContent=number;
+const items=[['यात्री',$('customerName').value.trim()],['मोबाइल',$('customerMobile').value.trim()],['यात्रा की तारीख',$('journeyDate').value],['बस का प्रकार',$('busType').value],['Boarding Point',$('boarding').value],['Dropping Point',$('dropping').value],['Seat Number',[...selected].sort().join(', ')],['यात्रियों की संख्या',String(selected.size)],['कुल अनुमानित किराया',money(selected.size*price)],['Payment Mode',mode.value],['Payment Status','Not processed — demo']];
+$('ticketGrid').replaceChildren();items.forEach(([label,value])=>{const div=document.createElement('div');div.className='ticket-item';const small=document.createElement('small');small.textContent=label;const b=document.createElement('b');b.textContent=value;div.append(small,b);$('ticketGrid').appendChild(div)});
+$('ticket').classList.add('show');$('ticket').scrollIntoView({behavior:'smooth',block:'start'});
+});
+$('printTicket').addEventListener('click',()=>window.print());
+})();
+</script>
+<style>@media print{header,.hero,.demo-notice,#busForm,footer,#printTicket{display:none!important}body{background:#fff}.ticket{display:block!important;border:1px solid #111;box-shadow:none}main{max-width:none;margin:0;padding:0}.ticket-warning{border:1px solid #999}}</style>
+</body></html>
