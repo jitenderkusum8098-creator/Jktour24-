@@ -29,19 +29,12 @@ main{max-width:1050px;margin:28px auto;padding:0 14px 48px}.hero{background:line
 </div>
 <section class="panel" id="reviews-panel" role="tabpanel"><h2 id="panel-title">⭐ Package Reviews</h2><div class="empty"><b>अभी verified reviews उपलब्ध नहीं हैं</b>ग्राहकों के approved reviews जुड़ने पर यहाँ rating, नाम और review दिखेंगे।</div></section>
 <section class="panel"><h2>📸 हमारी यात्रा की Photos & Videos</h2><p>Admin द्वारा प्रकाशित और Super Admin से approved यात्रियों की photos/videos यहाँ gallery में दिखाई जाएँगी।</p><div class="empty"><b>Gallery जल्द उपलब्ध होगी</b>अभी कोई verified media item प्रकाशित नहीं किया गया है।</div></section>
-<section class="panel"><h2>✍️ अपना Review भेजें</h2><p>अपनी यात्रा का अनुभव भेजें। Public website पर दिखाने से पहले review को approval मिलना चाहिए।</p>
-<form id="review-form"><div class="grid"><div><label class="field" for="customer-name">आपका नाम</label><input class="input" id="customer-name" required maxlength="80" placeholder="पूरा नाम"></div><div><label class="field" for="package">किस पैकेज की यात्रा की?</label><select class="input" id="package" required><option value="">पैकेज चुनें</option><option>दिल्ली से उज्जैन दर्शन यात्रा</option><option>खाटू श्याम जी यात्रा</option><option>9 देवी • शिवखोड़ी • हरिद्वार</option></select></div></div>
-<label class="field">Overall rating</label><div class="stars" id="star-picker" aria-label="1 से 5 स्टार चुनें"><button type="button" data-rating="1" aria-label="1 star">★</button><button type="button" data-rating="2" aria-label="2 stars">★</button><button type="button" data-rating="3" aria-label="3 stars">★</button><button type="button" data-rating="4" aria-label="4 stars">★</button><button type="button" data-rating="5" aria-label="5 stars">★</button></div>
-<label class="field" for="review-text">आपका review</label><textarea class="input" id="review-text" required rows="4" maxlength="1200" placeholder="अपना अनुभव लिखें"></textarea>
-<label class="field" for="media-file">यात्रा की photo/video (वैकल्पिक)</label><input class="input" id="media-file" type="file" accept="image/*,video/*"><p class="muted">यह UI preview अभी review या file को server पर भेजता नहीं है। कोई भी review/media public नहीं होगा जब तक secure submission और approval workflow जोड़ा न जाए।</p>
-<div class="actions"><button class="btn" type="submit">Review Submit Preview</button><a class="btn secondary" href="index.html">पैकेज देखें</a></div><p id="form-message" class="muted" aria-live="polite"></p></form></section>
+<section class="panel"><h2>⭐ केवल वास्तविक यात्रियों के Reviews</h2><p>रेटिंग और review केवल उन्हीं ग्राहकों से लिए जाएँगे जिन्होंने JKTour24 के साथ यात्रा पूरी की है। बिना यात्रा किए दिए गए reviews स्वीकार नहीं किए जाएँगे।</p><div class="empty"><b>Review submission बंद है</b>Verified यात्रियों के reviews सुरक्षित booking verification के बाद ही जोड़े जाएँगे।</div><div class="actions"><a class="btn secondary" href="index.html">पैकेज देखें</a></div></section>
 </main>
 <script>
 (function(){
-const titles={package:'⭐ Package Reviews',bus:'🚌 Bus Reviews',hotel:'🏨 Hotel Reviews',food:'🍽️ Food Reviews'};
-document.querySelectorAll('.tab').forEach(function(tab){tab.addEventListener('click',function(){document.querySelectorAll('.tab').forEach(function(t){t.setAttribute('aria-selected',String(t===tab));});document.getElementById('panel-title').textContent=titles[tab.dataset.panel];});});
-let rating=0;document.querySelectorAll('#star-picker button').forEach(function(btn){btn.addEventListener('click',function(){rating=Number(btn.dataset.rating);document.querySelectorAll('#star-picker button').forEach(function(b){b.classList.toggle('active',Number(b.dataset.rating)<=rating);});});});
-document.getElementById('review-form').addEventListener('submit',function(e){e.preventDefault();if(!rating){document.getElementById('form-message').textContent='कृपया 1 से 5 स्टार rating चुनें।';return;}document.getElementById('form-message').textContent='यह केवल preview है—review या media server पर submit नहीं हुआ। Live submission और Super Admin approval backend जोड़ने के बाद सक्रिय होगा।';});
+const titles={package:"⭐ Package Reviews",bus:"🚌 Bus Reviews",hotel:"🏨 Hotel Reviews",food:"🍽️ Food Reviews"};
+document.querySelectorAll(".tab").forEach(function(tab){tab.addEventListener("click",function(){document.querySelectorAll(".tab").forEach(function(t){t.setAttribute("aria-selected",String(t===tab));});document.getElementById("panel-title").textContent=titles[tab.dataset.panel];});});
 })();
 </script>
 </body></html>
