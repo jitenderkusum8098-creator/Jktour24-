@@ -11,7 +11,7 @@
 <header class="head"><b>JKTOUR24 · SUPER ADMIN PANEL</b><p>पैकेज, बस, सीटें, पिकअप और ड्रॉप सेटिंग</p></header>
 <main class="wrap">
 <div class="notice"><b>ज़रूरी सूचना:</b> यह एडमिन पैनल का प्रारंभिक इंटरफ़ेस है। अभी सेटिंग इसी ब्राउज़र में सेव होती है; ग्राहक वेबसाइट पर लागू करने, सभी डिवाइस पर साझा करने और सुरक्षित लॉगिन के लिए JKTour24 के सही बैकएंड से जोड़ना बाकी है।</div>
-<div class="tabs" role="tablist"><button class="active" data-tab="package">पैकेज सेटिंग</button><button data-tab="bus">बस और सीटें</button><button data-tab="stops">पिकअप / ड्रॉप</button><button data-tab="bookings">बुकिंग</button></div>
+<div class="tabs" role="tablist"><button class="active" data-tab="package">पैकेज सेटिंग</button><button data-tab="bus">बस और सीटें</button><button data-tab="stops">पिकअप / ड्रॉप</button><button data-tab="payments">पेमेंट नियम</button><button data-tab="bookings">बुकिंग</button></div>
 <section id="package" class="panel tabpanel"><h2>पैकेज और तय यात्रा</h2><div class="grid">
 <div class="field"><label>पैकेज चुनें</label><select id="pkg"><option value="khatu">खाटू श्याम जी</option><option value="ujjain">उज्जैन एवं ओंकारेश्वर</option><option value="devi">9 देवी यात्रा</option></select></div>
 <div class="field"><label>यात्रा की तारीख (एडमिन तय करेगा)</label><input id="date" type="date"></div>
@@ -29,13 +29,21 @@
 <div class="field"><label>पिकअप पॉइंट और समय (हर लाइन अलग)</label><textarea id="pickups" rows="6" placeholder="धौला कुआँ | रात 9:00 बजे&#10;जनकपुरी मेट्रो | रात 9:30 बजे"></textarea></div>
 <div class="field"><label>ड्रॉप पॉइंट और समय (हर लाइन अलग)</label><textarea id="drops" rows="6" placeholder="दिल्ली वापसी – धौला कुआँ | सुबह 5:00 बजे"></textarea></div>
 </div><div class="row"><button class="btn" id="saveStops">पिकअप / ड्रॉप सेव करें</button></div><div class="status" id="stopStatus" aria-live="polite"></div></section>
+<section id="payments" class="panel tabpanel hidden"><h2>पेमेंट और टिकट नियम</h2><div class="grid">
+<div class="field"><label>Payment विकल्प</label><select id="advanceMode"><option value="40">40% Advance</option><option value="full">Full Payment</option><option value="both">दोनों विकल्प ग्राहक को दिखाएँ</option></select></div>
+<div class="field"><label>Advance के बाद बाकी भुगतान</label><select id="balancePlace"><option>Pickup Point पर</option></select></div>
+<div class="field"><label>Payment Mode</label><select id="paymentModes" multiple><option selected>Cash</option><option selected>Online</option></select><small>Cash और Online में से ग्राहक चुन सकेगा।</small></div>
+<div class="field"><label>WhatsApp Booking Number</label><input id="adminWa" inputmode="numeric" value="7836875115"></div>
+<div class="field"><label>Free ticket उम्र (5 साल तक)</label><input id="freeAgeLimit" type="number" min="0" max="5" value="5"></div>
+<div class="field"><label>Full ticket उम्र</label><input value="6 साल या उससे अधिक" readonly></div>
+</div><div class="row"><button class="btn" id="savePaymentRules">पेमेंट नियम सेव करें</button></div><div class="status" id="paymentStatus" aria-live="polite"></div><p class="muted">ये सेटिंग अभी केवल इसी ब्राउज़र में सेव होती है। Customer booking पर लागू करने के लिए shared backend connection आवश्यक है।</p></section>
 <section id="bookings" class="panel tabpanel hidden"><h2>बुकिंग सूची</h2><p>इस प्रारंभिक संस्करण में ग्राहक की वास्तविक बुकिंग रिकॉर्ड अभी कनेक्ट नहीं है। सुरक्षित साझा बैकएंड जुड़ने पर यहाँ रेफरेंस, पैकेज, यात्री, सीट, भुगतान मोड और बुकिंग स्थिति दिखाई जाएगी।</p><div class="tablewrap"><table><thead><tr><th>रेफरेंस</th><th>पैकेज</th><th>यात्री</th><th>सीट</th><th>भुगतान</th><th>स्थिति</th></tr></thead><tbody><tr><td colspan="6">अभी कोई साझा बुकिंग डेटा कनेक्ट नहीं है।</td></tr></tbody></table></div></section>
 <p class="muted">सुरक्षा: यह URL अभी सार्वजनिक हो सकता है। वास्तविक एडमिन डेटा जोड़ने से पहले authentication और database permissions लगाना आवश्यक है। इस पेज को सुरक्षित admin login न समझें।</p>
 </main>
 <script>
 const $=id=>document.getElementById(id);const key='jktour24_admin_settings_v1';
-let state={packages:{},buses:{},stops:{}};
-try{state={...state,...JSON.parse(localStorage.getItem(key)||'{}')}}catch(e){}
+let state={packages:{},buses:{},stops:{},payment:{advanceMode:'both',balancePlace:'Pickup Point पर',modes:['Cash','Online'],wa:'7836875115',freeAgeLimit:5}};
+try{state={...state,...JSON.parse(localStorage.getItem(key)||'{}')};state.payment={advanceMode:'both',balancePlace:'Pickup Point पर',modes:['Cash','Online'],wa:'7836875115',freeAgeLimit:5,...(state.payment||{})}}catch(e){}
 function persist(){localStorage.setItem(key,JSON.stringify(state))}
 function say(id,msg){$(id).textContent=msg}
 document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.tabpanel').forEach(x=>x.classList.toggle('hidden',x.id!==b.dataset.tab))}));
