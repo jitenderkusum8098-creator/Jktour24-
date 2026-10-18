@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071a35">
+<title>JKTour24 · Super Admin</title>
+<style>
+:root{--navy:#071a35;--gold:#e8c36a;--ink:#17243a;--line:#dce3eb;--bg:#f4f6fa}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Arial,'Noto Sans Devanagari',sans-serif}.head{background:var(--navy);color:#fff;padding:20px max(16px,calc((100% - 1100px)/2));border-bottom:4px solid var(--gold)}.head b{letter-spacing:1px}.head p{margin:5px 0 0;color:#dce6f5}.wrap{max-width:1100px;margin:22px auto;padding:0 14px}.notice{background:#fff8e5;border:1px solid #e7c46e;border-radius:12px;padding:13px 15px;margin-bottom:18px}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.tabs button,.btn{border:0;border-radius:9px;padding:11px 15px;font-weight:700;cursor:pointer}.tabs button{background:#e6ebf3;color:#263852}.tabs button.active,.btn{background:var(--gold);color:#17243a}.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:18px;box-shadow:0 5px 18px #14213a0a}.panel h2{margin:0 0 14px;font-size:21px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.field label{display:block;font-weight:700;margin:0 0 6px}.field input,.field select,.field textarea{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:9px;background:#fff;color:var(--ink);font:inherit}.field small{display:block;color:#64748b;margin-top:5px}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:16px}.btn.secondary{background:#e9eef5}.status{margin-top:12px;color:#166534;font-weight:700}.hidden{display:none}.muted{color:#64748b;font-size:14px}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:580px}th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line)}th{background:#f2f5f9}@media(max-width:560px){.panel{padding:15px}.head{padding:17px}}
+</style></head>
+<body>
+<header class="head"><b>JKTOUR24 · SUPER ADMIN PANEL</b><p>पैकेज, बस, सीटें, पिकअप और ड्रॉप सेटिंग</p></header>
+<main class="wrap">
+<div class="notice"><b>ज़रूरी सूचना:</b> यह एडमिन पैनल का प्रारंभिक इंटरफ़ेस है। अभी सेटिंग इसी ब्राउज़र में सेव होती है; ग्राहक वेबसाइट पर लागू करने, सभी डिवाइस पर साझा करने और सुरक्षित लॉगिन के लिए JKTour24 के सही बैकएंड से जोड़ना बाकी है।</div>
+<div class="tabs" role="tablist"><button class="active" data-tab="package">पैकेज सेटिंग</button><button data-tab="bus">बस और सीटें</button><button data-tab="stops">पिकअप / ड्रॉप</button><button data-tab="bookings">बुकिंग</button></div>
+<section id="package" class="panel tabpanel"><h2>पैकेज और तय यात्रा</h2><div class="grid">
+<div class="field"><label>पैकेज चुनें</label><select id="pkg"><option value="khatu">खाटू श्याम जी</option><option value="ujjain">उज्जैन एवं ओंकारेश्वर</option><option value="devi">9 देवी यात्रा</option></select></div>
+<div class="field"><label>यात्रा की तारीख (एडमिन तय करेगा)</label><input id="date" type="date"></div>
+<div class="field"><label>प्रति टिकट किराया (₹)</label><input id="fare" type="number" min="0" step="1" placeholder="पैकेज का किराया"></div>
+<div class="field"><label>यात्रा अवधि</label><input id="duration" placeholder="जैसे 3 दिन · 2 रात"></div>
+</div><div class="row"><button class="btn" id="savePkg">पैकेज सेटिंग सेव करें</button></div><div class="status" id="pkgStatus" aria-live="polite"></div></section>
+<section id="bus" class="panel tabpanel hidden"><h2>बस और सीट कॉन्फ़िगरेशन</h2><div class="grid">
+<div class="field"><label>पैकेज</label><select id="busPkg"><option value="khatu">खाटू श्याम जी</option><option value="ujjain">उज्जैन एवं ओंकारेश्वर</option><option value="devi">9 देवी यात्रा</option></select></div>
+<div class="field"><label>बस का नाम</label><input id="busName" placeholder="जैसे खाटू श्याम स्पेशल बस"></div>
+<div class="field"><label>बस का प्रकार</label><select id="busType"><option value="seater">सीटर</option><option value="sleeper">स्लीपर</option><option value="seater-sleeper">सीटर + स्लीपर</option></select></div>
+<div class="field"><label>कुल सीट / बर्थ</label><select id="capacity"><option>16</option><option>20</option><option>27</option><option>29</option><option>30</option><option>32</option><option>36</option><option>40</option><option>45</option></select></div>
+</div><div class="row"><button class="btn" id="saveBus">बस सेटिंग सेव करें</button></div><div class="status" id="busStatus" aria-live="polite"></div></section>
+<section id="stops" class="panel tabpanel hidden"><h2>पिकअप / ड्रॉप पॉइंट और समय</h2><p class="muted">हर लाइन में एक विकल्प लिखें। ग्राहक सिर्फ दिए गए विकल्प चुन सकेगा; समय चुने गए पॉइंट के अनुसार दिखना चाहिए।</p><div class="grid">
+<div class="field"><label>पैकेज</label><select id="stopPkg"><option value="khatu">खाटू श्याम जी</option><option value="ujjain">उज्जैन एवं ओंकारेश्वर</option><option value="devi">9 देवी यात्रा</option></select></div>
+<div class="field"><label>पिकअप पॉइंट और समय (हर लाइन अलग)</label><textarea id="pickups" rows="6" placeholder="धौला कुआँ | रात 9:00 बजे&#10;जनकपुरी मेट्रो | रात 9:30 बजे"></textarea></div>
+<div class="field"><label>ड्रॉप पॉइंट और समय (हर लाइन अलग)</label><textarea id="drops" rows="6" placeholder="दिल्ली वापसी – धौला कुआँ | सुबह 5:00 बजे"></textarea></div>
+</div><div class="row"><button class="btn" id="saveStops">पिकअप / ड्रॉप सेव करें</button></div><div class="status" id="stopStatus" aria-live="polite"></div></section>
+<section id="bookings" class="panel tabpanel hidden"><h2>बुकिंग सूची</h2><p>इस प्रारंभिक संस्करण में ग्राहक की वास्तविक बुकिंग रिकॉर्ड अभी कनेक्ट नहीं है। सुरक्षित साझा बैकएंड जुड़ने पर यहाँ रेफरेंस, पैकेज, यात्री, सीट, भुगतान मोड और बुकिंग स्थिति दिखाई जाएगी।</p><div class="tablewrap"><table><thead><tr><th>रेफरेंस</th><th>पैकेज</th><th>यात्री</th><th>सीट</th><th>भुगतान</th><th>स्थिति</th></tr></thead><tbody><tr><td colspan="6">अभी कोई साझा बुकिंग डेटा कनेक्ट नहीं है।</td></tr></tbody></table></div></section>
+<p class="muted">सुरक्षा: यह URL अभी सार्वजनिक हो सकता है। वास्तविक एडमिन डेटा जोड़ने से पहले authentication और database permissions लगाना आवश्यक है। इस पेज को सुरक्षित admin login न समझें।</p>
+</main>
+<script>
+const $=id=>document.getElementById(id);const key='jktour24_admin_settings_v1';
+let state={packages:{},buses:{},stops:{}};
+try{state={...state,...JSON.parse(localStorage.getItem(key)||'{}')}}catch(e){}
+function persist(){localStorage.setItem(key,JSON.stringify(state))}
+function say(id,msg){$(id).textContent=msg}
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.tabpanel').forEach(x=>x.classList.toggle('hidden',x.id!==b.dataset.tab))}));
+$('savePkg').onclick=()=>{state.packages[$('pkg').value]={date:$('date').value,fare:Number($('fare').value||0),duration:$('duration').value.trim()};persist();say('pkgStatus','इस ब्राउज़र में पैकेज सेटिंग सेव हो गई। ग्राहक वेबसाइट पर लागू करने के लिए बैकएंड कनेक्शन बाकी है।')};
+$('saveBus').onclick=()=>{state.buses[$('busPkg').value]={name:$('busName').value.trim(),type:$('busType').value,capacity:Number($('capacity').value)};persist();say('busStatus','इस ब्राउज़र में बस सेटिंग सेव हो गई। ग्राहक वेबसाइट पर लागू करने के लिए बैकएंड कनेक्शन बाकी है।')};
+$('saveStops').onclick=()=>{state.stops[$('stopPkg').value]={pickups:$('pickups').value.split('\n').map(x=>x.trim()).filter(Boolean),drops:$('drops').value.split('\n').map(x=>x.trim()).filter(Boolean)};persist();say('stopStatus','इस ब्राउज़र में पॉइंट और समय सेव हो गए। ग्राहक वेबसाइट पर लागू करने के लिए बैकएंड कनेक्शन बाकी है।')};
+</script></body></html>
