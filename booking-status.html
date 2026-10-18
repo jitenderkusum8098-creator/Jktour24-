@@ -65,7 +65,7 @@ if(timerEligible){
 }else if(String(b.status||"").toLowerCase()==="expired"){
  timerText.textContent="00:00";timerMsg.textContent="समय समाप्त होने के कारण अस्थायी सीट होल्ड हट गया है। नई बुकिंग करें।";
 }else{timerCard.classList.add("hidden");}
-const paid=b.payment_status==="fully_paid"?"पूरा भुगतान प्राप्त":b.payment_status==="advance_received"?"40% एडवांस प्राप्त":b.payment_status==="payment_issue"?"भुगतान की जाँच आवश्यक":"भुगतान की पुष्टि बाकी";
+const totalFare=Math.max(0,Number(b.fare_total)||0);const receivedAmount=Math.max(0,Number(b.amount_received)||0);const paid=b.payment_status==="fully_paid"?"पूरा भुगतान प्राप्त":b.payment_status==="advance_received"?(receivedAmount>=totalFare*0.4?"40% एडवांस प्राप्त":"आंशिक भुगतान प्राप्त — 40% एडवांस अभी पूरा नहीं"):b.payment_status==="payment_issue"?"भुगतान की जाँच आवश्यक":"भुगतान की पुष्टि बाकी";
 const ticket=b.ticket_status==="issued";
 const confirmed=["confirmed","booked","booking_confirmed"].includes(String(b.status||"").toLowerCase());
 document.getElementById("bookingState").textContent=ticket?"🎫 टिकट जारी":confirmed?"✅ बुकिंग कन्फर्म":"🟠 रिक्वेस्ट प्राप्त";
