@@ -29,6 +29,7 @@ footer{text-align:center;color:#b8c3d0;margin:18px auto 0;font-size:13px}
 <div class="actions"><a class="cta" href="tel:+917836875115">📞 JKTour24 को कॉल करें</a><button type="button" class="cta secondary" id="toggleFull">📋 View Full Booking</button></div>
 <div id="fullBooking" class="hidden"><hr style="border:0;border-top:1px solid #dce4ee;margin:10px 0 14px"><dl id="bookingDetails"></dl><div class="steps" id="statusSteps"></div></div>
 </div>
+<div class="card notice" id="paymentTimerCard"><h3 style="margin:0 0 8px">⏳ सीट होल्ड और भुगतान का समय</h3><p class="sub" style="margin:0 0 8px">आपकी चुनी हुई सीटें बुकिंग नंबर बनने के बाद 10 मिनट तक अस्थायी रूप से होल्ड रहेंगी।</p><strong id="holdCountdown" style="font-size:26px;color:#9b6b00">10:00</strong><p id="holdTimerMessage" class="sub" style="margin:8px 0 0">समय समाप्त होने से पहले भुगतान की पुष्टि कराएँ।</p></div>
 <div class="card ticket-box" id="ticketWaiting"><h3 style="margin:0 0 7px">🎫 आपकी कन्फर्म टिकट</h3><b>⏳ कृपया प्रतीक्षा करें!</b><p class="sub" style="margin-bottom:0">बुकिंग कन्फर्म होने और टिकट जारी होने के बाद टिकट यहाँ दिखाई देगी।</p></div>
 <div id="ticket" class="card ticket-box hidden"><h2 style="margin-top:0">🎫 आपकी टिकट जारी हो गई है</h2><div id="ticketDetails"></div></div>
 <div class="card"><h3 style="margin-top:0">🚌 टिकट नंबर मिलने के बाद</h3><div class="steps">🎫 अपनी टिकट और यात्रा की जानकारी देखें।<br>📍 बोर्डिंग पॉइंट का पता और उपलब्ध समय जाँचें।<br>🚌 बस का लाइव स्टेटस तभी देखें जब लाइव लोकेशन सुविधा उपलब्ध हो।<br>☎️ सहायता के लिए JKTour24 को कॉल करें।</div></div>
@@ -55,6 +56,15 @@ document.getElementById("greeting").textContent="नमस्ते, "+(b.custom
 document.getElementById("customerName").textContent=b.customer_name||"—";
 document.getElementById("customerMobile").textContent=b.customer_mobile||b.mobile_number||b.customer_phone||b.phone||"—";
 document.getElementById("bookingCode").textContent=b.booking_code||"—";
+const timerCard=document.getElementById("paymentTimerCard"),timerText=document.getElementById("holdCountdown"),timerMsg=document.getElementById("holdTimerMessage");
+const timerEligible=b.payment_status==="pending"&&b.ticket_status!=="issued"&&String(b.status||"").toLowerCase()!=="expired";
+if(timerEligible){
+ const endAt=new Date(b.hold_expires_at||new Date(b.created_at).getTime()+600000).getTime();
+ const tick=()=>{const left=Math.max(0,endAt-Date.now()),mins=Math.floor(left/60000),secs=Math.floor((left%60000)/1000);timerText.textContent=String(mins).padStart(2,"0")+":"+String(secs).padStart(2,"0");if(left<=0){timerMsg.textContent="10 मिनट पूरे हो गए। बुकिंग और सीट की स्थिति दोबारा जाँची जा रही है…";timerText.textContent="00:00";setTimeout(()=>location.reload(),1200);}};
+ tick();setInterval(tick,1000);setInterval(()=>location.reload(),30000);
+}else if(String(b.status||"").toLowerCase()==="expired"){
+ timerText.textContent="00:00";timerMsg.textContent="समय समाप्त होने के कारण अस्थायी सीट होल्ड हट गया है। नई बुकिंग करें।";
+}else{timerCard.classList.add("hidden");}
 const paid=b.payment_status==="fully_paid"?"पूरा भुगतान प्राप्त":b.payment_status==="advance_received"?"40% एडवांस प्राप्त":b.payment_status==="payment_issue"?"भुगतान की जाँच आवश्यक":"भुगतान की पुष्टि बाकी";
 const ticket=b.ticket_status==="issued";
 const confirmed=["confirmed","booked","booking_confirmed"].includes(String(b.status||"").toLowerCase());
