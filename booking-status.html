@@ -63,6 +63,27 @@ document.getElementById("shortStatus").textContent=ticket?"टिकट जा�
 const rows=[["यात्री",b.customer_name],["मोबाइल नंबर",b.customer_mobile||b.mobile_number||b.customer_phone||b.phone],["बुकिंग नंबर",b.booking_code],["बुकिंग स्थिति",ticket?"टिकट जारी":confirmed?"कन्फर्म":"कन्फर्म होना बाकी"],["पैकेज",b.package_name],["यात्रा तारीख",b.travel_date||"एडमिन द्वारा तय होगी"],["पिकअप",b.pickup_point],["पिकअप समय",b.pickup_time],["ड्रॉप",b.drop_point],["सीटें",Array.isArray(b.selected_seats)?b.selected_seats.join(", "):"—"],["कुल किराया","₹"+Number(b.fare_total||0).toLocaleString("en-IN")],["भुगतान योजना",b.payment_plan==="advance_40"?"40% एडवांस":"पूरा भुगतान"],["भुगतान तरीका",b.payment_method==="cash"?"नकद (Cash)":"ऑनलाइन (Online)"],["भुगतान स्थिति",paid],["प्राप्त राशि","₹"+Number(b.amount_received||0).toLocaleString("en-IN")]];
 document.getElementById("bookingDetails").innerHTML=rows.map(([k,v])=>"<dt>"+esc(k)+"</dt><dd>"+esc(v)+"</dd>").join("");
 document.getElementById("statusSteps").innerHTML="🟢 बुकिंग रिक्वेस्ट प्राप्त हुई<br>"+(confirmed?"🟢 बुकिंग कन्फर्म":"🟠 बुकिंग कन्फर्म होना बाकी")+"<br>"+(ticket?"🟢 टिकट जारी हो गई":"🟠 टिकट जारी होना बाकी");
-if(ticket){document.getElementById("ticketWaiting").classList.add("hidden");document.getElementById("ticket").classList.remove("hidden");document.getElementById("ticketDetails").innerHTML="<p><b>टिकट नंबर:</b> "+esc(b.ticket_number)+"</p><pre style='white-space:pre-wrap;font:inherit'>"+esc(typeof b.ticket_data==="string"?b.ticket_data:JSON.stringify(b.ticket_data,null,2))+"</pre>"}}
+if(ticket){
+document.getElementById("ticketWaiting").classList.add("hidden");
+document.getElementById("ticket").classList.remove("hidden");
+const dateText=value=>{if(!value)return "अभी तय नहीं";const d=new Date(value+"T00:00:00");return Number.isNaN(d.getTime())?value:d.toLocaleDateString("hi-IN",{weekday:"long",day:"2-digit",month:"long",year:"numeric"})};
+const ticketRows=[
+["टिकट नंबर",b.ticket_number],
+["बुकिंग नंबर",b.booking_code],
+["यात्रा पैकेज",b.package_name],
+["यात्रा की तारीख",dateText(b.travel_date)],
+["पिकअप पॉइंट",b.pickup_point],
+["पिकअप का समय",b.pickup_time],
+["ड्रॉप पॉइंट",b.drop_point],
+["ड्रॉप का समय",b.drop_time],
+["यात्री का नाम",b.customer_name],
+["मोबाइल नंबर",b.customer_mobile||b.mobile_number||b.customer_phone||b.phone],
+["सीट नंबर",Array.isArray(b.selected_seats)&&b.selected_seats.length?b.selected_seats.join(", "):"अभी आवंटित नहीं"],
+["कुल किराया","₹"+Number(b.fare_total||0).toLocaleString("en-IN")],
+["भुगतान स्थिति",paid],
+["भुगतान की राशि","₹"+Number(b.amount_received||0).toLocaleString("en-IN")]
+];
+document.getElementById("ticketDetails").innerHTML='<p class="sub">आपकी यात्रा की टिकट जारी हो गई है। नीचे यात्रा की पूरी जानकारी ध्यान से देखें।</p><div class="mini-grid">'+ticketRows.map(([k,v])=>'<div class="field"><span>'+esc(k)+'</span><strong>'+esc(v||"—")+'</strong></div>').join("")+'</div><p class="sub" style="margin-bottom:0">कृपया यात्रा के दिन यह टिकट और बुकिंग नंबर अपने पास रखें। सहायता के लिए JKTour24 को कॉल करें।</p>';
+}}
 catch(e){loading.classList.add("hidden");err.classList.remove("hidden");err.textContent=e.message||"अभी बुकिंग स्टेटस नहीं खुल पाया। कृपया कुछ देर बाद फिर कोशिश करें।"}})();
 </script></body></html>
