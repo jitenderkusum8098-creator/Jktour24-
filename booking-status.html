@@ -81,6 +81,7 @@ const ticketRows=[
 ["टिकट नंबर",b.ticket_number],
 ["बुकिंग नंबर",b.booking_code],
 ["यात्रा पैकेज",b.package_name],
+["यात्रा कर रहे कुल यात्री",Array.isArray(b.passenger_details)?b.passenger_details.length:(Array.isArray(b.selected_seats)?b.selected_seats.length:0)],
 ["यात्रा की तारीख",dateText(b.travel_date)],
 ["पिकअप पॉइंट",b.pickup_point],
 ["पिकअप का समय",b.pickup_time],
@@ -89,10 +90,10 @@ const ticketRows=[
 ["यात्री का नाम",b.customer_name],
 ["मोबाइल नंबर",b.customer_mobile||b.mobile_number||b.customer_phone||b.phone],
 ["सीट नंबर",Array.isArray(b.selected_seats)&&b.selected_seats.length?b.selected_seats.join(", "):"अभी आवंटित नहीं"],
-["कुल किराया","₹"+(Math.max(0,Number(b.fare_total)||0)*(Array.isArray(b.selected_seats)&&b.selected_seats.length?b.selected_seats.length:1)).toLocaleString("en-IN")],
+["कुल किराया","₹"+Math.max(0,Number(b.fare_total)||0).toLocaleString("en-IN")],
 ["भुगतान स्थिति",paid],
 ["जमा की गई राशि","₹"+Number(b.amount_received||0).toLocaleString("en-IN")],
-["बाकी बकाया राशि","₹"+Math.max(0,(Math.max(0,Number(b.fare_total)||0)*(Array.isArray(b.selected_seats)&&b.selected_seats.length?b.selected_seats.length:1))-Number(b.amount_received||0)).toLocaleString("en-IN")]
+["बाकी बकाया राशि","₹"+Math.max(0,(Math.max(0,Number(b.fare_total)||0))-Number(b.amount_received||0)).toLocaleString("en-IN")]
 ];
 document.getElementById("ticketDetails").innerHTML='<p class="sub">आपकी यात्रा की टिकट जारी हो गई है। नीचे यात्रा की पूरी जानकारी ध्यान से देखें।</p><div class="mini-grid">'+ticketRows.map(([k,v])=>'<div class="field"><span>'+esc(k)+'</span><strong>'+esc(v||"—")+'</strong></div>').join("")+'</div><p class="sub" style="margin-bottom:0">कृपया यात्रा के दिन यह टिकट और बुकिंग नंबर अपने पास रखें। सहायता के लिए JKTour24 को कॉल करें।</p>';
 }}
