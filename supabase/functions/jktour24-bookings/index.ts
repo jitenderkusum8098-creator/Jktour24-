@@ -28,7 +28,7 @@ Deno.serve(async(req:Request)=>{
  }
  if(body.action==="seat_availability"){
   const slug=bounded(body.package_slug,100),date=bounded(body.travel_date,10);
-  if(!slug||!/^\\d{4}-\\d{2}-\\d{2}$/.test(date))return json({error:"Package aur travel date required hain"},400);
+  if(!slug||!/^\d{4}-\d{2}-\d{2}$/.test(date))return json({error:"Package aur travel date required hain"},400);
   const now=new Date().toISOString();
   await db.from("jktour24_seat_holds").delete().eq("hold_status","held").lte("expires_at",now);
   const {data:holds,error:he}=await db.from("jktour24_seat_holds").select("seat_number").eq("package_slug",slug).eq("travel_date",date).in("hold_status",["held","confirmed"]).gt("expires_at",now);
