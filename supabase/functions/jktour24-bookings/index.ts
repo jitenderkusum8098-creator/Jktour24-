@@ -111,16 +111,29 @@ Deno.serve(async(req:Request)=>{
   return {error:null,user:data.user};
  }
  const bounded=(v:any,n=300)=>String(v??"").trim().slice(0,n);
+ if(body.action==="manager_login"){
+  const name=bounded(body.full_name,120).toLowerCase(),mobile=bounded(body.mobile,25),password=String(body.password||"");
+  if(!name||!mobile||!password)return json({error:"Naam, mobile aur password bharein"},400);
+  const {data:manager,error:managerError}=await db.from("tour_managers").select("user_id,full_name,email,mobile,active").eq("mobile",mobile).maybeSingle();
+  if(managerError||!manager||!manager.active||String(manager.full_name||"").trim().toLowerCase()!==name)return json({error:"Manager name ya mobile number sahi nahi hai"},401);
+  const authClient=createClient(url,anonKey);
+  const {data:loginData,error:loginError}=await authClient.auth.signInWithPassword({email:manager.email,password});
+  if(loginError||!loginData.session||loginData.user?.app_metadata?.role!=="tour_manager")return json({error:"Password galat hai"},401);
+  return json({session:{access_token:loginData.session.access_token,refresh_token:loginData.session.refresh_token}});
+ }
  if(body.action==="admin_create_tour_manager"){
   const {error:authError,user}=await authorizedUser(req,"admin");
   if(authError||!user)return json({error:authError||"Admin permission required"},403);
-  const email=bounded(body.email,180).toLowerCase(),password=String(body.password||""),name=bounded(body.full_name,120),mobile=bounded(body.mobile,25);
-  if(!email||!name||password.length<10)return json({error:"Name, email, and a password of at least 10 characters are required"},400);
+  const name=bounded(body.full_name,120),mobile=bounded(body.mobile,25),digits=mobile.replace(/\\D/g,"");
+  if(!name||digits.length<7)return json({error:"Manager ka naam aur sahi mobile number zaroori hai"},400);
+  const {data:existing}=await db.from("tour_managers").select("user_id").eq("mobile",mobile).maybeSingle();
+  if(existing)return json({error:"Is mobile number se Tour Manager pehle se bana hua hai"},409);
+  const email="tm."+digits+"@manager.jktour24.com",password=name;
   const {data:created,error:createError}=await db.auth.admin.createUser({email,password,email_confirm:true,user_metadata:{full_name:name},app_metadata:{role:"tour_manager"}});
   if(createError||!created.user)return json({error:createError?.message||"Could not create manager login"},400);
   const {error:profileError}=await db.from("tour_managers").insert({user_id:created.user.id,full_name:name,email,mobile,active:true});
   if(profileError){await db.auth.admin.deleteUser(created.user.id);return json({error:"Manager profile could not be saved"},500);}
-  return json({manager:{user_id:created.user.id,full_name:name,email,mobile,active:true}},201);
+  return json({manager:{user_id:created.user.id,full_name:name,mobile,active:true}},201);
  }
  if(body.action==="admin_list_tour_managers"){
   const {error:authError,user}=await authorizedUser(req,"admin");if(authError||!user)return json({error:authError||"Admin permission required"},403);
