@@ -26,6 +26,19 @@ Deno.serve(async(req:Request)=>{
   data.hold_expires_at=new Date(deadline).toISOString();
   return json({booking:data});
  }
+ if(body.action==="seat_availability"){
+  const slug=bounded(body.package_slug,100),date=bounded(body.travel_date,10);
+  if(!slug||!/^\\d{4}-\\d{2}-\\d{2}$/.test(date))return json({error:"Package aur travel date required hain"},400);
+  const now=new Date().toISOString();
+  await db.from("jktour24_seat_holds").delete().eq("hold_status","held").lte("expires_at",now);
+  const {data:holds,error:he}=await db.from("jktour24_seat_holds").select("seat_number").eq("package_slug",slug).eq("travel_date",date).in("hold_status",["held","confirmed"]).gt("expires_at",now);
+  if(he)return json({error:"Seat availability load nahi hui"},500);
+  const {data:issued,error:ie}=await db.from("bookings").select("selected_seats").eq("package_slug",slug).eq("travel_date",date).eq("ticket_status","issued").not("status","in","(expired,cancelled)");
+  if(ie)return json({error:"Confirmed seats check nahi ho paayin"},500);
+  const seats=new Set((holds||[]).map((x:any)=>String(x.seat_number)));
+  for(const b of issued||[])for(const s of Array.isArray(b.selected_seats)?b.selected_seats:[])seats.add(String(s));
+  return json({blocked_seats:[...seats]});
+ }
  if(body.action==="create"){
   const p=body.booking||{},required=["package_slug","package_name","customer_name","customer_mobile","payment_plan","payment_method"];
   if(required.some(k=>!String(p[k]??"").trim()))return json({error:"Required booking information is missing"},400);
