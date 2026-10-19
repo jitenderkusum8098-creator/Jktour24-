@@ -559,6 +559,8 @@ if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded"
 })();
 </script>
 
+<script>
 /* My Booking reuses the exact status link sent by WhatsApp. */
 (function(){var a=document.getElementById("myBookingShortcut");if(!a)return;var keys=["jktour24_last_status_url","jktour24_status_token","lastBookingStatusUrl"];var saved="";for(var i=0;i<keys.length;i++){try{saved=localStorage.getItem(keys[i])||"";}catch(e){}if(saved)break;}if(saved){if(saved.indexOf("booking-status.html?token=")>=0){a.href=saved;}else if(!/^https?:/i.test(saved)){a.href="booking-status.html?token="+encodeURIComponent(saved);}else{try{var u=new URL(saved);if(u.origin===location.origin&&u.pathname.indexOf("booking-status.html")>=0)a.href=saved;}catch(e){}}}a.addEventListener("click",function(e){if(a.href===location.href+"booking-status.html"||a.href.endsWith("/booking-status.html")){e.preventDefault();alert("Yaar, is browser mein aapki booking link abhi save nahi hai. WhatsApp par mili booking link ek baar khol lijiye; phir My Booking se yahin khul jayegi.");}});})();
+</script>
 </body></html>
