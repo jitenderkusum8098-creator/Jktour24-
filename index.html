@@ -356,10 +356,11 @@
 
 /* Book Now button directly below package reviews */
 .review-book-now{margin:10px 0 0;width:100%;min-height:48px;border-radius:9px}
+ .my-booking-shortcut{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:40px;padding:0 10px;border:1px solid #dcae52;border-radius:9px;background:#111;color:#f2ca70;text-decoration:none;font-size:12px;font-weight:800;white-space:nowrap;flex:0 0 auto}.my-booking-shortcut:focus-visible{outline:3px solid #dcae52;outline-offset:3px}@media(max-width:390px){.my-booking-shortcut{padding:0 7px;font-size:11px;gap:3px}.brand{min-width:0}.brand small{font-size:9px}}
 </style>
 </head>
 <body>
-<header class="top"><div class="brand"><img class="brand-logo" src="logo.svg" alt="JKTour24 logo"><div>JKTOUR24<small>TRAVEL MORE, WORRY LESS</small></div></div><button class="mobile-menu-toggle" type="button" aria-label="मेन्यू खोलें" aria-expanded="false" aria-controls="primary-navigation"><span></span><span></span><span></span></button><nav class="nav" id="primary-navigation"><a href="#package">पैकेज</a><a href="booking.html?package=khatu">🚌 बस बुकिंग</a><a href="yatra-saathi.html">🧭 Yatra Saathi</a><a href="#itinerary">यात्रा कार्यक्रम</a><a href="#included">क्या शामिल है</a><a href="#contact">संपर्क</a></nav></header>
+<header class="top"><div class="brand"><img class="brand-logo" src="logo.svg" alt="JKTour24 logo"><div>JKTOUR24<small>TRAVEL MORE, WORRY LESS</small></div></div><a class="my-booking-shortcut" id="myBookingShortcut" href="booking-status.html" aria-label="मेरी बुकिंग देखें">🎫 <span>My Booking</span></a><button class="mobile-menu-toggle" type="button" aria-label="मेन्यू खोलें" aria-expanded="false" aria-controls="primary-navigation"><span></span><span></span><span></span></button><nav class="nav" id="primary-navigation"><a href="#package">पैकेज</a><a href="booking.html?package=khatu">🚌 बस बुकिंग</a><a href="yatra-saathi.html">🧭 Yatra Saathi</a><a href="#itinerary">यात्रा कार्यक्रम</a><a href="#included">क्या शामिल है</a><a href="#contact">संपर्क</a></nav></header>
 <section class="hero" id="package" aria-label="JKTOUR24 उज्जैन और ओंकारेश्वर यात्रा बैनर"></section>
 
 <section class="yatra-story" id="jk-safar-story" aria-labelledby="yatra-story-title">
@@ -557,4 +558,7 @@ Object.keys(packages).forEach(id=>build(id,packages[id]));
 if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",initJkPassengerFlow,{once:true});}else{initJkPassengerFlow();}
 })();
 </script>
+
+/* My Booking reuses the exact status link sent by WhatsApp. */
+(function(){var a=document.getElementById("myBookingShortcut");if(!a)return;var keys=["jktour24_last_status_url","jktour24_status_token","lastBookingStatusUrl"];var saved="";for(var i=0;i<keys.length;i++){try{saved=localStorage.getItem(keys[i])||"";}catch(e){}if(saved)break;}if(saved){if(saved.indexOf("booking-status.html?token=")>=0){a.href=saved;}else if(!/^https?:/i.test(saved)){a.href="booking-status.html?token="+encodeURIComponent(saved);}else{try{var u=new URL(saved);if(u.origin===location.origin&&u.pathname.indexOf("booking-status.html")>=0)a.href=saved;}catch(e){}}}a.addEventListener("click",function(e){if(a.href===location.href+"booking-status.html"||a.href.endsWith("/booking-status.html")){e.preventDefault();alert("Yaar, is browser mein aapki booking link abhi save nahi hai. WhatsApp par mili booking link ek baar khol lijiye; phir My Booking se yahin khul jayegi.");}});})();
 </body></html>
