@@ -140,6 +140,21 @@ Deno.serve(async(req:Request)=>{
   const {data,error}=await db.from("tour_managers").select("user_id,full_name,email,mobile,active,created_at").order("created_at",{ascending:false});
   if(error)return json({error:"Could not load Tour Managers"},500);return json({managers:data||[]});
  }
+ if(body.action==="admin_seat_report"){
+  const {error:authError,user}=await authorizedUser(req,"admin");if(authError||!user)return json({error:authError||"Admin permission required"},403);
+  const {data,error}=await db.from("bookings").select("id,package_slug,package_name,travel_date,selected_seats,bus_details,ticket_status,payment_status,status,created_at").order("travel_date",{ascending:true}).limit(5000);
+  if(error)return json({error:"Could not load package seat report"},500);
+  const rows=new Map();
+  for(const b of data||[]){
+   const key=String(b.package_slug||"unknown")+"|"+String(b.travel_date||"date_tbd");
+   if(!rows.has(key))rows.set(key,{package_slug:b.package_slug||"",package_name:b.package_name||b.package_slug||"Package",travel_date:b.travel_date||null,capacity:Number(b.bus_details?.capacity)||null,booking_count:0,confirmed_bookings:0,pending_bookings:0,confirmed_seats:[],pending_seats:[]});
+   const r=rows.get(key),seats=Array.isArray(b.selected_seats)?b.selected_seats.map((s:any)=>String(s)):[],valid=b.status!=="expired"&&b.status!=="cancelled"&&b.ticket_status!=="cancelled";
+   if(Number(b.bus_details?.capacity)>0)r.capacity=Number(b.bus_details.capacity);
+   if(valid){r.booking_count++;if(b.ticket_status==="issued"){r.confirmed_bookings++;seats.forEach((s:string)=>r.confirmed_seats.push(s));}else if(b.status!=="expired"){r.pending_bookings++;seats.forEach((s:string)=>r.pending_seats.push(s));}}
+  }
+  const report=[...rows.values()].map((r:any)=>{r.confirmed_seats=[...new Set(r.confirmed_seats)];r.pending_seats=[...new Set(r.pending_seats)].filter((s:string)=>!r.confirmed_seats.includes(s));r.confirmed_seat_count=r.confirmed_seats.length;r.pending_seat_count=r.pending_seats.length;r.available_seats=r.capacity===null?null:Math.max(0,r.capacity-r.confirmed_seat_count-r.pending_seat_count);return r;});
+  return json({report});
+ }
  if(body.action==="admin_list_journeys"){
   const {error:authError,user}=await authorizedUser(req,"admin");if(authError||!user)return json({error:authError||"Admin permission required"},403);
   const {data,error}=await db.from("tour_journeys").select("*,tour_managers(full_name,email,mobile),tour_journey_stops(*)").order("travel_date",{ascending:true});
