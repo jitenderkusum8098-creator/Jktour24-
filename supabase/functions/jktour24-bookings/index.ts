@@ -4,10 +4,61 @@ const cors={"Access-Control-Allow-Origin":"*","Access-Control-Allow-Headers":"au
 const json=(data:unknown,status=200)=>new Response(JSON.stringify(data),{status,headers:cors});
 const url=Deno.env.get("SUPABASE_URL")!, serviceKey=Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, anonKey=Deno.env.get("SUPABASE_ANON_KEY")!;
 const db=createClient(url,serviceKey);
+ const bounded=(v:any,n=300)=>String(v??"").trim().slice(0,n);
 Deno.serve(async(req:Request)=>{
  if(req.method==="OPTIONS")return new Response("ok",{headers:cors});
  if(req.method!=="POST")return json({error:"POST required"},405);
  let body:Record<string,any>;try{body=await req.json()}catch{return json({error:"Invalid JSON"},400)}
+
+ const razorpayKeyId=Deno.env.get("RAZORPAY_KEY_ID")||"", razorpayKeySecret=Deno.env.get("RAZORPAY_KEY_SECRET")||"";
+ const razorpayAuth="Basic "+btoa(razorpayKeyId+":"+razorpayKeySecret);
+ if(body.action==="create_payment_order"){
+  if(!razorpayKeyId||!razorpayKeySecret)return json({error:"Razorpay keys are not configured on the secure server yet."},503);
+  const token=bounded(body.status_token,100),plan=bounded(body.payment_plan,20),custom=Number(body.custom_amount);
+  if(!/^[a-f0-9]{48,80}$/i.test(token))return json({error:"Invalid booking status link."},400);
+  const {data:b,error:be}=await db.from("bookings").select("id,booking_code,status_token,fare_total,payment_status,amount_received,payment_method,status,customer_name,customer_mobile,customer_email").eq("status_token",token).maybeSingle();
+  if(be||!b)return json({error:"Booking not found."},404);
+  if(b.payment_method!=="online"||["expired","cancelled"].includes(b.status))return json({error:"This booking is not eligible for online payment."},400);
+  const fare=Math.round(Number(b.fare_total)||0),received=Math.round(Number(b.amount_received)||0),remaining=fare-received;
+  let amount=0;
+  if(plan==="advance_40")amount=Math.round(fare*0.4);
+  else if(plan==="full")amount=remaining;
+  else if(plan==="custom"){if(!Number.isFinite(custom)||custom<100)return json({error:"Custom Payment कम से कम ₹100 होना चाहिए।"},400);amount=Math.round(custom);}
+  else return json({error:"Choose 40% advance, custom amount, or full payment."},400);
+  if(amount<1||amount>remaining)return json({error:"Payment amount must be greater than zero and no more than the remaining balance ₹"+remaining+"."},400);
+  const response=await fetch("https://api.razorpay.com/v1/orders",{method:"POST",headers:{"Authorization":razorpayAuth,"Content-Type":"application/json"},body:JSON.stringify({amount:amount*100,currency:"INR",receipt:String(b.booking_code).slice(0,40),notes:{booking_code:b.booking_code,booking_id:b.id,payment_plan:plan}})});
+  const order=await response.json();
+  if(!response.ok||!order.id)return json({error:order.error?.description||"Could not create Razorpay order."},502);
+  const {error:saveError}=await db.from("jktour24_payment_orders").insert({booking_id:b.id,razorpay_order_id:order.id,amount_paise:amount*100,currency:"INR",status:"created"});
+  if(saveError)return json({error:"Payment order could not be saved securely."},500);
+  return json({key_id:razorpayKeyId,order_id:order.id,amount:amount*100,currency:"INR",booking_code:b.booking_code,customer_name:b.customer_name,customer_mobile:b.customer_mobile,customer_email:b.customer_email||""},201);
+ }
+ if(body.action==="verify_payment"){
+  if(!razorpayKeyId||!razorpayKeySecret)return json({error:"Razorpay keys are not configured."},503);
+  const orderId=bounded(body.razorpay_order_id,100),paymentId=bounded(body.razorpay_payment_id,100),signature=bounded(body.razorpay_signature,256);
+  if(!orderId||!paymentId||!signature)return json({error:"Missing payment verification details."},400);
+  const {data:po,error:poError}=await db.from("jktour24_payment_orders").select("id,booking_id,razorpay_order_id,amount_paise,status").eq("razorpay_order_id",orderId).maybeSingle();
+  if(poError||!po)return json({error:"Payment order not found."},404);
+  const enc=new TextEncoder(),key=await crypto.subtle.importKey("raw",enc.encode(razorpayKeySecret),{name:"HMAC",hash:"SHA-256"},false,["sign"]);
+  const digest=new Uint8Array(await crypto.subtle.sign("HMAC",key,enc.encode(orderId+"|"+paymentId)));
+  const expected=[...digest].map(x=>x.toString(16).padStart(2,"0")).join("");
+  if(expected.length!==signature.length||![...expected].every((c,i)=>c===signature[i]))return json({error:"Payment signature verification failed."},400);
+  if(po.status==="paid")return json({ok:true,message:"Payment already verified."});
+  const paymentResponse=await fetch("https://api.razorpay.com/v1/payments/"+encodeURIComponent(paymentId),{headers:{"Authorization":razorpayAuth}});
+  const payment=await paymentResponse.json();
+  if(!paymentResponse.ok||payment.order_id!==orderId||Number(payment.amount)!==Number(po.amount_paise)||payment.currency!=="INR"||!["captured","authorized"].includes(payment.status))return json({error:"Razorpay payment is not verified/captured yet."},400);
+  if(payment.status!=="captured")return json({error:"Payment authorized but not captured yet. Please wait and check status."},409);
+  const {data:b,error:bookingError}=await db.from("bookings").select("id,fare_total,amount_received").eq("id",po.booking_id).single();
+  if(bookingError||!b)return json({error:"Booking not found for this payment."},404);
+  const newReceived=Math.min(Number(b.fare_total)||0,(Number(b.amount_received)||0)+(Number(po.amount_paise)/100));
+  const paymentStatus=newReceived>=(Number(b.fare_total)||0)?"fully_paid":"advance_received";
+  const {error:updateOrderError}=await db.from("jktour24_payment_orders").update({status:"paid",razorpay_payment_id:paymentId,updated_at:new Date().toISOString()}).eq("id",po.id).eq("status","created");
+  if(updateOrderError)return json({error:"Could not save payment confirmation."},500);
+  const {error:updateBookingError}=await db.from("bookings").update({amount_received:newReceived,payment_status:paymentStatus,updated_at:new Date().toISOString()}).eq("id",b.id);
+  if(updateBookingError)return json({error:"Payment verified but booking update failed. Contact JKTour24 support."},500);
+  return json({ok:true,booking_code:body.booking_code||"",amount_received:newReceived,payment_status:paymentStatus,message:"Payment verified successfully."});
+ }
+
  if(body.action==="get_settings"){
   const {data,error}=await db.from("jktour24_settings").select("setting_value").eq("setting_key","site_config").maybeSingle();
   if(error)return json({error:"Could not load site settings"},500);
@@ -23,6 +74,9 @@ Deno.serve(async(req:Request)=>{
    await db.from("jktour24_seat_holds").delete().eq("booking_id",data.id).eq("hold_status","held");
    data.status="expired";
   }
+  const {data:paidOrders}=await db.from("jktour24_payment_orders").select("amount_paise").eq("booking_id",data.id).eq("status","paid");
+  data.online_paid_amount=Math.round((paidOrders||[]).reduce((sum:any,p:any)=>sum+(Number(p.amount_paise)||0),0)/100);
+  data.balance_due=Math.max(0,Number(data.fare_total||0)-Number(data.amount_received||0));
   data.hold_expires_at=new Date(deadline).toISOString();
   return json({booking:data});
  }
@@ -31,18 +85,18 @@ Deno.serve(async(req:Request)=>{
   if(!slug||!/^\d{4}-\d{2}-\d{2}$/.test(date))return json({error:"Package aur travel date required hain"},400);
   const now=new Date().toISOString();
   await db.from("jktour24_seat_holds").delete().eq("hold_status","held").lte("expires_at",now);
-  const {data:holds,error:he}=await db.from("jktour24_seat_holds").select("seat_number").eq("package_slug",slug).eq("travel_date",date).in("hold_status",["held","confirmed"]).gt("expires_at",now);
+  const {data:holds,error:he}=await db.from("jktour24_seat_holds").select("seat_number,hold_status").eq("package_slug",slug).eq("travel_date",date).in("hold_status",["held","confirmed"]).gt("expires_at",now);
   if(he)return json({error:"Seat availability load nahi hui"},500);
   const {data:issued,error:ie}=await db.from("bookings").select("selected_seats").eq("package_slug",slug).eq("travel_date",date).eq("ticket_status","issued").not("status","in","(expired,cancelled)");
   if(ie)return json({error:"Confirmed seats check nahi ho paayin"},500);
-  const seats=new Set((holds||[]).map((x:any)=>String(x.seat_number)));
-  for(const b of issued||[])for(const s of Array.isArray(b.selected_seats)?b.selected_seats:[])seats.add(String(s));
-  return json({blocked_seats:[...seats]});
+  const seats=new Set((holds||[]).map((x:any)=>String(x.seat_number))),heldSeats=new Set((holds||[]).filter((x:any)=>x.hold_status==="held").map((x:any)=>String(x.seat_number))),confirmedSeats=new Set((holds||[]).filter((x:any)=>x.hold_status==="confirmed").map((x:any)=>String(x.seat_number)));
+  for(const b of issued||[])for(const s of Array.isArray(b.selected_seats)?b.selected_seats:[]){seats.add(String(s));confirmedSeats.add(String(s));}
+  return json({blocked_seats:[...seats],held_seats:[...heldSeats],confirmed_seats:[...confirmedSeats]});
  }
  if(body.action==="create"){
   const p=body.booking||{},required=["package_slug","package_name","customer_name","customer_mobile","payment_plan","payment_method"];
   if(required.some(k=>!String(p[k]??"").trim()))return json({error:"Required booking information is missing"},400);
-  if(!["advance_40","full"].includes(p.payment_plan)||!["cash","online"].includes(p.payment_method))return json({error:"Invalid payment choice"},400);
+  if(!["advance_40","full","custom"].includes(p.payment_plan)||!["cash","online"].includes(p.payment_method))return json({error:"Invalid payment choice"},400);
   const token=crypto.randomUUID().replaceAll("-","")+crypto.randomUUID().replaceAll("-","").slice(0,16),code="JK"+crypto.randomUUID().replaceAll("-","").slice(0,8).toUpperCase();
   const row={booking_code:code,status_token:token,package_slug:String(p.package_slug),package_name:String(p.package_name),customer_name:String(p.customer_name).slice(0,120),customer_mobile:String(p.customer_mobile).replace(/[^0-9+]/g,"").slice(0,20),customer_email:p.customer_email?String(p.customer_email).slice(0,160):null,customer_age:Number.isFinite(Number(p.customer_age))?Number(p.customer_age):null,customer_gender:p.customer_gender?String(p.customer_gender).slice(0,30):null,emergency_contacts:Array.isArray(p.emergency_contacts)?p.emergency_contacts:[],passenger_details:Array.isArray(p.passenger_details)?p.passenger_details:[],pickup_point:p.pickup_point?String(p.pickup_point).slice(0,200):null,pickup_time:p.pickup_time?String(p.pickup_time).slice(0,50):null,drop_point:p.drop_point?String(p.drop_point).slice(0,200):null,drop_time:p.drop_time?String(p.drop_time).slice(0,50):null,travel_date:p.travel_date||null,bus_details:p.bus_details&&typeof p.bus_details==="object"?p.bus_details:{},selected_seats:Array.isArray(p.selected_seats)?p.selected_seats:[],fare_total:Math.max(0,Number(p.fare_total)||0),payment_plan:p.payment_plan,payment_method:p.payment_method,payment_status:"pending",ticket_status:"not_issued",customer_notes:p.customer_notes?String(p.customer_notes).slice(0,1000):null};
   if(!row.travel_date||!row.selected_seats.length)return json({error:"यात्रा की तारीख और सीटें चुनना जरूरी है"},400);
@@ -85,7 +139,7 @@ Deno.serve(async(req:Request)=>{
   if(userError||!userData.user||userData.user.app_metadata?.role!=="admin")return json({error:"Admin permission required. Use an authorized admin account."},403);
   if(body.action==="admin_list"){
    const {data,error}=await db.from("bookings").select("id,booking_code,status,package_name,customer_name,customer_mobile,emergency_contacts,passenger_details,pickup_point,pickup_time,drop_point,drop_time,selected_seats,fare_total,payment_plan,payment_method,payment_status,amount_received,ticket_status,ticket_number,travel_date,created_at").order("created_at",{ascending:false}).limit(200);
-   if(error)return json({error:"Could not load bookings"},500);return json({bookings:data||[]});
+   if(error)return json({error:"Could not load bookings"},500);const bookings=data||[];if(bookings.length){const ids=bookings.map((b:any)=>b.id);const {data:paidOrders}=await db.from("jktour24_payment_orders").select("booking_id,amount_paise").in("booking_id",ids).eq("status","paid");const onlineByBooking=new Map<string,number>();for(const p of paidOrders||[])onlineByBooking.set(String(p.booking_id),(onlineByBooking.get(String(p.booking_id))||0)+(Number(p.amount_paise)||0));for(const b of bookings){b.online_paid_amount=Math.round((onlineByBooking.get(String(b.id))||0)/100);b.balance_due=Math.max(0,Number(b.fare_total||0)-Number(b.amount_received||0));}}return json({bookings});
   }
   const id=String(body.id||""),payment=String(body.payment_status||"");
   if(!id||!["pending","advance_received","fully_paid","payment_issue"].includes(payment))return json({error:"Invalid update"},400);
@@ -110,7 +164,6 @@ Deno.serve(async(req:Request)=>{
   if(data.user.app_metadata?.role!==role)return {error:"Permission denied",user:null};
   return {error:null,user:data.user};
  }
- const bounded=(v:any,n=300)=>String(v??"").trim().slice(0,n);
  if(body.action==="manager_login"){
   const name=bounded(body.full_name,120).toLowerCase(),mobile=bounded(body.mobile,25),password=String(body.password||"");
   if(!name||!mobile||!password)return json({error:"Naam, mobile aur password bharein"},400);
@@ -212,10 +265,11 @@ Deno.serve(async(req:Request)=>{
  if(body.action==="manager_ticket_lookup"){
   const {error:authError,user}=await authorizedUser(req,"tour_manager");if(authError||!user)return json({error:authError||"Tour Manager permission required"},403);
   const journeyId=bounded(body.journey_id,60),ticket=bounded(body.ticket_number,80);const {data:journey}=await db.from("tour_journeys").select("id,package_slug,travel_date").eq("id",journeyId).eq("manager_user_id",user.id).maybeSingle();if(!journey)return json({error:"This tour is not assigned to your account"},403);
-  const {data:b,error}=await db.from("bookings").select("id,ticket_number,booking_code,customer_name,passenger_details,pickup_point,ticket_status,package_slug,travel_date").eq("ticket_number",ticket).eq("ticket_status","issued").maybeSingle();if(error||!b)return json({error:"Issued ticket not found"},404);if((journey.package_slug&&b.package_slug!==journey.package_slug)||(journey.travel_date&&b.travel_date!==journey.travel_date))return json({error:"Yeh ticket is tour/date se sambandhit nahi hai."},403);
+  const {data:b,error}=await db.from("bookings").select("id,ticket_number,booking_code,customer_name,passenger_details,pickup_point,ticket_status,package_slug,travel_date,fare_total,amount_received").eq("ticket_number",ticket).eq("ticket_status","issued").maybeSingle();if(error||!b)return json({error:"Issued ticket not found"},404);if((journey.package_slug&&b.package_slug!==journey.package_slug)||(journey.travel_date&&b.travel_date!==journey.travel_date))return json({error:"Yeh ticket is tour/date se sambandhit nahi hai."},403);
   const list=Array.isArray(b.passenger_details)&&b.passenger_details.length?b.passenger_details:[{name:b.customer_name}];const passengers=list.map((p:any,i:number)=>({name:bounded(p.name||p.full_name||p.passenger_name||(i===0?b.customer_name:"Yatri "+(i+1)),120),index:i+1}));
   const {data:attendance}=await db.from("tour_passenger_attendance").select("passenger_name,attendance_status").eq("journey_id",journeyId).eq("ticket_number",ticket);const statuses=new Map((attendance||[]).map((a:any)=>[a.passenger_name,a.attendance_status]));
-  return json({ticket:{id:b.id,ticket_number:b.ticket_number,booking_code:b.booking_code,pickup_point:b.pickup_point,passengers:passengers.map((p:any)=>({...p,attendance_status:statuses.get(p.name)||"not_present"}))}});
+  const {data:paidOrders}=await db.from("jktour24_payment_orders").select("amount_paise").eq("booking_id",b.id).eq("status","paid");const onlinePaid=Math.round((paidOrders||[]).reduce((sum:any,p:any)=>sum+(Number(p.amount_paise)||0),0)/100);
+  return json({ticket:{id:b.id,ticket_number:b.ticket_number,booking_code:b.booking_code,pickup_point:b.pickup_point,fare_total:Number(b.fare_total)||0,amount_received:Number(b.amount_received)||0,online_paid_amount:onlinePaid,balance_due:Math.max(0,Number(b.fare_total||0)-Number(b.amount_received||0)),passengers:passengers.map((p:any)=>({...p,attendance_status:statuses.get(p.name)||"not_present"}))}});
  }
  if(body.action==="manager_mark_attendance"){
   const {error:authError,user}=await authorizedUser(req,"tour_manager");if(authError||!user)return json({error:authError||"Tour Manager permission required"},403);
