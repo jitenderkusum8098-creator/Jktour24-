@@ -135,6 +135,19 @@
 }
 
 
+
+/* Budget filter: additive homepage-only feature */
+.tour-budget-finder{max-width:760px;margin:0 auto 26px;padding:22px 20px;background:#fff;border:1px solid #e4d4ad;border-radius:16px;box-shadow:0 8px 24px rgba(7,26,53,.07);text-align:center}
+.tour-budget-finder h3{margin:0 0 7px;color:#0b1b38;font-size:clamp(20px,3vw,25px)}
+.tour-budget-finder>p{margin:0 auto 16px;color:#667085;font-size:13px;line-height:1.6}
+.tour-budget-options{display:flex;flex-wrap:wrap;justify-content:center;gap:9px}
+.tour-budget-btn{appearance:none;border:1px solid #d9c18c;background:#fffaf0;color:#17233a;border-radius:9px;padding:11px 13px;font-size:13px;font-weight:800;cursor:pointer;transition:background .15s,border-color .15s,transform .15s}
+.tour-budget-btn:hover{border-color:#c59a3a;transform:translateY(-1px)}
+.tour-budget-btn.is-active{background:#071a35;color:#f4cf78;border-color:#071a35;box-shadow:0 4px 12px #071a3520}
+.tour-budget-result{margin-top:13px;color:#667085;font-size:12px;line-height:1.5}
+.tour-card.budget-hidden{display:none!important}
+@media(max-width:520px){.tour-budget-finder{padding:18px 13px;margin-bottom:20px}.tour-budget-options{gap:7px}.tour-budget-btn{flex:1 1 calc(50% - 7px);padding:11px 8px;font-size:12px}}
+
 /* Price label readability fix */
 .tour-bottom>div>small{font-size:15px!important;line-height:1.45;font-weight:700;color:#344054!important}
 .tour-price{font-size:clamp(36px,4.2vw,44px)!important}
@@ -380,6 +393,19 @@
 
 <section class="package-area" id="featured-package">
 <div class="tour-heading"><span class="tour-kicker">JKTOUR24 • यादगार तीर्थ यात्राएँ</span><h2 class="section-title">चलिए, एक यादगार सफ़र पर ❤️</h2><p class="sub">आस्था के दर्शन, अपनों का साथ और आरामदायक यात्रा — अपनी अगली मंज़िल चुनिए।</p></div>
+<div class="tour-budget-finder" id="tourBudgetFilter" aria-label="बजट के अनुसार यात्रा चुनें">
+  <h3>💰 अपने बजट में यात्रा चुनें</h3>
+  <p>अपना बजट चुनें — उसी कीमत में उपलब्ध हमारे तय टूर पैकेज नीचे दिखेंगे।</p>
+  <div class="tour-budget-options" role="group" aria-label="यात्रा बजट">
+    <button type="button" class="tour-budget-btn is-active" data-budget="all" aria-pressed="true">सभी टूर</button>
+    <button type="button" class="tour-budget-btn" data-budget="500-1500" aria-pressed="false">₹500–₹1,500</button>
+    <button type="button" class="tour-budget-btn" data-budget="1500-3000" aria-pressed="false">₹1,500–₹3,000</button>
+    <button type="button" class="tour-budget-btn" data-budget="3000-5000" aria-pressed="false">₹3,000–₹5,000</button>
+    <button type="button" class="tour-budget-btn" data-budget="5000-8000" aria-pressed="false">₹5,000–₹8,000</button>
+    <button type="button" class="tour-budget-btn" data-budget="8000-plus" aria-pressed="false">₹8,000 से अधिक</button>
+  </div>
+  <div class="tour-budget-result" id="tourBudgetResult" aria-live="polite">सभी उपलब्ध टूर पैकेज दिखाए जा रहे हैं।</div>
+</div>
 <div class="tour-grid">
 <article class="tour-card">
   <div class="tour-cover ujjain-cover"><span class="tour-ribbon">POPULAR PACKAGE</span><span class="tour-duration">4 रात / 5 दिन</span></div>
@@ -603,4 +629,58 @@ if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded"
 /* My Booking reuses the exact status link sent by WhatsApp. */
 (function(){var a=document.getElementById("myBookingShortcut");if(!a)return;var keys=["jktour24_last_status_url","jktour24_status_token","lastBookingStatusUrl"];var saved="";for(var i=0;i<keys.length;i++){try{saved=localStorage.getItem(keys[i])||"";}catch(e){}if(saved)break;}if(saved){if(saved.indexOf("booking-status.html?token=")>=0){a.href=saved;}else if(!/^https?:/i.test(saved)){a.href="booking-status.html?token="+encodeURIComponent(saved);}else{try{var u=new URL(saved);if(u.origin===location.origin&&u.pathname.indexOf("booking-status.html")>=0)a.href=saved;}catch(e){}}}a.addEventListener("click",function(e){if(a.href===location.href+"booking-status.html"||a.href.endsWith("/booking-status.html")){e.preventDefault();alert("Yaar, is browser mein aapki booking link abhi save nahi hai. WhatsApp par mili booking link ek baar khol lijiye; phir My Booking se yahin khul jayegi.");}});})();
 </script>
+
+<script>
+/* Homepage budget filter — filters existing fixed tour cards only. */
+(function(){
+  function initTourBudgetFilter(){
+    var root=document.getElementById('tourBudgetFilter');
+    var grid=document.querySelector('.tour-grid');
+    if(!root||!grid)return;
+    var cards=Array.from(grid.querySelectorAll('.tour-card'));
+    var buttons=Array.from(root.querySelectorAll('[data-budget]'));
+    var result=document.getElementById('tourBudgetResult');
+    function priceOf(card){
+      var node=card.querySelector('.tour-price');
+      if(!node)return NaN;
+      var n=Number((node.textContent||'').replace(/[^0-9]/g,''));
+      return Number.isFinite(n)&&n>0?n:NaN;
+    }
+    function matches(price,range){
+      if(range==='all')return true;
+      if(!Number.isFinite(price))return false;
+      if(range==='500-1500')return price>=500&&price<=1500;
+      if(range==='1500-3000')return price>1500&&price<=3000;
+      if(range==='3000-5000')return price>3000&&price<=5000;
+      if(range==='5000-8000')return price>5000&&price<=8000;
+      if(range==='8000-plus')return price>8000;
+      return true;
+    }
+    buttons.forEach(function(button){
+      button.addEventListener('click',function(){
+        var range=button.getAttribute('data-budget')||'all';
+        buttons.forEach(function(b){
+          var active=b===button;
+          b.classList.toggle('is-active',active);
+          b.setAttribute('aria-pressed',active?'true':'false');
+        });
+        var count=0;
+        cards.forEach(function(card){
+          var show=matches(priceOf(card),range);
+          card.classList.toggle('budget-hidden',!show);
+          if(show)count++;
+        });
+        if(result){
+          result.textContent=range==='all'
+            ?'सभी उपलब्ध टूर पैकेज दिखाए जा रहे हैं।'
+            :count+' टूर पैकेज इस बजट में मिले।'+(count?' नीचे पैकेज देखकर बुकिंग करें।':' इस बजट में अभी कोई तय पैकेज उपलब्ध नहीं है। सभी टूर देखने के लिए “सभी टूर” चुनें।');
+        }
+      });
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initTourBudgetFilter,{once:true});
+  else initTourBudgetFilter();
+})();
+</script>
+
 </body></html>
