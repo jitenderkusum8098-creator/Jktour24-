@@ -635,9 +635,10 @@ if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded"
 (function(){
   function initTourBudgetFilter(){
     var root=document.getElementById('tourBudgetFilter');
-    var grid=document.querySelector('.tour-grid');
-    if(!root||!grid)return;
-    var cards=Array.from(grid.querySelectorAll('.tour-card'));
+    var area=document.getElementById('featured-package');
+    if(!root||!area)return;
+    /* Include every package card in the section; one existing card sits outside .tour-grid. */
+    var cards=Array.from(area.querySelectorAll('.tour-card'));
     var buttons=Array.from(root.querySelectorAll('[data-budget]'));
     var result=document.getElementById('tourBudgetResult');
     function priceOf(card){
