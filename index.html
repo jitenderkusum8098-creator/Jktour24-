@@ -372,11 +372,40 @@
 /* Book Now button directly below package reviews */
 .review-book-now{margin:10px 0 0;width:100%;min-height:48px;border-radius:9px}
  .my-booking-shortcut{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:40px;padding:0 10px;border:1px solid #dcae52;border-radius:9px;background:#111;color:#f2ca70;text-decoration:none;font-size:12px;font-weight:800;white-space:nowrap;flex:0 0 auto}.my-booking-shortcut:focus-visible{outline:3px solid #dcae52;outline-offset:3px}@media(max-width:390px){.my-booking-shortcut{padding:0 7px;font-size:11px;gap:3px}.brand{min-width:0}.brand small{font-size:9px}}
+
+/* Mera Teerth Yatra Passport — new homepage feature, isolated from existing flows */
+.passport-promo{padding:24px 4%;background:linear-gradient(180deg,#f8f5ed 0%,#fff 100%)}
+.passport-promo-inner{max-width:1120px;margin:auto;border:1px solid #e5d3a8;border-radius:18px;overflow:hidden;display:grid;grid-template-columns:1.2fr .8fr;background:linear-gradient(125deg,#071a35,#12385b 68%,#4c3416);box-shadow:0 14px 34px #071a351c}
+.passport-promo-copy{padding:clamp(22px,4vw,42px);color:#fff;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.passport-promo-kicker{color:#f4d58b;font-weight:900;font-size:11px;letter-spacing:2px}
+.passport-promo-copy h2{font-size:clamp(25px,3.6vw,38px);line-height:1.2;margin:12px 0;color:#fff}
+.passport-promo-copy p{font-size:14px;line-height:1.8;color:#e4eaf2;margin:0 0 12px}
+.passport-promo-points{display:flex;flex-wrap:wrap;gap:8px;margin:7px 0 14px}
+.passport-promo-points span{font-size:12px;border:1px solid #dcae5277;background:#ffffff0d;padding:7px 10px;border-radius:20px;color:#fff}
+.passport-promo-btn{display:inline-flex;align-items:center;justify-content:center;min-height:47px;padding:13px 18px;background:linear-gradient(135deg,#f5d98c,#dcae52);color:#111;text-decoration:none;font-weight:900;border-radius:9px}
+.passport-promo-visual{min-height:270px;background:linear-gradient(0deg,#06132855,#06132812),url('Sacred%20Yatra_%20Temples,%20Mountains%20and%20Devotion.png') center/cover no-repeat;display:flex;align-items:flex-end;padding:20px}
+.passport-promo-badge{background:#071a35e8;border:1px solid #dcae52;color:#fff;border-radius:12px;padding:13px 16px;max-width:260px;line-height:1.55;font-size:13px}
+.passport-promo-badge strong{display:block;color:#f4d58b;font-size:16px;margin-bottom:3px}
+@media(max-width:680px){.passport-promo{padding:20px 4%}.passport-promo-inner{grid-template-columns:1fr}.passport-promo-copy{padding:24px 20px}.passport-promo-visual{min-height:190px;order:-1;background-position:center 40%}.passport-promo-copy h2{font-size:28px}.passport-promo-copy p{font-size:14px}}
+
 </style>
 </head>
 <body>
 <header class="top"><div class="brand"><img class="brand-logo" src="logo.svg" alt="JKTour24 logo"><div>JKTOUR24<small>TRAVEL MORE, WORRY LESS</small></div></div><a class="my-booking-shortcut" id="myBookingShortcut" href="booking-status.html" aria-label="मेरी बुकिंग देखें">🎫 <span>My Booking</span></a><button class="mobile-menu-toggle" type="button" aria-label="मेन्यू खोलें" aria-expanded="false" aria-controls="primary-navigation"><span></span><span></span><span></span></button><nav class="nav" id="primary-navigation"><a href="#package">पैकेज</a><a href="booking.html?package=khatu">🚌 बस बुकिंग</a><a href="yatra-saathi.html">🧭 Yatra Saathi</a><a href="#itinerary">यात्रा कार्यक्रम</a><a href="#included">क्या शामिल है</a><a href="#contact">संपर्क</a></nav></header>
 <section class="hero" id="package" aria-label="JKTOUR24 उज्जैन और ओंकारेश्वर यात्रा बैनर"></section>
+
+<section class="passport-promo" id="teerth-passport-promo" aria-labelledby="passport-promo-title">
+ <div class="passport-promo-inner">
+  <div class="passport-promo-copy">
+   <span class="passport-promo-kicker">🙏 JKTour24 PRESENTS · एक नया तीर्थ मिशन</span>
+   <h2 id="passport-promo-title">मेरा तीर्थ यात्रा पासपोर्ट</h2>
+   <p><strong>आपकी हर तीर्थ यात्रा, आपकी एक नई उपलब्धि!</strong><br>खाटू श्याम जी से लेकर 12 ज्योतिर्लिंग और चार धाम तक—अपना अगला तीर्थ मिशन चुनें और JKTour24 के साथ अपने दर्शन का सफर शुरू करें।</p>
+   <div class="passport-promo-points"><span>🛕 अलग-अलग तीर्थ मिशन</span><span>🏆 दर्शन का रिकॉर्ड</span><span>📲 दोस्तों से शेयर करने का लक्ष्य</span></div>
+   <a class="passport-promo-btn" href="teerth-yatra-passport.html">🙏 तीर्थ मिशन देखें →</a>
+  </div>
+  <div class="passport-promo-visual" role="img" aria-label="भारत के तीर्थों की यात्रा का दृश्य"><div class="passport-promo-badge"><strong>एक यात्रा से शुरुआत</strong>हर पड़ाव के साथ आगे बढ़ें। नए तीर्थ मिशन समय के साथ जुड़ते रहेंगे।</div></div>
+ </div>
+</section>
 
 <section class="yatra-story" id="jk-safar-story" aria-labelledby="yatra-story-title">
 <div class="homepage-story-layout">
