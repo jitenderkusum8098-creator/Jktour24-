@@ -31,22 +31,25 @@ const TEERTH_KEY='sb_publishable_hzgQGEVIMU5YKB1WXQaY5w_bsAgcm8S';
 const escapeHtml=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 async function loadAdminMandirs(){
  try{
-  const response=await fetch(TEERTH_API,{method:'POST',headers:{'Content-Type':'application/json','apikey':TEERTH_KEY},body:JSON.stringify({action:'teerth_list_mandirs'})});
-  if(!response.ok)return;
-  const result=await response.json(),rows=Array.isArray(result.mandirs)?result.mandirs:[];
-  const linksResponse=await fetch(TEERTH_API,{method:'POST',headers:{'Content-Type':'application/json','apikey':TEERTH_KEY},body:JSON.stringify({action:'teerth_list_package_links'})});
-  const linksData=linksResponse.ok?await linksResponse.json():{links:[]};
+  const headers={'Content-Type':'application/json','apikey':TEERTH_KEY};
+  const call=async action=>{const r=await fetch(TEERTH_API,{method:'POST',headers,body:JSON.stringify({action})});return r.ok?await r.json():{}};
+  const [missionData,mandirData,linksData]=await Promise.all([call('teerth_list_missions'),call('teerth_list_mandirs'),call('teerth_list_package_links')]);
+  const rows=Array.isArray(mandirData.mandirs)?mandirData.mandirs:[];
   const packageLinks=Array.isArray(linksData.links)?linksData.links:[];
   const groups=new Map();
   rows.forEach(row=>{if(!row.active||!row.mission_key||!row.temple_name)return;if(!groups.has(row.mission_key))groups.set(row.mission_key,[]);groups.get(row.mission_key).push(row)});
+  const missionRows=Array.isArray(missionData.missions)?missionData.missions:[];
+  missionRows.forEach(m=>{if(!groups.has(m.mission_key))groups.set(m.mission_key,[])});
   groups.forEach((items,key)=>{
    items.sort((a,b)=>(Number(a.sort_order)||1)-(Number(b.sort_order)||1));
+   const adminMission=missionRows.find(m=>m.mission_key===key);
    const found=missions.find(m=>m.id===key);
    const places=items.map(r=>r.location?r.temple_name+' — '+r.location:r.temple_name);
    const linkedPackages=packageLinks.filter(link=>link.mission_key===key).map(link=>link.package_title).filter(Boolean);
-   const packageSub=linkedPackages.length?'जुड़े पैकेज: '+linkedPackages.join(' · '):'JKTour24 द्वारा प्रबंधित तीर्थ मिशन';
-   if(found){found.title=items[0].mission_title||found.title;found.places=places;found.adminManaged=true;found.sub=packageSub;}
-   else missions.push({id:key,icon:'🛕',title:items[0].mission_title||key,sub:packageSub,places,adminManaged:true});
+   const title=(adminMission&&adminMission.mission_title)||(items[0]&&items[0].mission_title)||(found&&found.title)||key;
+   const packageSub=linkedPackages.length?'जुड़े पैकेज: '+linkedPackages.join(' · '):((adminMission&&adminMission.description)||'JKTour24 द्वारा प्रबंधित तीर्थ मिशन');
+   if(found){found.title=title;found.places=places;found.adminManaged=true;found.sub=packageSub;if(adminMission)found.icon=adminMission.icon||found.icon;}
+   else missions.push({id:key,icon:(adminMission&&adminMission.icon)||'🛕',title,sub:packageSub,places,adminManaged:true});
   });
  }catch(e){/* Keep fallback lists if the network is unavailable. */}
 }
